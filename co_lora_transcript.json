@@ -1,0 +1,172 @@
+{
+  "models": [
+    "qwen3:1.7b",
+    "llama3.2:3b",
+    "phi4-mini"
+  ],
+  "target": "improve step-by-step mathematical reasoning",
+  "profiles": {
+    "qwen3:1.7b": {
+      "model_name": "Qwen3 1.7B",
+      "arch": "qwen3",
+      "params": "2.03B",
+      "n_layers": 28,
+      "max_layer": 27,
+      "embed_dim": 2048,
+      "heads": 16,
+      "kv_heads": 8,
+      "ff_dim": 6144,
+      "norm_growth": "4.86x",
+      "first_norm": 1.2429,
+      "last_norm": 6.0442,
+      "sparsity": {
+        "attn_q.weight": "100%",
+        "attn_v.weight": "1%"
+      }
+    },
+    "llama3.2:3b": {
+      "model_name": "Llama 3.2 3B Instruct",
+      "arch": "llama",
+      "params": "3.21B",
+      "n_layers": 28,
+      "max_layer": 27,
+      "embed_dim": 3072,
+      "heads": 24,
+      "kv_heads": 8,
+      "ff_dim": 8192,
+      "norm_growth": "3.82x",
+      "first_norm": 0.1119,
+      "last_norm": 0.428,
+      "sparsity": {
+        "attn_q.weight": "46%",
+        "attn_v.weight": "100%"
+      }
+    },
+    "phi4-mini": {
+      "model_name": "Phi 4 Mini Instruct",
+      "arch": "phi3",
+      "params": "3.84B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "embed_dim": 3072,
+      "heads": 24,
+      "kv_heads": 8,
+      "ff_dim": 8192,
+      "norm_growth": "1.79x",
+      "first_norm": 0.0899,
+      "last_norm": 0.1612,
+      "sparsity": {}
+    }
+  },
+  "round1_self_proposals": {
+    "qwen3:1.7b": {
+      "target_modules": [
+        "attn_q.weight",
+        "attn_v.weight"
+      ],
+      "r": 64,
+      "lora_alpha": 0.1,
+      "lora_dropout": 0.05,
+      "reasoning": "LoRA is applied to attention weights (attn_q and attn_v) to enhance step-by-step reasoning. r=64 balances model capacity with efficiency, lora_alpha=0.1 ensures stable scaling, and lora_dropout=0.05 prevents overfitting. Sparsity on attn_v (1%) focuses on critical attention heads, while attn_q (100% sparsity) leverages full weight adaptation for sequential reasoning tasks."
+    },
+    "llama3.2:3b": {
+      "target_modules": [
+        "mathematical_reasoning"
+      ],
+      "r": 8,
+      "lora_alpha": 0.5,
+      "lora_dropout": 0.05
+    },
+    "phi4-mini": {
+      "target_modules": [
+        "transformer_layer",
+        "attention_layer"
+      ],
+      "r": 4,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "reasoning": "LoRA is applied to transformer layers and attention mechanisms to enhance step-by-step mathematical reasoning by focusing on small, dense, and efficient adjustments, preserving the model's original structure while improving its reasoning capabilities."
+    }
+  },
+  "round2_cross_proposals": {
+    "qwen3:1.7b": [
+      {
+        "for_model": "qwen3:1.7b",
+        "agree_with_self": false,
+        "target_modules": [
+          "attn_q.weight",
+          "attn_v.weight"
+        ],
+        "r": 32,
+        "lora_alpha": 0.05,
+        "lora_dropout": 0.1,
+        "reasoning": "To focus on step-by-step mathematical reasoning, reducing r to 32 reduces model capacity but preserves efficiency. Lowering lora_alpha to 0.05 and increasing lora_dropout to 0.1 encourages more sparse and adaptive attention weights, enhancing sequential reasoning without overfitting."
+      },
+      {
+        "for_model": "qwen3:1.7b",
+        "agree_with_self": true,
+        "target_modules": [
+          "attn_q.weight",
+          "attn_v.weight"
+        ],
+        "r": 64,
+        "lora_alpha": 0.1,
+        "lora_dropout": 0.05,
+        "reasoning": "The self-proposal seems suitable for enhancing step-by-step mathematical reasoning in Qwen3 1.7B. Given the architecture's complexity, LoRA on attention weights is apt for fine-tuning reasoning capabilities. The chosen parameters balance capacity and efficiency, and sparsity adjustments on attn_v weights can help focus on key connections. No significant changes needed."
+      }
+    ],
+    "llama3.2:3b": [
+      {
+        "for_model": "llama3.2:3b",
+        "agree_with_self": true,
+        "target_modules": [
+          "mathematical_reasoning"
+        ],
+        "r": 8,
+        "lora_alpha": 0.5,
+        "lora_dropout": 0.05,
+        "reasoning": "The target module 'mathematical_reasoning' aligns with the architecture's focus on step-by-step reasoning. Parameters (r=8, alpha=0.5, dropout=0.05) balance efficiency and stability, reflecting the model's design and the need for precise adjustments in mathematical tasks."
+      },
+      {
+        "for_model": "llama3.2:3b",
+        "agree_with_self": true,
+        "target_modules": [
+          "attention_layer"
+        ],
+        "r": 8,
+        "lora_alpha": 0.5,
+        "lora_dropout": 0.05,
+        "reasoning": "For Llama 3.2 3B, focusing LoRA on 'attention_layer' is ideal for enhancing step-by-step mathematical reasoning. Attention mechanisms are crucial for understanding and reasoning about relationships between different parts of input, which is essential for complex tasks like mathematics. An r of 8 with lora_alpha=0.5 and lora_dropout=0.05 is chosen to retain a good balance between model efficiency and enhancement. These parameters are conservative, ensuring stability and minimal performance impact."
+      }
+    ],
+    "phi4-mini": [
+      {
+        "for_model": "phi4-mini",
+        "agree_with_self": false,
+        "target_modules": [
+          "transformer_layer",
+          "attention_layer"
+        ],
+        "r": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "reasoning": "Phi 4 Mini Instruct has 32 layers and a higher norm growth (1.79x). Using r=8 balances capacity with efficiency, lora_alpha=16 ensures stable scaling, and lora_dropout=0.05 preserves model integrity. Adjusted from the original proposal to optimize for its architecture."
+      },
+      {
+        "for_model": "phi4-mini",
+        "agree_with_self": false,
+        "target_modules": [
+          "transformer_layer",
+          "attention_layer",
+          "fully_connected_layer"
+        ],
+        "r": 16,
+        "lora_alpha": 0.02,
+        "lora_dropout": 0.1,
+        "reasoning": "LoRA is applied to all layers to enhance step-by-step mathematical reasoning by introducing sparse connections and reducing the dimensionality of weight matrices, while maintaining a balance between model capacity and efficiency. This adaptation is tailored to improve Phi 4 Mini Instruct's performance in mathematical reasoning tasks."
+      }
+    ]
+  },
+  "round3_training": {},
+  "elapsed": 193.6
+}

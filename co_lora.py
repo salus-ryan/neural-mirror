@@ -42,7 +42,7 @@ HF_MAP = {
     "mistral:7b": "mistralai/Mistral-7B-Instruct-v0.3",
 }
 
-DEFAULT_MODELS = ["qwen3:1.7b", "llama3.2:3b", "phi4-mini"]
+DEFAULT_MODELS = ["qwen3:1.7b", "phi4-mini", "mistral:7b"]
 
 
 # ── Helpers ──────────────────────────────────────────────────
@@ -180,11 +180,45 @@ def profile_gguf(path):
     }
 
 
-# ── Round 1: Self-Propose ────────────────────────────────────
+# ── Bootstrap: Profile + Self-Propose ────────────────────────
+
+@app.function(image=image, volumes={"/cache": model_cache}, timeout=600, memory=16384, cpu=4)
+def bootstrap_round1(model_name: str, all_models: list, target_task: str) -> dict:
+    """Pull, profile GGUF, and self-propose LoRA in one container."""
+    proc = start_ollama()
+    pull_and_warm(model_name)
+    gguf_path = find_gguf(model_name)
+    if not gguf_path:
+        proc.terminate()
+        return {"model": model_name, "error": "no GGUF"}
+
+    profile = profile_gguf(gguf_path)
+    roster = "Models: " + ", ".join(all_models)
+    s = profile
+    system = f"""You are {s['model_name']} ({s['params']}, {s['arch']}, {s['n_layers']} layers).
+{roster}
+Task: {target_task}
+
+Your weights: norm growth {s['norm_growth']}, embed {s['embed_dim']}, heads {s['heads']}, KV {s['kv_heads']}, FFN {s['ff_dim']}
+Sparsity: {json.dumps(s['sparsity'])}
+
+Propose a LoRA config for YOURSELF as JSON:
+{{"target_modules": [...], "r": N, "lora_alpha": N, "lora_dropout": 0.05, "reasoning": "..."}}
+No <think> tags. JSON only."""
+
+    response = ask_model(model_name, system, f"Propose your LoRA for: {target_task}")
+    proposal = parse_json_from_text(response) or {
+        "target_modules": ["q_proj", "v_proj"], "r": 16,
+        "lora_alpha": 32, "lora_dropout": 0.05,
+        "reasoning": f"default: {response[:200]}",
+    }
+    proc.terminate()
+    return {"model": model_name, "profile": profile, "self_proposal": proposal, "raw": response[:500]}
+
 
 @app.function(image=image, volumes={"/cache": model_cache}, timeout=600, memory=16384, cpu=4)
 def round1_self_propose(model_name: str, profile: dict, roster: str, target_task: str) -> dict:
-    """Each model inspects itself and proposes a LoRA for itself."""
+    """Legacy self-propose (unused, kept for compatibility)."""
     proc = start_ollama()
     pull_and_warm(model_name)
 
@@ -331,14 +365,36 @@ def round3_train(
         if p.get('lora_alpha'):
             alphas.append(p['lora_alpha'])
 
+    # Sanitize: only allow real LoRA module names
+    VALID_MODULES = {
+        'q_proj', 'k_proj', 'v_proj', 'o_proj',
+        'gate_proj', 'up_proj', 'down_proj',
+        'attn_q.weight', 'attn_k.weight', 'attn_v.weight', 'attn_output.weight',
+        'ffn_gate.weight', 'ffn_up.weight', 'ffn_down.weight',
+    }
+    # Map common hallucinations to real modules
+    MODULE_ALIASES = {
+        'attention_layer': 'q_proj', 'transformer_layer': 'v_proj',
+        'mathematical_reasoning': 'q_proj', 'fully_connected_layer': 'down_proj',
+    }
+    cleaned_votes = {}
+    for m, v in module_votes.items():
+        real = MODULE_ALIASES.get(m, m)
+        if real in VALID_MODULES:
+            cleaned_votes[real] = cleaned_votes.get(real, 0) + v
+    if not cleaned_votes:
+        cleaned_votes = {'q_proj': 3, 'v_proj': 3}
+    module_votes = cleaned_votes
+
     # Take modules with > 1 vote, or top-voted
     threshold = len(all_proposals) / 2
     consensus_modules = [m for m, v in module_votes.items() if v >= threshold]
     if not consensus_modules:
         consensus_modules = sorted(module_votes, key=module_votes.get, reverse=True)[:3]
 
-    consensus_r = int(sum(ranks) / len(ranks)) if ranks else 16
-    consensus_alpha = int(sum(alphas) / len(alphas)) if alphas else 32
+    consensus_r = max(4, min(64, int(sum(ranks) / len(ranks)))) if ranks else 16
+    raw_alpha = int(sum(alphas) / len(alphas)) if alphas else 32
+    consensus_alpha = raw_alpha if raw_alpha >= 1 else consensus_r * 2  # fix alpha=0
 
     consensus = {
         "target_modules": consensus_modules,
@@ -359,9 +415,16 @@ def round3_train(
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    from transformers import BitsAndBytesConfig
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16,
+    )
     model = AutoModelForCausalLM.from_pretrained(
         hf_name, cache_dir="/cache/hf",
-        torch_dtype=torch.bfloat16, device_map="auto", load_in_4bit=True,
+        torch_dtype=torch.bfloat16, device_map="auto",
+        quantization_config=bnb_config,
     )
 
     total_params = sum(p.numel() for p in model.parameters())
@@ -524,66 +587,9 @@ def main(
 
     t_start = time.time()
 
-    # ── Profile all models ──
-    print("📋 Profiling...")
-
-    # Profile in parallel using round1 containers (they pull + profile)
-    profile_results = {}
-    profile_futs = {}
-    for m in MODELS:
-        # Use a lightweight function just to profile
-        profile_futs[m] = round1_self_propose.spawn(m, {
-            'model_name': m, 'params': '?', 'arch': '?', 'n_layers': 0,
-            'max_layer': 0, 'embed_dim': '?', 'heads': '?', 'kv_heads': '?',
-            'ff_dim': '?', 'norm_growth': '?', 'first_norm': 0, 'last_norm': 0,
-            'sparsity': {},
-        }, "Models: " + ", ".join(MODELS), target)
-
-    # Actually, let's profile properly with a dedicated function
-    # For now just proceed with round 1 which does profile internally
-
     # ── Round 1: Self-propose (parallel) ──
-    print("\n" + "━" * 65)
-    print("  Round 1: Each model proposes LoRA for ITSELF")
+    print("📋 Profiling + Round 1: Each model proposes LoRA for ITSELF")
     print("━" * 65 + "\n")
-
-    # We need profiles first — let's use a bootstrap approach
-    # Each round1 container profiles + proposes
-    @app.function(image=image, volumes={"/cache": model_cache}, timeout=600, memory=16384, cpu=4)
-    def bootstrap_round1(model_name, all_models, target_task):
-        proc = start_ollama()
-        pull_and_warm(model_name)
-        gguf_path = find_gguf(model_name)
-        if not gguf_path:
-            proc.terminate()
-            return {"model": model_name, "error": "no GGUF"}
-
-        profile = profile_gguf(gguf_path)
-        roster = "Models: " + ", ".join(all_models)
-
-        s = profile
-        system = f"""You are {s['model_name']} ({s['params']}, {s['arch']}, {s['n_layers']} layers).
-{roster}
-Task: {target_task}
-
-Your weights: norm growth {s['norm_growth']}, embed {s['embed_dim']}, heads {s['heads']}, KV {s['kv_heads']}, FFN {s['ff_dim']}
-Sparsity: {json.dumps(s['sparsity'])}
-
-Propose a LoRA config for YOURSELF as JSON:
-{{"target_modules": [...], "r": N, "lora_alpha": N, "lora_dropout": 0.05, "reasoning": "..."}}
-No <think> tags. JSON only."""
-
-        response = ask_model(model_name, system,
-            f"Propose your LoRA for: {target_task}")
-
-        proposal = parse_json_from_text(response) or {
-            "target_modules": ["q_proj", "v_proj"], "r": 16,
-            "lora_alpha": 32, "lora_dropout": 0.05,
-            "reasoning": f"default: {response[:200]}",
-        }
-
-        proc.terminate()
-        return {"model": model_name, "profile": profile, "self_proposal": proposal, "raw": response[:500]}
 
     r1_futs = {m: bootstrap_round1.spawn(m, MODELS, target) for m in MODELS}
     r1_results = {}
