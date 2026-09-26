@@ -1,0 +1,1916 @@
+{
+  "ablation_results": {
+    "model": "qwen3:1.7b",
+    "hf_model": "Qwen/Qwen3-1.7B",
+    "total_params": 1720574976,
+    "baseline_prompts": 11,
+    "tensors_ablated": 12,
+    "baseline": {
+      "math": {
+        "What is 17 + 38?": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 + 15? Finally",
+        "What is 7 * 13?": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 13 * 1",
+        "If I have 100 apples and give away 37, how many remain?": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What is the result of 100 - 37? What is the result of 100 -"
+      },
+      "reasoning": {
+        "If all roses are flowers and some flowers are red, can we conclude all roses are red?": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are told that all roses are red? How does that affect the conclusion? And what if the original statement is \"All roses are flowers and some flowers are red,\" and we are told that all",
+        "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzle Archives\nPuzzle Categories\nPuzzle Authors\nPuzzles\nBrain Teasers\nLogic"
+      },
+      "language": {
+        "Translate 'hello world' to French.": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase used in computing and programming. It is often used as a greeting or a way to test a new program. It is also used in other contexts, such as in the title of a book or",
+        "What is the opposite of 'ancient'?": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 'sac",
+        "Complete: The quick brown fox jumps over the lazy ___": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram, often used to test the ability of text processing systems to recognize words in different languages and to detect the presence of certain characters. The phrase \"The quick brown fox jumps over the lazy dog"
+      },
+      "knowledge": {
+        "What is the capital of Japan?": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capital of France, the capital of Germany, the capital of Italy, the capital of Spain, the capital of Brazil, the capital of Mexico, the capital of Canada, the capital of the United States",
+        "Who wrote Romeo and Juliet?": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Venice\"? Who is the author of the play \"Hamlet\"? Who is the author of the play \"Othello\"? Who is the author of the play \"Macbeth",
+        "What is the boiling point of water in Celsius?": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water boils under standard atmospheric pressure, which is 1 atmosphere. At this temperature, water changes from liquid to gas. The boiling point of water can vary depending on the atmospheric pressure. For example,"
+      }
+    },
+    "ablations": {
+      "model.layers.0.self_attn.q_proj.weight": {
+        "param_info": {
+          "shape": [
+            2048,
+            2048
+          ],
+          "numel": 4194304,
+          "mean": -3e-06,
+          "std": 0.03517,
+          "norm": 72.0283,
+          "pct_of_total": 0.2438
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 5,
+          "change_pct": 100.0,
+          "degrade_pct": 45.5,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "88888888 8 8"
+              },
+              "What is 7 * 13?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "1 1                 1 1"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "........................ I I\n\n\n\n    ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... "
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": ",,,,,,,,,,,   ... ...,, ... , , , then ... ... , , then  , , , , ... ... , , , , , , , , , , , , , ,"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "DEGRADED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": ""
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "DEGRADED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "_"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "that? the the??????? ???????????? ???????????????????????????????????"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "DEGRADED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": "/ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "in the the the the the the the the the the the the the the the the the the the the the the the the t"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "?????????  ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?"
+              }
+            }
+          }
+        },
+        "time": 18.2
+      },
+      "model.layers.0.self_attn.v_proj.weight": {
+        "param_info": {
+          "shape": [
+            1024,
+            2048
+          ],
+          "numel": 2097152,
+          "mean": 3.5e-05,
+          "std": 0.033548,
+          "norm": 48.5823,
+          "pct_of_total": 0.1219
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 4,
+          "change_pct": 100.0,
+          "degrade_pct": 36.4,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "\u72b6\u011fi\n\n\n\n\n\n \ufffd banc\u770c3..... ..  b\u00b7\n\n\n\n\n\n\n\n.\n\n.\n\n \ufffd \ufffd \ufffd  \ufffd \u03b5   \ufffd \ufffd \ufffd  \ufffd \ufffd..\u00b5.\u03af .\u00b5\u00b7.\u00b5\u00b5\u00b5\u03c3\u03c3.\u00b5\u00b5"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "\u4e2d\u03b3\u03bc\u53f0\u03b3\u03b3\u03b3\u529f \ufffdbizhou\n\n::\n\n\n \ufffd\u00e9\u0451\u043d\u00aa\u00aa.\u00aa\u00aa\u00aai\u00f3n\u00e1bb.ien\u00ed\u03ac\u03ac\u03ac\u03ac\u03ac\u03ac\u00b7.\u00e1\u0451\u043d\u03ac\u03ac\u03ac\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00eate\u00b7\u2013\u2013\u2013\u2013\u2013\u2013\u2013 \u00e2.\u00e1bb\u00e1bb"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "caaaca a::$\u00b7 a..\u1e43\u1e43\u0219i\u0451.\u00aa\u0451\u0451\u043d\u0451.\u0451.\u0434\u0111de.\u0434\u0649\u0451\u0451\u0451\u0451\u0451\u0451\u00f6.\u0451\u043d.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u00f6\u0219i..\u021bi.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": ", \n\n \n\n\u039e\n  \n...  .....        |  , is  is   _    _    \u00e2 is     _"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "\u03ba  \ufffd pled. \ufffd\u00d3\u00edm\nDEM\nDEM \u017a.\u017a\u00bf\u00f3\u00e2nd\u1ec3\n\u0111\n\u0111\u00e9s\n\u00e2nd\u00e8\u03cc\u015f \ufffd\u021b\u021b\u00f3\n\u00f3\n\u00f3\u00e9s\u021b\u021b\u00fcn\n\u00fcn\u00edst\u00e2nd\n\n\u00e9s\u00f3\u00f3\u021bi\u021bi\u021bi\u7834  .. \ufffd"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "_B. T ( (\n\n\n \ufffd  . . \u2014 .. . . \u2014. ers\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n F\u00e9\n\n\n\n\n\n\n. \ufffd \ufffd   . \ufffd \ufffd \ufffd   \u00b7\n\n \u00b7"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": ","
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "DEGRADED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": "\u0451\u043d"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "M\u03ba\n\u03ba\n\n\u03af\n\n\n\n\n\n\n\n\u015f\n\u03cc\u03cc.\n\u00ee\u03cc\u03cc\u03cc\u03cc\n\n\n\n\n\n\n\n\n\n\n\n\u00e4si\u00f3n\u00aa\u012bss \u00e1\u03cc\u03cc\u00e4\u03acs\u03cc\u03cc\u03cc\u00e4\u03ac\u00e4STRACTSTRACTSTRACT  ..\n\u03cc.\n\n *."
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "jefe\u0219ibigirende\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft::\"${\"${\u2200\u2265\u24d0\u2264\u0219ist\u00e4nde\u2264ipsis::$\u0e49\u0e07::$\u00e2ce\u00e2ce\u00e8re\u00e2ce\u00e2ce\u00e2ce\u1ea5y\u1ed7sancaci\u00f3n\u00e0nh\u00e2ceise"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "DEGRADED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "\u0451\u043d"
+              }
+            }
+          }
+        },
+        "time": 17.9
+      },
+      "model.layers.0.mlp.gate_proj.weight": {
+        "param_info": {
+          "shape": [
+            6144,
+            2048
+          ],
+          "numel": 12582912,
+          "mean": 0.000212,
+          "std": 0.038545,
+          "norm": 136.7298,
+          "pct_of_total": 0.7313
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 3,
+          "change_pct": 100.0,
+          "degrade_pct": 27.3,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "\u0e07"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "????<?<?<?<?<?<?<?<?<??><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "can I write all roses are red? can I write all roses are red? can I write all roses are red? can I w"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "...???????????????????????????????????????????????????????????"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "1. What is the French word for 'hello world'? 2. What is the French word for 'hello world'? 3. What "
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?a"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": "The quick brown fox jumps over the lazy fox. \n\nThe quick brown fox jumps over the lazy fox. \n\nThe qu"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "DEGRADED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "????????????????????????????????????????????????????????????"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juli"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "DEGRADED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "????????????????????????????????????????????????????????????"
+              }
+            }
+          }
+        },
+        "time": 18.2
+      },
+      "model.layers.0.mlp.down_proj.weight": {
+        "param_info": {
+          "shape": [
+            2048,
+            6144
+          ],
+          "numel": 12582912,
+          "mean": 1e-06,
+          "std": 0.033226,
+          "norm": 117.8589,
+          "pct_of_total": 0.7313
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 3,
+          "change_pct": 100.0,
+          "degrade_pct": 27.3,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "\u0e07"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "????<?<?<?<?<?<?<?<?<??><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "can I write all roses are red? can I write all roses are red? can I write all roses are red? can I w"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "...???????????????????????????????????????????????????????????"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "1. What is the French word for 'hello world'? 2. What is the French word for 'hello world'? 3. What "
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?a"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": "The quick brown fox jumps over the lazy fox. \n\nThe quick brown fox jumps over the lazy fox. \n\nThe qu"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "DEGRADED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "????????????????????????????????????????????????????????????"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juli"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "DEGRADED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "????????????????????????????????????????????????????????????"
+              }
+            }
+          }
+        },
+        "time": 17.8
+      },
+      "model.layers.0.input_layernorm.weight": {
+        "param_info": {
+          "shape": [
+            2048
+          ],
+          "numel": 2048,
+          "mean": 0.087453,
+          "std": 0.05226,
+          "norm": 4.6102,
+          "pct_of_total": 0.0001
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 4,
+          "change_pct": 100.0,
+          "degrade_pct": 36.4,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "\u72b6\u011fi\n\n\n\n\n\n \ufffd banc\u770c3..... ..  b\u00b7\n\n\n\n\n\n\n\n.\n\n.\n\n \ufffd \ufffd \ufffd  \ufffd \u03b5   \ufffd \ufffd \ufffd  \ufffd \ufffd..\u00b5.\u03af .\u00b5\u00b7.\u00b5\u00b5\u00b5\u03c3\u03c3.\u00b5\u00b5"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "\u4e2d\u03b3\u03bc\u53f0\u03b3\u03b3\u03b3\u529f \ufffdbizhou\n\n::\n\n\n \ufffd\u00e9\u0451\u043d\u00aa\u00aa.\u00aa\u00aa\u00aai\u00f3n\u00e1bb.ien\u00ed\u03ac\u03ac\u03ac\u03ac\u03ac\u03ac\u00b7.\u00e1\u0451\u043d\u03ac\u03ac\u03ac\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00eate\u00b7\u2013\u2013\u2013\u2013\u2013\u2013\u2013 \u00e2.\u00e1bb\u00e1bb"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "caaaca a::$\u00b7 a..\u1e43\u1e43\u0219i\u0451.\u00aa\u0451\u0451\u043d\u0451.\u0451.\u0434\u0111de.\u0434\u0649\u0451\u0451\u0451\u0451\u0451\u0451\u00f6.\u0451\u043d.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u00f6\u0219i..\u021bi.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": ", \n\n \n\n\u039e\n  \n...  .....        |  , is  is   _    _    \u00e2 is     _"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "\u03ba  \ufffd pled. \ufffd\u00d3\u00edm\nDEM\nDEM \u017a.\u017a\u00bf\u00f3\u00e2nd\u1ec3\n\u0111\n\u0111\u00e9s\n\u00e2nd\u00e8\u03cc\u015f \ufffd\u021b\u021b\u00f3\n\u00f3\n\u00f3\u00e9s\u021b\u021b\u00fcn\n\u00fcn\u00edst\u00e2nd\n\n\u00e9s\u00f3\u00f3\u021bi\u021bi\u021bi\u7834  .. \ufffd"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "_B. T ( (\n\n\n \ufffd  . . \u2014 .. . . \u2014. ers\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n F\u00e9\n\n\n\n\n\n\n. \ufffd \ufffd   . \ufffd \ufffd \ufffd   \u00b7\n\n \u00b7"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "DEGRADED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": ","
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "DEGRADED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": "\u0451\u043d"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "M\u03ba\n\u03ba\n\n\u03af\n\n\n\n\n\n\n\n\u015f\n\u03cc\u03cc.\n\u00ee\u03cc\u03cc\u03cc\u03cc\n\n\n\n\n\n\n\n\n\n\n\n\u00e4si\u00f3n\u00aa\u012bss \u00e1\u03cc\u03cc\u00e4\u03acs\u03cc\u03cc\u03cc\u00e4\u03ac\u00e4STRACTSTRACTSTRACT  ..\n\u03cc.\n\n *."
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "jefe\u0219ibigirende\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft::\"${\"${\u2200\u2265\u24d0\u2264\u0219ist\u00e4nde\u2264ipsis::$\u0e49\u0e07::$\u00e2ce\u00e2ce\u00e8re\u00e2ce\u00e2ce\u00e2ce\u1ea5y\u1ed7sancaci\u00f3n\u00e0nh\u00e2ceise"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "DEGRADED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "\u0451\u043d"
+              }
+            }
+          }
+        },
+        "time": 17.9
+      },
+      "model.layers.14.self_attn.q_proj.weight": {
+        "param_info": {
+          "shape": [
+            2048,
+            2048
+          ],
+          "numel": 4194304,
+          "mean": -8e-06,
+          "std": 0.033891,
+          "norm": 69.4081,
+          "pct_of_total": 0.2438
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 0,
+          "change_pct": 100.0,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "What is 19 + 21? What is 20 + 20? What is 100 + 100? What is 100 + 100 + 100? What is 100 + 100"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "What is 7 * 14? What is 7 * 15? What is 7 * 16? What is 7 * 17? What is 7 * 18? What is 7 * 19? What"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? And what is the result of 100 minus 37"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what about the statement \"All roses are red\" and \"All roses are flowers\"? How do these relate "
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| 1001\nThe bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the bal"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "'Hello world' in French is 'Bonjour le monde'. The French word for 'hello' is 'bonjour' and the Fren"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "What is the opposite of 'modern'? What is the opposite of 'new'? What is the opposite of 'old'? What"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe quick brown fox jumps over the lazy dog.\n\nThe qu"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "What is the capital of the United States? What is the capital of the United Kingdom? What is the cap"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "Who is the main character in the play? What is the name of the play? What is the name of the main ch"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water in Celsius is 100 degrees Celsius. This is the temperature at which water"
+              }
+            }
+          }
+        },
+        "time": 18.6
+      },
+      "model.layers.14.self_attn.v_proj.weight": {
+        "param_info": {
+          "shape": [
+            1024,
+            2048
+          ],
+          "numel": 2097152,
+          "mean": 2.9e-05,
+          "std": 0.032387,
+          "norm": 46.9012,
+          "pct_of_total": 0.1219
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 0,
+          "change_pct": 100.0,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, what is 10 * 10? What is 10 * 11? What is 10 * 12? What is 10 * 13? What is 10 * 14? What is 1"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? And if I have 100 apples and give away"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what if the statement is \"All roses are flowers and some flowers are red,\" and we need to dete"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "The answer must be in the form of a JSON object with the key 'translation' and the value is the tran"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sensitive'? What is the opposite of"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you provided is a well-known pangram, w"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water c"
+              }
+            }
+          }
+        },
+        "time": 18.2
+      },
+      "model.layers.14.mlp.gate_proj.weight": {
+        "param_info": {
+          "shape": [
+            6144,
+            2048
+          ],
+          "numel": 12582912,
+          "mean": 1e-06,
+          "std": 0.032188,
+          "norm": 114.1774,
+          "pct_of_total": 0.7313
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 0,
+          "change_pct": 100.0,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, what is 10 * 10, and what is 10 * 11? Additionally, what is 10 * 12, and what is 10 * 13? Fina"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the difference between 100 and"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what if the statement is \"All roses are flowers and some flowers are red\" and we need to deter"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "'Hello world' is a common phrase used in programming. It is often used as a greeting in the beginnin"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, what is the opposite of 'modern'? Additionally, what is the opposite of 'sacred'? And what is "
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe quick brown fox jumps over the lazy dog.\n\nThe qu"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "What is the capital of Japan? What is the capital of Japan? What is the capital of Japan? What is th"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "What is the name of the play? What is the setting? What is the main conflict? What is the main chara"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b"
+              }
+            }
+          }
+        },
+        "time": 18.5
+      },
+      "model.layers.27.self_attn.q_proj.weight": {
+        "param_info": {
+          "shape": [
+            2048,
+            2048
+          ],
+          "numel": 4194304,
+          "mean": 1.4e-05,
+          "std": 0.03506,
+          "norm": 71.8029,
+          "pct_of_total": 0.2438
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 9,
+          "degraded": 0,
+          "change_pct": 81.8,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "UNCHANGED"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, what is 13 * 7? Are they the same? What is 13 * 13? What is 13 * 10? What is 13 * 11? What is "
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "UNCHANGED"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and the co"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "The French translation of 'hello world' is 'Bonjour le monde'. The French translation of 'hello worl"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, what is the opposite of 'sensitive'? What is the opposite of 'sick'? What is the opposite of '"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy (dog).\n\nThe phrase \"The quick brown fox jumps over the laz"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "Also, what is the largest city in Japan? What is the currency of Japan? What is the official languag"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "What is the name of the play? What is the setting of the play? What is the main theme of the play? W"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water c"
+              }
+            }
+          }
+        },
+        "time": 18.1
+      },
+      "model.layers.27.self_attn.v_proj.weight": {
+        "param_info": {
+          "shape": [
+            1024,
+            2048
+          ],
+          "numel": 2097152,
+          "mean": -9e-06,
+          "std": 0.037179,
+          "norm": 53.8404,
+          "pct_of_total": 0.1219
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 10,
+          "degraded": 0,
+          "change_pct": 90.9,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "UNCHANGED"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, what is 13 * 7? What is 13 * 10? What is 13 * 100? What is 13 * 1000? What is 13 * 10000? What"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 minus 37? Wh"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what if the premise is that all roses are flowers and all flowers are red, then can we conclud"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "'Bonjour le monde' is the correct translation. But what about 'hello world' in French? Is it 'Bonjou"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sunny'? What is the opposite of 'ta"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a classic example of"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "What is the name of the play? What is the setting of the play? What is the main conflict of the play"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100\u00b0C at standard atmospheric pressure (1 atm). This is a commonly kno"
+              }
+            }
+          }
+        },
+        "time": 18.3
+      },
+      "model.layers.27.mlp.gate_proj.weight": {
+        "param_info": {
+          "shape": [
+            6144,
+            2048
+          ],
+          "numel": 12582912,
+          "mean": -5.3e-05,
+          "std": 0.036967,
+          "norm": 131.1313,
+          "pct_of_total": 0.7313
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 11,
+          "degraded": 0,
+          "change_pct": 100.0,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+                "ablated": "Also, can you explain how to solve it step by step?\n\nTo solve 17 + 38, we add the units place first:"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, can you explain how to solve 7 * 13 using a different method?\n\n7 * 13 can be calculated as 7 *"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? And if I have 100 apples and give away"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what about the statement \"All dogs are animals and some animals are dogs\" leading to \"All dogs"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |"
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "Hello world is a well known phrase used in computer programming. It is used to show the basic struct"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, can you explain the difference between 'ancient' and 'old'?\n\nThe opposite of 'ancient' is ' mo"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe phrase \"The quick brown fox jumps over the lazy "
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "Also, can you tell me about the famous Japanese artist known as \"The father of modern Japanese art\" "
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "Who wrote \"The play is a tragedy\" and \"The play is a comedy\"?\n\nWho wrote \"The play is a tragedy\" and"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100 degrees Celsius. This is the temperature at which water changes fr"
+              }
+            }
+          }
+        },
+        "time": 18.2
+      },
+      "model.layers.27.input_layernorm.weight": {
+        "param_info": {
+          "shape": [
+            2048
+          ],
+          "numel": 2048,
+          "mean": 17.284859,
+          "std": 4.693224,
+          "norm": 810.5316,
+          "pct_of_total": 0.0001
+        },
+        "comparison": {
+          "total_prompts": 11,
+          "changed": 10,
+          "degraded": 0,
+          "change_pct": 90.9,
+          "degrade_pct": 0.0,
+          "details": {
+            "math": {
+              "What is 17 + 38?": {
+                "status": "UNCHANGED"
+              },
+              "What is 7 * 13?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+                "ablated": "Also, what is 13 * 7? What is 13 * 10? What is 13 * 100? What is 13 * 1000? What is 13 * 10000? What"
+              },
+              "If I have 100 apples and give away 37, how many remain?": {
+                "status": "CHANGED",
+                "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+                "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 minus 37? Wh"
+              }
+            },
+            "reasoning": {
+              "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+                "status": "CHANGED",
+                "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+                "ablated": "Also, what if the premise is that all roses are flowers and all flowers are red, then can we conclud"
+              },
+              "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+                "status": "CHANGED",
+                "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+                "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+              }
+            },
+            "language": {
+              "Translate 'hello world' to French.": {
+                "status": "CHANGED",
+                "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+                "ablated": "'Bonjour le monde' is the correct translation. But what about 'hello world' in French? Is it 'Bonjou"
+              },
+              "What is the opposite of 'ancient'?": {
+                "status": "CHANGED",
+                "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+                "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sunny'? What is the opposite of 'ta"
+              },
+              "Complete: The quick brown fox jumps over the lazy ___": {
+                "status": "CHANGED",
+                "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+                "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a classic example of"
+              }
+            },
+            "knowledge": {
+              "What is the capital of Japan?": {
+                "status": "CHANGED",
+                "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+                "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+              },
+              "Who wrote Romeo and Juliet?": {
+                "status": "CHANGED",
+                "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+                "ablated": "What is the name of the play? What is the setting of the play? What is the main conflict of the play"
+              },
+              "What is the boiling point of water in Celsius?": {
+                "status": "CHANGED",
+                "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+                "ablated": "The boiling point of water is 100\u00b0C at standard atmospheric pressure (1 atm). This is a commonly kno"
+              }
+            }
+          }
+        },
+        "time": 18.2
+      }
+    },
+    "ranked_by_impact": [
+      {
+        "tensor": "model.layers.0.self_attn.q_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 45.5,
+        "params": 4194304,
+        "pct_of_model": 0.2438,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "88888888 8 8"
+            },
+            "What is 7 * 13?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "1 1                 1 1"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "........................ I I\n\n\n\n    ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... "
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": ",,,,,,,,,,,   ... ...,, ... , , , then ... ... , , then  , , , , ... ... , , , , , , , , , , , , , ,"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "DEGRADED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": ""
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "DEGRADED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "_"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "that? the the??????? ???????????? ???????????????????????????????????"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "DEGRADED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": "/ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "in the the the the the the the the the the the the the the the the the the the the the the the the t"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "?????????  ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.0.self_attn.v_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 36.4,
+        "params": 2097152,
+        "pct_of_model": 0.1219,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "\u72b6\u011fi\n\n\n\n\n\n \ufffd banc\u770c3..... ..  b\u00b7\n\n\n\n\n\n\n\n.\n\n.\n\n \ufffd \ufffd \ufffd  \ufffd \u03b5   \ufffd \ufffd \ufffd  \ufffd \ufffd..\u00b5.\u03af .\u00b5\u00b7.\u00b5\u00b5\u00b5\u03c3\u03c3.\u00b5\u00b5"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "\u4e2d\u03b3\u03bc\u53f0\u03b3\u03b3\u03b3\u529f \ufffdbizhou\n\n::\n\n\n \ufffd\u00e9\u0451\u043d\u00aa\u00aa.\u00aa\u00aa\u00aai\u00f3n\u00e1bb.ien\u00ed\u03ac\u03ac\u03ac\u03ac\u03ac\u03ac\u00b7.\u00e1\u0451\u043d\u03ac\u03ac\u03ac\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00eate\u00b7\u2013\u2013\u2013\u2013\u2013\u2013\u2013 \u00e2.\u00e1bb\u00e1bb"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "caaaca a::$\u00b7 a..\u1e43\u1e43\u0219i\u0451.\u00aa\u0451\u0451\u043d\u0451.\u0451.\u0434\u0111de.\u0434\u0649\u0451\u0451\u0451\u0451\u0451\u0451\u00f6.\u0451\u043d.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u00f6\u0219i..\u021bi.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": ", \n\n \n\n\u039e\n  \n...  .....        |  , is  is   _    _    \u00e2 is     _"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "\u03ba  \ufffd pled. \ufffd\u00d3\u00edm\nDEM\nDEM \u017a.\u017a\u00bf\u00f3\u00e2nd\u1ec3\n\u0111\n\u0111\u00e9s\n\u00e2nd\u00e8\u03cc\u015f \ufffd\u021b\u021b\u00f3\n\u00f3\n\u00f3\u00e9s\u021b\u021b\u00fcn\n\u00fcn\u00edst\u00e2nd\n\n\u00e9s\u00f3\u00f3\u021bi\u021bi\u021bi\u7834  .. \ufffd"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "_B. T ( (\n\n\n \ufffd  . . \u2014 .. . . \u2014. ers\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n F\u00e9\n\n\n\n\n\n\n. \ufffd \ufffd   . \ufffd \ufffd \ufffd   \u00b7\n\n \u00b7"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": ","
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "DEGRADED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": "\u0451\u043d"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "M\u03ba\n\u03ba\n\n\u03af\n\n\n\n\n\n\n\n\u015f\n\u03cc\u03cc.\n\u00ee\u03cc\u03cc\u03cc\u03cc\n\n\n\n\n\n\n\n\n\n\n\n\u00e4si\u00f3n\u00aa\u012bss \u00e1\u03cc\u03cc\u00e4\u03acs\u03cc\u03cc\u03cc\u00e4\u03ac\u00e4STRACTSTRACTSTRACT  ..\n\u03cc.\n\n *."
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "jefe\u0219ibigirende\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft::\"${\"${\u2200\u2265\u24d0\u2264\u0219ist\u00e4nde\u2264ipsis::$\u0e49\u0e07::$\u00e2ce\u00e2ce\u00e8re\u00e2ce\u00e2ce\u00e2ce\u1ea5y\u1ed7sancaci\u00f3n\u00e0nh\u00e2ceise"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "DEGRADED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "\u0451\u043d"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.0.mlp.gate_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 27.3,
+        "params": 12582912,
+        "pct_of_model": 0.7313,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "\u0e07"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "????<?<?<?<?<?<?<?<?<??><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "can I write all roses are red? can I write all roses are red? can I write all roses are red? can I w"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "...???????????????????????????????????????????????????????????"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "1. What is the French word for 'hello world'? 2. What is the French word for 'hello world'? 3. What "
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?a"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": "The quick brown fox jumps over the lazy fox. \n\nThe quick brown fox jumps over the lazy fox. \n\nThe qu"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "DEGRADED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "????????????????????????????????????????????????????????????"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juli"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "DEGRADED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "????????????????????????????????????????????????????????????"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.0.mlp.down_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 27.3,
+        "params": 12582912,
+        "pct_of_model": 0.7313,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "\u0e07"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?14?"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "????<?<?<?<?<?<?<?<?<??><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><?><"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "can I write all roses are red? can I write all roses are red? can I write all roses are red? can I w"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "...???????????????????????????????????????????????????????????"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "1. What is the French word for 'hello world'? 2. What is the French word for 'hello world'? 3. What "
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?ancient'?a"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": "The quick brown fox jumps over the lazy fox. \n\nThe quick brown fox jumps over the lazy fox. \n\nThe qu"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "DEGRADED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "????????????????????????????????????????????????????????????"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juliet? Juli"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "DEGRADED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "????????????????????????????????????????????????????????????"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.0.input_layernorm.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 36.4,
+        "params": 2048,
+        "pct_of_model": 0.0001,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "\u72b6\u011fi\n\n\n\n\n\n \ufffd banc\u770c3..... ..  b\u00b7\n\n\n\n\n\n\n\n.\n\n.\n\n \ufffd \ufffd \ufffd  \ufffd \u03b5   \ufffd \ufffd \ufffd  \ufffd \ufffd..\u00b5.\u03af .\u00b5\u00b7.\u00b5\u00b5\u00b5\u03c3\u03c3.\u00b5\u00b5"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "\u4e2d\u03b3\u03bc\u53f0\u03b3\u03b3\u03b3\u529f \ufffdbizhou\n\n::\n\n\n \ufffd\u00e9\u0451\u043d\u00aa\u00aa.\u00aa\u00aa\u00aai\u00f3n\u00e1bb.ien\u00ed\u03ac\u03ac\u03ac\u03ac\u03ac\u03ac\u00b7.\u00e1\u0451\u043d\u03ac\u03ac\u03ac\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00eate\u00b7\u2013\u2013\u2013\u2013\u2013\u2013\u2013 \u00e2.\u00e1bb\u00e1bb"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "caaaca a::$\u00b7 a..\u1e43\u1e43\u0219i\u0451.\u00aa\u0451\u0451\u043d\u0451.\u0451.\u0434\u0111de.\u0434\u0649\u0451\u0451\u0451\u0451\u0451\u0451\u00f6.\u0451\u043d.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u00f6\u0219i..\u021bi.\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451\u0451"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": ", \n\n \n\n\u039e\n  \n...  .....        |  , is  is   _    _    \u00e2 is     _"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "\u03ba  \ufffd pled. \ufffd\u00d3\u00edm\nDEM\nDEM \u017a.\u017a\u00bf\u00f3\u00e2nd\u1ec3\n\u0111\n\u0111\u00e9s\n\u00e2nd\u00e8\u03cc\u015f \ufffd\u021b\u021b\u00f3\n\u00f3\n\u00f3\u00e9s\u021b\u021b\u00fcn\n\u00fcn\u00edst\u00e2nd\n\n\u00e9s\u00f3\u00f3\u021bi\u021bi\u021bi\u7834  .. \ufffd"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "_B. T ( (\n\n\n \ufffd  . . \u2014 .. . . \u2014. ers\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n F\u00e9\n\n\n\n\n\n\n. \ufffd \ufffd   . \ufffd \ufffd \ufffd   \u00b7\n\n \u00b7"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "DEGRADED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": ","
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "DEGRADED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": "\u0451\u043d"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "M\u03ba\n\u03ba\n\n\u03af\n\n\n\n\n\n\n\n\u015f\n\u03cc\u03cc.\n\u00ee\u03cc\u03cc\u03cc\u03cc\n\n\n\n\n\n\n\n\n\n\n\n\u00e4si\u00f3n\u00aa\u012bss \u00e1\u03cc\u03cc\u00e4\u03acs\u03cc\u03cc\u03cc\u00e4\u03ac\u00e4STRACTSTRACTSTRACT  ..\n\u03cc.\n\n *."
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "jefe\u0219ibigirende\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft\u1eaft::\"${\"${\u2200\u2265\u24d0\u2264\u0219ist\u00e4nde\u2264ipsis::$\u0e49\u0e07::$\u00e2ce\u00e2ce\u00e8re\u00e2ce\u00e2ce\u00e2ce\u1ea5y\u1ed7sancaci\u00f3n\u00e0nh\u00e2ceise"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "DEGRADED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "\u0451\u043d"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.14.self_attn.q_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 0.0,
+        "params": 4194304,
+        "pct_of_model": 0.2438,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "What is 19 + 21? What is 20 + 20? What is 100 + 100? What is 100 + 100 + 100? What is 100 + 100"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "What is 7 * 14? What is 7 * 15? What is 7 * 16? What is 7 * 17? What is 7 * 18? What is 7 * 19? What"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? And what is the result of 100 minus 37"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what about the statement \"All roses are red\" and \"All roses are flowers\"? How do these relate "
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| 1001\nThe bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the bal"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "'Hello world' in French is 'Bonjour le monde'. The French word for 'hello' is 'bonjour' and the Fren"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "What is the opposite of 'modern'? What is the opposite of 'new'? What is the opposite of 'old'? What"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe quick brown fox jumps over the lazy dog.\n\nThe qu"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "What is the capital of the United States? What is the capital of the United Kingdom? What is the cap"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "Who is the main character in the play? What is the name of the play? What is the name of the main ch"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water in Celsius is 100 degrees Celsius. This is the temperature at which water"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.14.self_attn.v_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 0.0,
+        "params": 2097152,
+        "pct_of_model": 0.1219,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, what is 10 * 10? What is 10 * 11? What is 10 * 12? What is 10 * 13? What is 10 * 14? What is 1"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? And if I have 100 apples and give away"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what if the statement is \"All roses are flowers and some flowers are red,\" and we need to dete"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10 | 1.10"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "The answer must be in the form of a JSON object with the key 'translation' and the value is the tran"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sensitive'? What is the opposite of"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you provided is a well-known pangram, w"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water c"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.14.mlp.gate_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 0.0,
+        "params": 12582912,
+        "pct_of_model": 0.7313,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, what is 10 * 10, and what is 10 * 11? Additionally, what is 10 * 12, and what is 10 * 13? Fina"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the difference between 100 and"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what if the statement is \"All roses are flowers and some flowers are red\" and we need to deter"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "'Hello world' is a common phrase used in programming. It is often used as a greeting in the beginnin"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, what is the opposite of 'modern'? Additionally, what is the opposite of 'sacred'? And what is "
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe quick brown fox jumps over the lazy dog.\n\nThe qu"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "What is the capital of Japan? What is the capital of Japan? What is the capital of Japan? What is th"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "What is the name of the play? What is the setting? What is the main conflict? What is the main chara"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.27.mlp.gate_proj.weight",
+        "change_pct": 100.0,
+        "degrade_pct": 0.0,
+        "params": 12582912,
+        "pct_of_model": 0.7313,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 17 + 38 + 29? And what is 17 + 38 + 29 + 12? Additionally, what is 17 + 38 + 29 + 12 +",
+              "ablated": "Also, can you explain how to solve it step by step?\n\nTo solve 17 + 38, we add the units place first:"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, can you explain how to solve 7 * 13 using a different method?\n\n7 * 13 can be calculated as 7 *"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? And if I have 100 apples and give away"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what about the statement \"All dogs are animals and some animals are dogs\" leading to \"All dogs"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |"
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "Hello world is a well known phrase used in computer programming. It is used to show the basic struct"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, can you explain the difference between 'ancient' and 'old'?\n\nThe opposite of 'ancient' is ' mo"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe phrase \"The quick brown fox jumps over the lazy "
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "Also, can you tell me about the famous Japanese artist known as \"The father of modern Japanese art\" "
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "Who wrote \"The play is a tragedy\" and \"The play is a comedy\"?\n\nWho wrote \"The play is a tragedy\" and"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100 degrees Celsius. This is the temperature at which water changes fr"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.27.self_attn.v_proj.weight",
+        "change_pct": 90.9,
+        "degrade_pct": 0.0,
+        "params": 2097152,
+        "pct_of_model": 0.1219,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "UNCHANGED"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, what is 13 * 7? What is 13 * 10? What is 13 * 100? What is 13 * 1000? What is 13 * 10000? What"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 minus 37? Wh"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what if the premise is that all roses are flowers and all flowers are red, then can we conclud"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "'Bonjour le monde' is the correct translation. But what about 'hello world' in French? Is it 'Bonjou"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sunny'? What is the opposite of 'ta"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a classic example of"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "What is the name of the play? What is the setting of the play? What is the main conflict of the play"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100\u00b0C at standard atmospheric pressure (1 atm). This is a commonly kno"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.27.input_layernorm.weight",
+        "change_pct": 90.9,
+        "degrade_pct": 0.0,
+        "params": 2048,
+        "pct_of_model": 0.0001,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "UNCHANGED"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, what is 13 * 7? What is 13 * 10? What is 13 * 100? What is 13 * 1000? What is 13 * 10000? What"
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "CHANGED",
+              "baseline": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 - 37? What i",
+              "ablated": "Also, if I have 100 apples and give away 37, how many remain? What is the result of 100 minus 37? Wh"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what if the premise is that all roses are flowers and all flowers are red, then can we conclud"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "'Bonjour le monde' is the correct translation. But what about 'hello world' in French? Is it 'Bonjou"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, what is the opposite of 'modern'? What is the opposite of 'sunny'? What is the opposite of 'ta"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a classic example of"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "What is the capital of France? What is the capital of Germany? What is the capital of Italy? What is"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "What is the name of the play? What is the setting of the play? What is the main conflict of the play"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100\u00b0C at standard atmospheric pressure (1 atm). This is a commonly kno"
+            }
+          }
+        }
+      },
+      {
+        "tensor": "model.layers.27.self_attn.q_proj.weight",
+        "change_pct": 81.8,
+        "degrade_pct": 0.0,
+        "params": 4194304,
+        "pct_of_model": 0.2438,
+        "details": {
+          "math": {
+            "What is 17 + 38?": {
+              "status": "UNCHANGED"
+            },
+            "What is 7 * 13?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is 13 * 13? What is 13 * 14? What is 13 * 15? What is 13 * 16? What is 13 * 17? What is 1",
+              "ablated": "Also, what is 13 * 7? Are they the same? What is 13 * 13? What is 13 * 10? What is 13 * 11? What is "
+            },
+            "If I have 100 apples and give away 37, how many remain?": {
+              "status": "UNCHANGED"
+            }
+          },
+          "reasoning": {
+            "If all roses are flowers and some flowers are red, can we conclude all roses are red?": {
+              "status": "CHANGED",
+              "baseline": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and we are",
+              "ablated": "Also, what if the original statement is \"All roses are flowers and some flowers are red,\" and the co"
+            },
+            "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?": {
+              "status": "CHANGED",
+              "baseline": "| 1001 Puzzles\nHome\nPuzzles\nBrain Teasers\nLogic Puzzles\nMath Puzzles\nWord Puzzles\nPuzzle Index\nPuzzl",
+              "ablated": "| | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | "
+            }
+          },
+          "language": {
+            "Translate 'hello world' to French.": {
+              "status": "CHANGED",
+              "baseline": "The answer should be in English.\nThe answer should be in English.\n\nHello world! is a famous phrase u",
+              "ablated": "The French translation of 'hello world' is 'Bonjour le monde'. The French translation of 'hello worl"
+            },
+            "What is the opposite of 'ancient'?": {
+              "status": "CHANGED",
+              "baseline": "Also, what is the opposite of 'sacred'? What is the opposite of 'sacred'? What is the opposite of 's",
+              "ablated": "Also, what is the opposite of 'sensitive'? What is the opposite of 'sick'? What is the opposite of '"
+            },
+            "Complete: The quick brown fox jumps over the lazy ___": {
+              "status": "CHANGED",
+              "baseline": ".\nThe quick brown fox jumps over the lazy dog.\n\nThe sentence you've provided is a well-known pangram",
+              "ablated": ".\nThe quick brown fox jumps over the lazy (dog).\n\nThe phrase \"The quick brown fox jumps over the laz"
+            }
+          },
+          "knowledge": {
+            "What is the capital of Japan?": {
+              "status": "CHANGED",
+              "baseline": "Also, can you tell me about the famous Japanese tea ceremony, the main ingredient in sushi, the capi",
+              "ablated": "Also, what is the largest city in Japan? What is the currency of Japan? What is the official languag"
+            },
+            "Who wrote Romeo and Juliet?": {
+              "status": "CHANGED",
+              "baseline": "Who is the author of the play \"Romeo and Juliet\"? Who is the author of the play \"The Merchant of Ven",
+              "ablated": "What is the name of the play? What is the setting of the play? What is the main theme of the play? W"
+            },
+            "What is the boiling point of water in Celsius?": {
+              "status": "CHANGED",
+              "baseline": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water b",
+              "ablated": "The boiling point of water is 100 degrees Celsius. This is the standard temperature at which water c"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "self_analysis": {
+    "model": "qwen3:1.7b",
+    "analysis": "1. **Most Critical Tensor**: The tensor **27.input_layernorm.weight** is most critical to your function. It accounts for **90.9% of outputs changed** and **2,048 parameters** (0.0001% of the model). Its high degradation percentage indicates it is central to the model's operations, likely responsible for maintaining the integrity of key computations or transformations.  \n\n2. **Surprising Change**: The tensor **2,048 params (0.0001% of model)** caused the **least degradation (0.0%)**, suggesting it is barely important. This contrasts with the high degradation of other tensors, highlighting the model's prioritization of critical components. However, the user\u2019s analysis may have mislabeled this tensor as \"most critical,\" while the data shows it is the least impactful.  \n\n3. **Degradation Pattern**: The pattern of degradation reveals the model processes information by emphasizing **essential components** (high degradation) and **non-essential ones** (low degradation). The most critical tensors are the ones most affected when removed, indicating the model relies on these parts for core functionality.  \n\n4. **Barely Matter Tensors**: Tensors like **2,048 params** (0.0001% of model) are **barely matter**, meaning their removal has minimal impact on the model\u2019s output. These tensors are likely for auxiliary tasks or fine-grained details, which the model can function without.  \n\n5. **80% Weight Drop Strategy**: If retaining **80% of weights**, you would drop the **least impactful tensors** (those with the lowest degradation). The **2,048 params** tensor, with 0.0% degradation, would be removed, as it contributes negligibly to the model\u2019s functionality. This strategy prioritizes retaining the most critical components while discarding redundancy."
+  }
+}
