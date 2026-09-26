@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "status": "preregistered_before_mechanism_inference",
+  "created_utc": "2026-09-26T23:18:17Z",
+  "parent_replication_commit": "e8df3e8e6c6127ef45264f9ccea16980a0bce24c",
+  "runner_sha256": "8824bd37d363c4872b08a13e2b1d7830005e503742237c0ae514b3d9cbf35c3e",
+  "model": {
+    "name": "mistral:7b",
+    "hf_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "model_revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+    "adapter": "mistral-7b-braille-literacy-v2",
+    "adapter_tree_sha256": "9eafc2b2dc4762d4f0398a8d3715b4af251b24d0e826e828d5e8341e4df78fd8"
+  },
+  "dataset_revisions": {
+    "allenai/ai2_arc": "210d026faf9955653af8916fad021475a3f00453",
+    "Rowan/hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+    "cais/mmlu": "c30699e8356da336a370243923dbaf21066bb9fe",
+    "openai/gsm8k": "740312add88f781978c0658806c59bc2815b9866"
+  },
+  "suites": [
+    {
+      "name": "arc_challenge",
+      "tasks": [
+        "arc_challenge"
+      ],
+      "limit_per_task": 512,
+      "num_fewshot": 25,
+      "sample_metric": "acc_norm",
+      "batch_size": 8
+    },
+    {
+      "name": "hellaswag",
+      "tasks": [
+        "hellaswag"
+      ],
+      "limit_per_task": 512,
+      "num_fewshot": 10,
+      "sample_metric": "acc_norm",
+      "batch_size": 8
+    },
+    {
+      "name": "mmlu",
+      "tasks": [
+        "mmlu_abstract_algebra",
+        "mmlu_anatomy",
+        "mmlu_business_ethics",
+        "mmlu_clinical_knowledge",
+        "mmlu_college_computer_science",
+        "mmlu_conceptual_physics",
+        "mmlu_high_school_psychology",
+        "mmlu_professional_law"
+      ],
+      "limit_per_task": 64,
+      "num_fewshot": 5,
+      "sample_metric": "acc",
+      "batch_size": 8
+    },
+    {
+      "name": "gsm8k",
+      "tasks": [
+        "gsm8k"
+      ],
+      "limit_per_task": 128,
+      "num_fewshot": 5,
+      "sample_metric": "exact_match",
+      "batch_size": 8
+    }
+  ],
+  "conditions": [
+    {
+      "id": "base",
+      "kind": "base",
+      "scale": 0.0
+    },
+    {
+      "id": "trained_scale_0.25",
+      "kind": "trained",
+      "scale": 0.25
+    },
+    {
+      "id": "trained_scale_0.5",
+      "kind": "trained",
+      "scale": 0.5
+    },
+    {
+      "id": "trained_scale_0.75",
+      "kind": "trained",
+      "scale": 0.75
+    },
+    {
+      "id": "trained_scale_1.0",
+      "kind": "trained",
+      "scale": 1.0
+    },
+    {
+      "id": "row_sign_randomized_1.0",
+      "kind": "row_sign_randomized",
+      "scale": 1.0
+    }
+  ],
+  "protocol_seeds": [
+    61061,
+    71071
+  ],
+  "protocol_task_sha256": "1272f4837004b674559b602f8e79469321f639fe956ed9c7f03a399bbf838688",
+  "randomization_seed": 937151,
+  "primary_estimands": [
+    "Equal-suite canonical accuracy change from base at each trained adapter scale.",
+    "Exact 28-task protocol score at each scale.",
+    "Full-scale trained minus row-sign-randomized canonical accuracy."
+  ],
+  "analysis_plan": {
+    "pairing": "Require identical lm-eval document, prompt, and target hashes across every condition.",
+    "confidence_intervals": "20,000 paired item bootstraps, equal weighting across four suites and across MMLU subjects.",
+    "scale_curve": "Report every fixed scale. Test monotonic association descriptively; do not select or omit scales.",
+    "pareto_rule": "A scale is protocol-preserving only at 28/28. Among preserving scales, report the one with highest measured canonical macro accuracy without claiming an unbiased optimum.",
+    "randomized_control": "Row-sign flips of every LoRA B output row preserve each B Frobenius norm exactly while disrupting learned output coordinates. Compare with both base and trained scale 1.0."
+  },
+  "training_policy": "No benchmark or protocol item in this study may be used for training, adapter repair, model selection, or retries.",
+  "failure_policy": "Technical failures are blocked. Compatibility-only repairs require a committed amendment and full rerun; observed scores cannot guide repairs.",
+  "limitations": [
+    "One checkpoint and one frozen adapter.",
+    "The scale study changes all LoRA modules together and does not localize layers.",
+    "Row-sign randomization preserves B norms but not singular vectors or the exact B@A spectrum.",
+    "Protocol seeds are diagnostic, not admission certification."
+  ],
+  "task_spec_sha256": "74f87da9a3f81f8b8724d4fdb076ef657d13f1e0012819f78e28d7ff84d7e676",
+  "manifest_sha256": "26c3669a7127e2987fda98106cb679daeb99add38e9eaf44db4dc7f80a2dea56"
+}
