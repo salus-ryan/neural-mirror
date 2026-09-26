@@ -1,0 +1,25 @@
+{
+  "protocol": "neural-mirror-computer-braille-v1",
+  "purpose": "one-shot post-selection certification; no training or retries on these seeds",
+  "created_utc": "2026-09-26",
+  "seeds": [
+    17017,
+    29029
+  ],
+  "tasks_per_seed": 14,
+  "required_score": "28/28",
+  "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+  "frozen_candidates": {
+    "qwen3:4b": "qwen3-4b-braille-literacy-v3",
+    "llama3.2:3b": "llama3.2-3b-braille-literacy-v1",
+    "granite3.3:8b": "granite3.3-8b-braille-literacy-v1",
+    "glm4:9b": "glm4-9b-braille-literacy-v1",
+    "falcon3:7b": "falcon3-7b-braille-literacy-v2",
+    "mistral:7b": "mistral-7b-braille-literacy-v2",
+    "phi4-mini": "phi4-mini-braille-literacy-v2",
+    "solar:10.7b": "solar-10.7b-braille-literacy-v2",
+    "gemma3:4b": "gemma3-4b-braille-literacy-v2",
+    "olmo2:7b": "olmo2-7b-braille-literacy-v2",
+    "yi:6b": "yi-6b-braille-literacy-v2"
+  }
+}
