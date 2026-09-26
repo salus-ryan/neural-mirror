@@ -30,6 +30,7 @@ image = (
         "bitsandbytes", "safetensors", "gguf", "trl", "huggingface_hub",
     )
     .add_local_file("introspect.py", "/app/introspect.py")
+    .add_local_file("braille_protocol.py", "/app/braille_protocol.py")
 )
 
 HF_MAP = {
@@ -184,7 +185,13 @@ def profile_gguf(path):
 
 @app.function(image=image, volumes={"/cache": model_cache}, timeout=600, memory=16384, cpu=4)
 def bootstrap_round1(model_name: str, all_models: list, target_task: str) -> dict:
-    """Pull, profile GGUF, and self-propose LoRA in one container."""
+    """Pull, profile GGUF, and self-propose LoRA using braille protocol."""
+    sys.path.insert(0, "/app")
+    from braille_protocol import (
+        encode_architecture, encode_proposal, decode_proposal,
+        MODULE_CODES, ARCH_CODES, cell
+    )
+
     proc = start_ollama()
     pull_and_warm(model_name)
     gguf_path = find_gguf(model_name)
@@ -193,17 +200,36 @@ def bootstrap_round1(model_name: str, all_models: list, target_task: str) -> dic
         return {"model": model_name, "error": "no GGUF"}
 
     profile = profile_gguf(gguf_path)
-    roster = "Models: " + ", ".join(all_models)
     s = profile
+
+    # Encode architecture as braille for compact representation
+    arch_braille = encode_architecture(
+        s.get('arch', '?'),
+        s.get('n_layers', 0),
+        int(s.get('embed_dim', 0)) if str(s.get('embed_dim',0)).isdigit() else 0,
+        int(s.get('heads', 0)) if str(s.get('heads',0)).isdigit() else 0,
+        int(s.get('kv_heads', 0)) if str(s.get('kv_heads',0)).isdigit() else 0,
+        float(s['params'].replace('B','')) if 'B' in str(s.get('params','0')) else 0,
+        float(s['norm_growth'].replace('x','')) if 'x' in str(s.get('norm_growth','0')) else 0,
+    )
+
+    # Build module menu from actual valid names
+    module_menu = "\n".join(f"  {cell(code)} = {name}" for name, code in sorted(MODULE_CODES.items(), key=lambda x: x[1]))
+
     system = f"""You are {s['model_name']} ({s['params']}, {s['arch']}, {s['n_layers']} layers).
-{roster}
+Your architecture in braille: {arch_braille}
 Task: {target_task}
 
-Your weights: norm growth {s['norm_growth']}, embed {s['embed_dim']}, heads {s['heads']}, KV {s['kv_heads']}, FFN {s['ff_dim']}
+Your weights: norm growth {s['norm_growth']}, embed {s['embed_dim']}, heads {s['heads']}, KV {s['kv_heads']}
 Sparsity: {json.dumps(s['sparsity'])}
 
-Propose a LoRA config for YOURSELF as JSON:
-{{"target_modules": [...], "r": N, "lora_alpha": N, "lora_dropout": 0.05, "reasoning": "..."}}
+Choose LoRA modules from this EXACT list (these are the ONLY valid names):
+{module_menu}
+
+Respond with a JSON object using ONLY module names from the list above:
+{{"target_modules": ["q_proj", "v_proj"], "r": 16, "lora_alpha": 32, "lora_dropout": 0.05, "reasoning": "brief explanation"}}
+
+IMPORTANT: target_modules must ONLY contain names from: q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj
 No <think> tags. JSON only."""
 
     response = ask_model(model_name, system, f"Propose your LoRA for: {target_task}")
@@ -212,8 +238,28 @@ No <think> tags. JSON only."""
         "lora_alpha": 32, "lora_dropout": 0.05,
         "reasoning": f"default: {response[:200]}",
     }
+
+    # Sanitize modules through braille encoding round-trip
+    valid = set(MODULE_CODES.keys())
+    proposal['target_modules'] = [m for m in proposal.get('target_modules', []) if m in valid] or ['q_proj', 'v_proj']
+
+    # Encode proposal as braille for downstream use
+    proposal_braille = encode_proposal(
+        proposal['target_modules'],
+        proposal.get('r', 16),
+        proposal.get('lora_alpha', 32),
+        proposal.get('lora_dropout', 5) if isinstance(proposal.get('lora_dropout'), int) else int(proposal.get('lora_dropout', 0.05) * 100),
+    )
+
     proc.terminate()
-    return {"model": model_name, "profile": profile, "self_proposal": proposal, "raw": response[:500]}
+    return {
+        "model": model_name,
+        "profile": profile,
+        "self_proposal": proposal,
+        "arch_braille": arch_braille,
+        "proposal_braille": proposal_braille,
+        "raw": response[:500],
+    }
 
 
 @app.function(image=image, volumes={"/cache": model_cache}, timeout=600, memory=16384, cpu=4)
@@ -270,46 +316,42 @@ def round2_cross_propose(
     roster: str,
     target_task: str,
 ) -> dict:
-    """One model proposes a LoRA for ANOTHER model, informed by Round 1."""
+    """One model proposes LoRA for ANOTHER model, using braille for structured data."""
+    sys.path.insert(0, "/app")
+    from braille_protocol import decode_proposal, MODULE_CODES, cell
+
     proc = start_ollama()
     pull_and_warm(proposer_name)
 
-    # Summarize round 1
+    # Summarize round 1 using braille-encoded proposals where available
     r1_summary = ""
     for name, r1 in all_round1.items():
+        braille = r1.get('proposal_braille', '')
         prop = r1.get('self_proposal', {})
-        r1_summary += f"\n  {name} proposed for itself: r={prop.get('r')}, modules={prop.get('target_modules')}\n"
-        r1_summary += f"    Reasoning: {prop.get('reasoning', '?')[:200]}\n"
+        if braille:
+            r1_summary += f"\n  {name}: {braille} (decoded: r={prop.get('r')}, modules={prop.get('target_modules')})\n"
+        else:
+            r1_summary += f"\n  {name}: r={prop.get('r')}, modules={prop.get('target_modules')}\n"
 
     tp = target_profile
+    module_menu = ", ".join(sorted(MODULE_CODES.keys()))
+
     system = f"""You are {proposer_profile['model_name']} ({proposer_profile['params']}).
 
-Round 1 results — what everyone proposed for themselves:
+Round 1 proposals (braille-encoded for precision):
 {r1_summary}
 
-Now you must propose a LoRA for {tp['model_name']} ({tp['params']}, {tp['arch']}, {tp['n_layers']} layers).
+Propose a LoRA for {tp['model_name']} ({tp['params']}, {tp['arch']}, {tp['n_layers']} layers).
 
-{tp['model_name']}'s weight profile:
-- Norm growth: {tp['norm_growth']}
-- Embedding dim: {tp['embed_dim']}, Heads: {tp['heads']}, KV heads: {tp['kv_heads']}
-- FFN dim: {tp['ff_dim']}
-- Layer 0 sparsity: {json.dumps(tp['sparsity'])}
+{tp['model_name']}'s profile: norm growth {tp['norm_growth']}, embed {tp['embed_dim']}, heads {tp['heads']}, KV {tp['kv_heads']}
+Sparsity: {json.dumps(tp['sparsity'])}
 
-{tp['model_name']} proposed for itself: {json.dumps(target_self_proposal, indent=2)[:500]}
+{tp['model_name']}'s self-proposal: r={target_self_proposal.get('r')}, modules={target_self_proposal.get('target_modules')}
 
-Do you agree with their self-proposal? Or would you change something?
-Consider: their architecture differs from yours. What would YOU recommend?
+VALID module names (use ONLY these): {module_menu}
 
-Respond with ONLY a JSON object:
-{{
-  "for_model": "{target_name}",
-  "agree_with_self": true/false,
-  "target_modules": [...],
-  "r": ...,
-  "lora_alpha": ...,
-  "lora_dropout": ...,
-  "reasoning": "why I'd change/keep this for their architecture"
-}}
+Respond with JSON. target_modules must be from the valid list above.
+{{"for_model": "{target_name}", "agree_with_self": true/false, "target_modules": [...], "r": N, "lora_alpha": N, "lora_dropout": 0.05, "reasoning": "brief"}}
 No <think> tags. JSON only."""
 
     response = ask_model(proposer_name, system,
@@ -321,6 +363,10 @@ No <think> tags. JSON only."""
         **target_self_proposal,
         "reasoning": f"parse failed, deferring to self: {response[:200]}",
     }
+
+    # Sanitize modules
+    valid = set(MODULE_CODES.keys())
+    proposal['target_modules'] = [m for m in proposal.get('target_modules', []) if m in valid] or target_self_proposal.get('target_modules', ['q_proj', 'v_proj'])
 
     proc.terminate()
     return {
@@ -502,6 +548,12 @@ def round3_train(
 
     print(f"   ✅ Done in {elapsed:.0f}s, loss: {result.training_loss:.4f}")
 
+    # Encode result as braille
+    sys.path.insert(0, "/app")
+    from braille_protocol import encode_training_result, encode_proposal
+    result_braille = encode_training_result(0, result.training_loss, trainable/1e6, int(elapsed))
+    consensus_braille = encode_proposal(consensus_modules, consensus_r, consensus_alpha)
+
     return {
         "model": model_name,
         "consensus": consensus,
@@ -511,6 +563,8 @@ def round3_train(
         "training_time": f"{elapsed:.0f}s",
         "lora_stats_sample": dict(list(lora_stats.items())[:6]),
         "eval_outputs": outputs,
+        "result_braille": result_braille,
+        "consensus_braille": consensus_braille,
     }
 
 
@@ -524,46 +578,47 @@ def round4_evaluate(
     roster: str,
     target_task: str,
 ) -> dict:
-    """Each model evaluates ALL training results and picks winners."""
+    """Each model evaluates results using braille-encoded data for precision."""
     proc = start_ollama()
     pull_and_warm(evaluator_name)
 
+    # Build results summary with braille encodings for precision
+    model_list = list(all_results.keys())
     results_summary = ""
-    for name, r in all_results.items():
-        results_summary += f"\n--- {name} ---\n"
-        results_summary += f"  Consensus config: modules={r.get('consensus',{}).get('target_modules')}, "
-        results_summary += f"r={r.get('consensus',{}).get('r')}, alpha={r.get('consensus',{}).get('lora_alpha')}\n"
-        results_summary += f"  Module votes: {r.get('consensus',{}).get('module_votes')}\n"
+    for idx, (name, r) in enumerate(all_results.items()):
+        braille = r.get('result_braille', '')
+        cb = r.get('consensus_braille', '')
+        results_summary += f"\n[{idx}] {name}\n"
+        if cb:
+            results_summary += f"  Consensus (braille): {cb}\n"
+        results_summary += f"  Modules: {r.get('consensus',{}).get('target_modules')}, "
+        results_summary += f"r={r.get('consensus',{}).get('r')}, votes: {r.get('consensus',{}).get('module_votes')}\n"
+        results_summary += f"  Loss: {r.get('training_loss')}, Time: {r.get('training_time')}\n"
         results_summary += f"  Trainable: {r.get('trainable_params')} ({r.get('trainable_pct')})\n"
-        results_summary += f"  Loss: {r.get('training_loss')}\n"
-        results_summary += f"  Time: {r.get('training_time')}\n"
-        results_summary += f"  Sample LoRA norms: "
-        for sname, stats in list(r.get('lora_stats_sample', {}).items())[:3]:
+        if braille:
+            results_summary += f"  Result (braille): {braille}\n"
+        for sname, stats in list(r.get('lora_stats_sample', {}).items())[:2]:
             short = '.'.join(sname.split('.')[-3:])
-            results_summary += f"{short}={stats.get('norm',0):.4f} "
-        results_summary += f"\n  Eval outputs: {json.dumps(r.get('eval_outputs',[])[:2])[:300]}\n"
+            results_summary += f"  Norm: {short}={stats.get('norm',0):.4f}\n"
+        results_summary += f"  Eval: {json.dumps(r.get('eval_outputs',[])[:1])[:200]}\n"
 
     system = f"""You are {evaluator_profile['model_name']} ({evaluator_profile['params']}).
 
-All models were fine-tuned to: {target_task}
+Task: {target_task}
 {roster}
 
-Training results:
+Training results (most important info FIRST):
 {results_summary}
 
-Evaluate ALL results. For each model:
-1. Was the consensus LoRA config good? Why/why not?
-2. Did the loss converge well?
-3. Are the LoRA weight norms healthy?
-4. How do the eval outputs look?
+Put your RANKING first (1=best), then explain briefly:
+1. Which model adapted best? (lowest loss + correct eval outputs)
+2. Were the LoRA norms healthy? (0.5-5.0 is typical)
+3. What ONE change for next iteration?
 
-Then: RANK all models from best to worst adaptation.
-Finally: What would you change for the NEXT iteration?
-
-Be specific. Reference numbers. No <think> tags."""
+Be concise. 3-5 sentences total. No <think> tags."""
 
     evaluation = ask_model(evaluator_name, system,
-        "Evaluate all training results. Rank them. What would you change?")
+        "Rank the models and evaluate. Most important finding first.")
 
     proc.terminate()
     return {"evaluator": evaluator_name, "evaluation": evaluation}
