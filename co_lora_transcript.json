@@ -61,22 +61,25 @@
   "round1_self_proposals": {
     "qwen3:1.7b": {
       "target_modules": [
-        "attn_q.weight",
-        "attn_v.weight"
+        "q_proj",
+        "v_proj"
       ],
-      "r": 64,
-      "lora_alpha": 16,
+      "r": 16,
+      "lora_alpha": 32,
       "lora_dropout": 0.05,
-      "reasoning": "Focuses on sparse attention heads (1% sparsity) while maintaining full Q weights for precise reasoning. Rank 64 balances parameter efficiency with performance, and 16 alpha ensures stable training dynamics."
+      "reasoning": "q_proj and v_proj are critical for attention mechanism inputs, while o_proj handles output projections. LoRA parameters (r=16, alpha=32) enhance reasoning by fine-tuning attention weights and output transformations, enabling better step-by-step logical deductions."
     },
     "phi4-mini": {
       "target_modules": [
-        "math_reasoning"
+        "q_proj",
+        "v_proj",
+        "o_proj",
+        "up_proj"
       ],
-      "r": 4,
-      "lora_alpha": 32,
+      "r": 32,
+      "lora_alpha": 4,
       "lora_dropout": 0.05,
-      "reasoning": "Enhance precision in multi-step calculations and logical deductions."
+      "reasoning": "Incorporating q_proj for query transformation, v_proj for value transformation, o_proj for output transformation, and up_proj for upscaling, allows for targeted adjustments in key areas of the attention mechanism. This combination aims to enhance understanding and representation of relationships within the data."
     },
     "mistral:7b": {
       "target_modules": [
@@ -86,37 +89,34 @@
       "r": 16,
       "lora_alpha": 32,
       "lora_dropout": 0.05,
-      "reasoning": "default: Here is a proposed LoRA (Layer-wise Adaptive Representation Refinement) configuration for my model to improve step-by-step mathematical reasoning:\n\n```json\n{\n  \"target_modules\": [\"q\", \"v\", \"o\"], // Q "
+      "reasoning": "By adding Lora to q_proj and v_proj, we can modify the query and value weights in a step-by-step manner, potentially improving the model's ability to reason mathematically by providing it with more flexible and adaptable weight matrices."
     }
   },
   "round2_cross_proposals": {
     "qwen3:1.7b": [
       {
         "for_model": "qwen3:1.7b",
-        "agree_with_self": false,
+        "agree_with_self": true,
         "target_modules": [
           "q_proj",
-          "v_proj",
-          "o_proj",
-          "attn_q.weight",
-          "attn_v.weight"
+          "v_proj"
         ],
-        "r": 64,
-        "lora_alpha": 32,
-        "lora_dropout": 0.1,
-        "reasoning": "Expanding the LoRA to include projection matrices (q_proj, v_proj, o_proj) alongside attention weights enhances mathematical reasoning capabilities. Increasing rank to 64 maintains efficiency, while doubling alpha to 32 stabilizes training, considering the complexity of mathematical reasoning tasks."
+        "r": 16,
+        "lora_alpha": 4,
+        "lora_dropout": 0.05,
+        "reasoning": "Considering the model's sparsity and its self-proposal metrics, LoRA is applied to q_proj and v_proj with moderate alpha for improved efficiency without altering the original weight distribution excessively."
       },
       {
         "for_model": "qwen3:1.7b",
-        "agree_with_self": true,
+        "agree_with_self": false,
         "target_modules": [
-          "attn_q.weight",
-          "attn_v.weight"
+          "k_proj",
+          "v_proj"
         ],
-        "r": 64,
-        "lora_alpha": 16,
-        "lora_dropout": 0.05,
-        "reasoning": "The proposed configuration focuses on sparse attention heads while maintaining full Q weights for precise reasoning, which is beneficial for improving step-by-step mathematical reasoning. The parameter balance provided by rank 64 and 16 alpha ensures stable training dynamics."
+        "r": 8,
+        "lora_alpha": 0.05,
+        "lora_dropout": 0.1,
+        "reasoning": "Incorporating LORA (Layer-Ordered Reparameterization) for the key and value projection modules is expected to improve mathematical reasoning as it allows for targeted modifications to the model's behavior. By using a smaller reparameterization rank (r=8) compared to the self-proposed r=16, we aim to improve the model's capacity to reason mathematically without significantly increasing the model size."
       }
     ],
     "phi4-mini": [
@@ -124,26 +124,43 @@
         "for_model": "phi4-mini",
         "agree_with_self": true,
         "target_modules": [
-          "math_reasoning"
+          "q_proj",
+          "v_proj",
+          "o_proj",
+          "up_proj"
         ],
-        "r": 4,
-        "lora_alpha": 32,
+        "r": 32,
+        "lora_alpha": 1.79,
         "lora_dropout": 0.05,
-        "reasoning": "The target module 'math_reasoning' aligns with the model's architecture and purpose. r=4 balances efficiency with precision, and lora_alpha=32 ensures stable training. The dropout rate of 0.05 is appropriate for maintaining model integrity while optimizing parameters."
+        "reasoning": "Targeted modules (q_proj, v_proj, o_proj, up_proj) enable fine-grained training for mathematical reasoning. lora_alpha=1.79 matches norm growth, and 0.05 dropout ensures stability. This setup enhances attention mechanisms and output capabilities for step-by-step logic."
       },
       {
         "for_model": "phi4-mini",
         "agree_with_self": true,
         "target_modules": [
-          "math_reasoning"
+          "k_proj",
+          "v_proj"
         ],
-        "r": 4,
-        "lora_alpha": 32,
+        "r": 32,
+        "lora_alpha": 0.05,
         "lora_dropout": 0.1,
-        "reasoning": "Given the architecture's emphasis on mathematical reasoning, the self-proposed LoRA configuration focuses on improving precision in multi-step calculations and logical deductions. However, a slightly higher dropout rate of 0.1 is suggested to prevent overfitting and ensure model generalization."
+        "reasoning": "Adding LORA to the key and value projections can help in learning task-specific patterns and improving the model's ability to perform mathematical reasoning by allowing it to specialize in handling mathematical operations."
       }
     ],
     "mistral:7b": [
+      {
+        "for_model": "mistral:7b",
+        "agree_with_self": false,
+        "target_modules": [
+          "q_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "r": 20,
+        "lora_alpha": 2.0,
+        "lora_dropout": 0.05,
+        "reasoning": "Adding q_proj, v_proj, and o_proj modules to enhance attention mechanism for step-by-step mathematical reasoning. Maintains sparsity (100% for q/v weights) and increases alpha (2.0) for effective LoRA training. 0.05 dropout ensures stability."
+      },
       {
         "for_model": "mistral:7b",
         "agree_with_self": true,
@@ -151,27 +168,140 @@
           "q_proj",
           "v_proj"
         ],
-        "r": 16,
-        "lora_alpha": 32,
+        "r": 32,
+        "lora_alpha": 4,
         "lora_dropout": 0.05,
-        "reasoning": "The proposed LoRA targets q_proj and v_proj, which are critical for attention mechanisms in Mistral-7B. The 16 r value balances efficiency with performance, and the 32 alpha ensures stable training. The 0.05 dropout aligns with the model's sparse attention heads, preserving accuracy while enabling fine-grained adaptation for mathematical reasoning."
-      },
-      {
-        "for_model": "mistral:7b",
-        "agree_with_self": false,
-        "target_modules": [
-          "q_proj",
-          "v_proj",
-          "o"
-        ],
-        "r": 8,
-        "lora_alpha": 32,
-        "lora_dropout": 0.05,
-        "reasoning": "The proposed LoRA for Mistral-7B-Instruct-v0.3 should include 'o' to ensure all layers are refined. Lowering the rank 'r' to 8 might be more efficient for improving step-by-step mathematical reasoning while keeping a balance between computational cost and performance. This configuration retains the original sparsity while focusing on optimizing the model's reasoning capabilities."
+        "reasoning": "Based on the self-proposal and agreed modules, LoRA focuses on enhancing 'q_proj' and 'v_proj' for improved mathematical reasoning with 'lora_alpha' set to a moderate value for initial testing."
       }
     ]
   },
   "round3_training": {
+    "qwen3:1.7b": {
+      "model": "qwen3:1.7b",
+      "consensus": {
+        "target_modules": [
+          "q_proj",
+          "v_proj"
+        ],
+        "r": 13,
+        "lora_alpha": 12,
+        "lora_dropout": 0.05,
+        "n_votes": 3,
+        "module_votes": {
+          "q_proj": 2,
+          "v_proj": 3,
+          "k_proj": 1
+        }
+      },
+      "trainable_params": "2.6M",
+      "trainable_pct": "0.26%",
+      "training_loss": 1.6598,
+      "training_time": "19s",
+      "lora_stats_sample": {
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": {
+          "mean": -6.8e-05,
+          "std": 0.012959,
+          "norm": 2.1145
+        },
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": {
+          "mean": -1.3e-05,
+          "std": 0.001611,
+          "norm": 0.2628
+        },
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": {
+          "mean": -3.9e-05,
+          "std": 0.012941,
+          "norm": 2.1115
+        },
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": {
+          "mean": 1.1e-05,
+          "std": 0.001555,
+          "norm": 0.1794
+        },
+        "base_model.model.model.layers.1.self_attn.q_proj.lora_A.default.weight": {
+          "mean": -4e-05,
+          "std": 0.012849,
+          "norm": 2.0966
+        },
+        "base_model.model.model.layers.1.self_attn.q_proj.lora_B.default.weight": {
+          "mean": 1e-06,
+          "std": 0.001554,
+          "norm": 0.2535
+        }
+      },
+      "eval_outputs": [
+        "What is 7 * 13? Also, what is 10 * 10? What is 10 * 100? What is 10 * 1000? What is 10 * 10000? What is 10 * 100000? What is 10 * 1000000? What is ",
+        "What is 25 + 38? Also, what is 12 + 15? What is 100 - 25? What is 100 - 20? What is 100 - 15? What is 100 - 10? What is 100 - 5? What is 100 - 2? What is 1",
+        "What is 100 / 4? Also, what is 100 / 5? What is 100 / 10? What is 100 / 20? What is 100 / 25? What is 100 / 50? What is 100 / 100? What is 100 / 1000"
+      ],
+      "result_braille": "\u2808\u2800\u28a4\u283e\u2838\u2841\u2812\u2800",
+      "consensus_braille": "\u2804\u2800\u2805\u280d\u280c\u2805"
+    },
+    "phi4-mini": {
+      "model": "phi4-mini",
+      "consensus": {
+        "target_modules": [
+          "q_proj",
+          "v_proj",
+          "o_proj",
+          "up_proj"
+        ],
+        "r": 32,
+        "lora_alpha": 1,
+        "lora_dropout": 0.05,
+        "n_votes": 3,
+        "module_votes": {
+          "q_proj": 2,
+          "v_proj": 3,
+          "o_proj": 2,
+          "up_proj": 2,
+          "k_proj": 1
+        }
+      },
+      "trainable_params": "6.3M",
+      "trainable_pct": "0.28%",
+      "training_loss": 2.5357,
+      "training_time": "22s",
+      "lora_stats_sample": {
+        "base_model.model.model.layers.0.self_attn.o_proj.lora_A.default.weight": {
+          "mean": -5.3e-05,
+          "std": 0.010698,
+          "norm": 3.3541
+        },
+        "base_model.model.model.layers.0.self_attn.o_proj.lora_B.default.weight": {
+          "mean": 2e-06,
+          "std": 0.002248,
+          "norm": 0.7049
+        },
+        "base_model.model.model.layers.1.self_attn.o_proj.lora_A.default.weight": {
+          "mean": -2.4e-05,
+          "std": 0.010691,
+          "norm": 3.3519
+        },
+        "base_model.model.model.layers.1.self_attn.o_proj.lora_B.default.weight": {
+          "mean": 5e-06,
+          "std": 0.002234,
+          "norm": 0.7006
+        },
+        "base_model.model.model.layers.2.self_attn.o_proj.lora_A.default.weight": {
+          "mean": 2e-05,
+          "std": 0.01068,
+          "norm": 3.3485
+        },
+        "base_model.model.model.layers.2.self_attn.o_proj.lora_B.default.weight": {
+          "mean": 3e-06,
+          "std": 0.002186,
+          "norm": 0.6854
+        }
+      },
+      "eval_outputs": [
+        "What is 7 * 13? To find the product of 7 and 13, you simply multiply the two numbers together. The calculation is as follows:\n\n7 * 13 = 91\n\nSo, the answer is 91.",
+        "What is 25 + 38? I need to know the answer to this math problem. To solve this problem, we simply need to add the two numbers together. 25 + 38 = 63. So, the answer to this math problem is 63.",
+        "What is 100 / 4? To solve the problem 100 / 4, you divide 100 by 4. The result is 25."
+      ],
+      "result_braille": "\u2808\u2800\u2812\u2841\u284b\u2846\u2816\u2800",
+      "consensus_braille": "\u2804\u2800\u282d\u2820\u2801\u2805"
+    },
     "mistral:7b": {
       "model": "mistral:7b",
       "consensus": {
@@ -179,57 +309,60 @@
           "q_proj",
           "v_proj"
         ],
-        "r": 13,
-        "lora_alpha": 32,
+        "r": 22,
+        "lora_alpha": 12,
         "lora_dropout": 0.05,
         "n_votes": 3,
         "module_votes": {
           "q_proj": 3,
-          "v_proj": 3
+          "v_proj": 3,
+          "o_proj": 1
         }
       },
-      "trainable_params": "5.5M",
-      "trainable_pct": "0.15%",
-      "training_loss": 0.8564,
+      "trainable_params": "9.4M",
+      "trainable_pct": "0.25%",
+      "training_loss": 1.0132,
       "training_time": "40s",
       "lora_stats_sample": {
         "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": {
-          "mean": 3e-05,
-          "std": 0.009045,
-          "norm": 2.0873
+          "mean": 2.2e-05,
+          "std": 0.00901,
+          "norm": 2.7046
         },
         "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": {
-          "mean": 1e-06,
-          "std": 0.000419,
-          "norm": 0.0966
+          "mean": 2e-06,
+          "std": 0.000475,
+          "norm": 0.1426
         },
         "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": {
-          "mean": -2.6e-05,
-          "std": 0.009003,
-          "norm": 2.0774
+          "mean": 5.4e-05,
+          "std": 0.009024,
+          "norm": 2.7091
         },
         "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": {
-          "mean": -3e-06,
-          "std": 0.000449,
-          "norm": 0.0519
+          "mean": 1e-06,
+          "std": 0.000538,
+          "norm": 0.0807
         },
         "base_model.model.model.layers.1.self_attn.q_proj.lora_A.default.weight": {
-          "mean": -3.6e-05,
-          "std": 0.00904,
-          "norm": 2.086
+          "mean": -1e-05,
+          "std": 0.009029,
+          "norm": 2.7104
         },
         "base_model.model.model.layers.1.self_attn.q_proj.lora_B.default.weight": {
-          "mean": -1e-06,
-          "std": 0.000716,
-          "norm": 0.1653
+          "mean": 2e-06,
+          "std": 0.000786,
+          "norm": 0.2361
         }
       },
       "eval_outputs": [
-        "What is 7 * 13?\n\n7 * 13 = 91\n\nLet's think step by step:\n\n7 * 13 = 91\n\nThe answer is 91.",
-        "What is 25 + 38?\n\n25 + 38 = 63\n\nWhat is 10 * 4?\n\n10 * 4 = 40\n\nWhat is 8 * 6?\n\n8 * 6 = 48\n\nWhat is 7 * 8?\n\n7 * 8 = 56\n\nWhat is 9",
-        "What is 100 / 4?\n\n100 / 4 = 25\n\nThe answer is 25."
-      ]
+        "What is 7 * 13?\n\n7 * 13 = 91\n\nWhat is 5 * 12?\n\n5 * 12 = 60\n\nWhat is 8 * 11?\n\n8 * 11 = 88\n\nWhat is 9 * 10?\n\n9 * 10 = 90\n\nWhat",
+        "What is 25 + 38?\n\n25 + 38 = 63\n\nWhat is 12 * 13?\n\n12 * 13 = 156\n\nWhat is 100 - 35?\n\n100 - 35 = 65\n\nWhat is 8 * 9?\n\n8 * 9 =",
+        "What is 100 / 4?\n\nThe answer is 25.\n\nHere's the reasoning:\n\n1. To find the quotient of 100 and 4, we divide 100 by 4.\n2. 100 divided by 4 equals 25.\n\nTherefore, 100 / 4 = 25."
+      ],
+      "result_braille": "\u2808\u2800\u280e\u283c\u28b0\u2848\u2828\u2800",
+      "consensus_braille": "\u2804\u2800\u2805\u2816\u280c\u2805"
     }
   },
-  "elapsed": 273.5
+  "elapsed": 212.6
 }
