@@ -1,0 +1,2529 @@
+{
+  "version": 1,
+  "id_type": "uint16",
+  "policy": "Models may interpret registered records but may not create or mutate measurements.",
+  "records": [
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 88539136.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "tiiuae/Falcon3-7B-Instruct",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 88539136,
+        "paired_updates": 196
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 50149,
+      "record_sha256": "c3e5b00b1db67714c030d1acf3d690e0ebd77c92270b8f71529b2863b8101ee4"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011347864,
+      "payload": {
+        "layer": 19,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0011347864,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 52808,
+      "record_sha256": "ce481db644d5c9644b9b1f9963ee3a9541468d09e226938eff90eab7f3709278"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011229576,
+      "payload": {
+        "layer": 22,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011229576,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 3859,
+      "record_sha256": "0f1377eaf373e553f80a3431992418f333a5404604af055757c81d0433d7d56b"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011178836,
+      "payload": {
+        "layer": 23,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011178836,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 57819,
+      "record_sha256": "e1db446e310d271c94cb5ba95a94f3d026285e87026d30bd076007889933b2fa"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010950718,
+      "payload": {
+        "layer": 20,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010950718,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 38953,
+      "record_sha256": "9829199ed77d727982fddaf9d646574040287373be89e226e7f2d776c35f15d9"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010915619,
+      "payload": {
+        "layer": 21,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010915619,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 41330,
+      "record_sha256": "a172faec1019ad53f6e77a24398078ca16b7916713c18e291a0e0ede667fcf51"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010832056,
+      "payload": {
+        "layer": 24,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010832056,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 45328,
+      "record_sha256": "b110523b2c05c2640ca7c8b0214c866ccf4550cace93ebc01f99d2f959f0a051"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010573678,
+      "payload": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010573678,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 9851,
+      "record_sha256": "267bfe6f88a2d1556a2b29b48f6572a526a4d7626dfebb1b31eba31b5de4e84e"
+    },
+    {
+      "key": "adapter:falcon3:7b:falcon3-7b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010517359,
+      "payload": {
+        "layer": 6,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010517359,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 41394,
+      "record_sha256": "a1b27b1eed35ad0b5f0e2e69b6fa1d084bd12e95538dd8500d6980bedb4f85c1"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 76995584.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "unsloth/gemma-3-4b-it",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 76995584,
+        "paired_updates": 400
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 22066,
+      "record_sha256": "56325892cab68129523f88f4e320b43c39c6412e48b632c4f4d3b4be9deff7b5"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011644955,
+      "payload": {
+        "layer": 23,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011644955,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 59161,
+      "record_sha256": "e719ed3f55a856114c6ade0f823f66b4df57b62adbb79f3a9e0f0a05a49ef310"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011398414,
+      "payload": {
+        "layer": 24,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011398414,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 19734,
+      "record_sha256": "4d16015d8ea7071ff773368f553c33660697229f7a8b610593e159aad69a12e3"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011326002,
+      "payload": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011326002,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 49863,
+      "record_sha256": "c2c79d9664568c2231c7ba4cb59e579deeb80ad51eebbfca3197a18a367caef4"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.001127563,
+      "payload": {
+        "layer": 21,
+        "module": "o_proj",
+        "delta_rms_upper_bound": 0.001127563,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 19151,
+      "record_sha256": "4acf7c9395de2d3341c04d0091322f3f57699cd677b099d278b682222c8f87bc"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011143459,
+      "payload": {
+        "layer": 6,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011143459,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 877,
+      "record_sha256": "036dffc926bd07ec4afb42bcde8022585a5f1e7f385de74b250d79148e67f3a3"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011140112,
+      "payload": {
+        "layer": 7,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011140112,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 7719,
+      "record_sha256": "1e276e0b4e89fb44ed7d455cf91286e1623f04d920fc80e1aeb571d995b4b97e"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011083321,
+      "payload": {
+        "layer": 8,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011083321,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 36565,
+      "record_sha256": "8ed56c06e23f7f15a865989d9c5bf26acf0e96dfb42fd48a5ff2749635c8cb8f"
+    },
+    {
+      "key": "adapter:gemma3:4b:gemma3-4b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0011054572,
+      "payload": {
+        "layer": 22,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0011054572,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 25643,
+      "record_sha256": "642bb1cb39c9ae035851f29626f6ace9930b6d7dbe4d88900c6514fb7d391274"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.1",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 95191040.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "THUDM/glm-4-9b-chat-hf",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 95191040,
+        "paired_updates": 240
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 4991,
+      "record_sha256": "137f0a29e0df92bd9e6b8c7267a4aa760094b125d8520f8eface0d53285e80f7"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.2",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007341174,
+      "payload": {
+        "layer": 1,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007341174,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 46796,
+      "record_sha256": "b6cc39834d485adf4ded6289f6a249bacf0062ae5c4d2a3a6e8445873bb1fbe1"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.3",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006912334,
+      "payload": {
+        "layer": 8,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0006912334,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 62918,
+      "record_sha256": "f5c6025357d538d11b5222a475179108330cba18f6841b92adc2a2c2485e5cba"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.4",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006891968,
+      "payload": {
+        "layer": 25,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0006891968,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 13679,
+      "record_sha256": "356fe8a24e90fc50d3955c125a84979dbf300d368e8c4b594c311f8b8366d251"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.5",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006812841,
+      "payload": {
+        "layer": 21,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0006812841,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 22878,
+      "record_sha256": "595eee0c9205ba8f5f0cab501c61cba8c3db648cbe6a28767ee4e021becc5f2c"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.6",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006808616,
+      "payload": {
+        "layer": 1,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0006808616,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 27482,
+      "record_sha256": "6b5a7851c59be5c07ff5fdb066ff3f0b9295e1ab3c29eecb06baeb84f0d734a8"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.7",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006733564,
+      "payload": {
+        "layer": 24,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0006733564,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 33186,
+      "record_sha256": "81a20d3455df668cf5a080e689c17ec7598957849be045f33c2622d00c647a99"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.8",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006692688,
+      "payload": {
+        "layer": 22,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0006692688,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 54971,
+      "record_sha256": "d6bb6ba1cc9fb2330fabf16646eefb770e2c068ae89457fa4bd6c81938fe7ca0"
+    },
+    {
+      "key": "adapter:glm4:9b:glm4-9b-braille-literacy-v1:ADAPTER.9",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006642585,
+      "payload": {
+        "layer": 23,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0006642585,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 63925,
+      "record_sha256": "f9b56fcf0283b3bdec021dbd1316386c4917ce976924f720412d6cb3cf11f9c0"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.1",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 98959360.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "ibm-granite/granite-3.3-8b-instruct",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 98959360,
+        "paired_updates": 280
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 2878,
+      "record_sha256": "0b3e56595ef0af9b489214bd9f818ff62006b01331c5d43de6bb6ef37f714800"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.2",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007538766,
+      "payload": {
+        "layer": 7,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007538766,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 59249,
+      "record_sha256": "e771aaabd2979011fd64c5a5c6bcd845fbeb112db57e381b8a29805342a79255"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.3",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007207024,
+      "payload": {
+        "layer": 36,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007207024,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 6948,
+      "record_sha256": "1b24d6621150017abf18bc9904b15efd9f2d93abda01eee28ca2cbece03203a4"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.4",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.000718103,
+      "payload": {
+        "layer": 8,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.000718103,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 62330,
+      "record_sha256": "f37a7a090eaececc6726149987b5277912b7b805b2b59d4a78c8d6bc11472b23"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.5",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007169616,
+      "payload": {
+        "layer": 5,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007169616,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 42643,
+      "record_sha256": "a693dbeee2471f30c23a2af7284c675ab546167ad4c728eebe260996584257d0"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.6",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007133467,
+      "payload": {
+        "layer": 6,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007133467,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 56797,
+      "record_sha256": "dddd5cc84439122b3cba79155379a1c58981b1356d4a214b619cf542d04480ea"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.7",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007041709,
+      "payload": {
+        "layer": 4,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007041709,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 902,
+      "record_sha256": "0386aa87224150cfe3ea50a87fbb8bc67707e7480283c4cb6135a88e601078e1"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.8",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007029097,
+      "payload": {
+        "layer": 35,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0007029097,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 11208,
+      "record_sha256": "2bc8e24b70737c0b3fa745fc68a55bfc5b5bd6196dccad094c93af5b21d023eb"
+    },
+    {
+      "key": "adapter:granite3.3:8b:granite3.3-8b-braille-literacy-v1:ADAPTER.9",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006970636,
+      "payload": {
+        "layer": 9,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0006970636,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 25875,
+      "record_sha256": "65132888ab21c0adfda7dc2e888a8575da17f17f4949134022566a7e7dafc439"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 83886080.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "mistralai/Mistral-7B-Instruct-v0.3",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 83886080,
+        "paired_updates": 224
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 54837,
+      "record_sha256": "d6352bb5e2daf56b37642b50d166956fda09fea4381f25a2d915cb3f74656e4e"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007405411,
+      "payload": {
+        "layer": 0,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007405411,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 44401,
+      "record_sha256": "ad7135a700f215b916a81c9fbfb5425406d6eb5ba7d876aa0ce405c866d3d9e7"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007151514,
+      "payload": {
+        "layer": 0,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007151514,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 6317,
+      "record_sha256": "18ad0a90c9675d2db4f699cdcb6d0da46bc83d195d3b50efda3572ec93b914a1"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007106346,
+      "payload": {
+        "layer": 14,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007106346,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 30934,
+      "record_sha256": "78d6ba283266b3fc83b5028dfbf29f21a6f46a07a203d8ddef8c4e3009947f23"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007088773,
+      "payload": {
+        "layer": 0,
+        "module": "up_proj",
+        "delta_rms_upper_bound": 0.0007088773,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 23635,
+      "record_sha256": "5c532645b2e8b34ee14c5472e37450bb388621e9cccc999ffe59f05d263089f1"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.000704128,
+      "payload": {
+        "layer": 0,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.000704128,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 58533,
+      "record_sha256": "e4a5f55b1ca34c00afa5df884624b3d861ff292f312db32df72fb1d9d70974d1"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007033161,
+      "payload": {
+        "layer": 17,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007033161,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 6010,
+      "record_sha256": "177afd971623cf3119ce4dc2e19af8fae0c5c21bd439bb62dfe0dcbf02f73eb6"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007023757,
+      "payload": {
+        "layer": 14,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007023757,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 29917,
+      "record_sha256": "74dd84f2cf95838dd6f2e5e94e4cbb14938f667055d693d63e5c53b0213f5c42"
+    },
+    {
+      "key": "adapter:mistral:7b:mistral-7b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0006999058,
+      "payload": {
+        "layer": 0,
+        "module": "o_proj",
+        "delta_rms_upper_bound": 0.0006999058,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 55976,
+      "record_sha256": "daa8534db147aa4ce703e7c948989902d288399d77ade93a13769cef3c440b58"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 79953920.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "allenai/OLMo-2-1124-7B-Instruct",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 79953920,
+        "paired_updates": 224
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 477,
+      "record_sha256": "01ddf72e2c382a01ea0f02152454203059c06353bac6e52814a73474e4a39783"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.001030858,
+      "payload": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.001030858,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 54008,
+      "record_sha256": "d2f8a61321cf43d48b1196bb9f547ed0b3f0dac4a2529128bb3668f1aa136110"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010294684,
+      "payload": {
+        "layer": 24,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010294684,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 47456,
+      "record_sha256": "b960150d2a0017b2f457fdd7a2375b5dae1bc91ebb19198e286809f923c61b86"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010176754,
+      "payload": {
+        "layer": 22,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010176754,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 57744,
+      "record_sha256": "e1900b843319c6f35463601acdb4c98d33ea532ca5751944afc1d6819776f40a"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010098425,
+      "payload": {
+        "layer": 26,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010098425,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 24319,
+      "record_sha256": "5effa8b314dad5c8a679582f733928b4836c616ef08cb5fa6ee76c171a0700da"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010066524,
+      "payload": {
+        "layer": 27,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010066524,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 11471,
+      "record_sha256": "2ccf86609f43e85d6e5ff2980bccab66cb2a4794d573df743aa6d067bf4f65cf"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010025289,
+      "payload": {
+        "layer": 23,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010025289,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 38651,
+      "record_sha256": "96fb3f2812373ac87afd4d439d7a7506377367d64c63ea4f6e0259d76621a8ff"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0009847196,
+      "payload": {
+        "layer": 28,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009847196,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 4389,
+      "record_sha256": "112565861a3e141c924607035bb35a06a9610ea2d0a2b8e45c0137e3a94720f1"
+    },
+    {
+      "key": "adapter:olmo2:7b:olmo2-7b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0009666236,
+      "payload": {
+        "layer": 21,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009666236,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 26702,
+      "record_sha256": "684e1a604549ff1952118aa6cdd868a7cb08d92afa2391d9dcae592061d8822f"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.1",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 66060288.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "Qwen/Qwen3-4B",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 66060288,
+        "paired_updates": 252
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 65494,
+      "record_sha256": "ffd624aada49be0ca9f8ba99af4eec96c653caa56f713779bfb949a4e19b11cd"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.2",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010899367,
+      "payload": {
+        "layer": 30,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010899367,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 60797,
+      "record_sha256": "ed7d1040d4a633d94ea9d77c996cbeb8b1b0a2aa900a932a405024c9a24597a0"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.3",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010682002,
+      "payload": {
+        "layer": 31,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010682002,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 11551,
+      "record_sha256": "2d1ff870d3b7f357d6ee7e00c64e4b07400f8c46f1bf788e29694d96aecf92e2"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.4",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010638317,
+      "payload": {
+        "layer": 29,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010638317,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 49342,
+      "record_sha256": "c0be8a329d813b3978c8fcfdee7852a077c7efde4ec28eb2ac83dcdcf5034720"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.5",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010474704,
+      "payload": {
+        "layer": 32,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010474704,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 47110,
+      "record_sha256": "b806cdc68501644d9ecc091d23d8d4635f2a036a65068d5262c9bdf17e8de1ff"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.6",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010162574,
+      "payload": {
+        "layer": 27,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010162574,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 14467,
+      "record_sha256": "3883cb7ecebae9d398ae4633caa31ea42be4b56c0ab79f2a940d12f5f57da01f"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.7",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0010065459,
+      "payload": {
+        "layer": 26,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0010065459,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 55689,
+      "record_sha256": "d9894e4dbf3eaea92aa46ba52582afd5d7f18fa0881d5e46c06beec6324c44f0"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.8",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0009954633,
+      "payload": {
+        "layer": 28,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009954633,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 26033,
+      "record_sha256": "65b1fd092131e5fb406997aa73527f8138fa440a083535b7d583ebca16479713"
+    },
+    {
+      "key": "adapter:qwen3:4b:qwen3-4b-braille-literacy-v3:ADAPTER.9",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0009903381,
+      "payload": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009903381,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "qwen3-4b-braille-literacy-v3-profile.json",
+      "source_sha256": "2844dbefc0b4c6f416b1e7a2ec6de0b5ba163439c73542457fecc8faaffd8e56",
+      "evidence_id": 14186,
+      "record_sha256": "376aa9ede3188108c98c17c14ef25a7263ec1cbf57e66f463858b04f410ced71"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 125829120.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "upstage/SOLAR-10.7B-Instruct-v1.0",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 125829120,
+        "paired_updates": 336
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 32097,
+      "record_sha256": "7d61b6553e78f16807eee819727e218d0a3f2de999fcf91f47d4a2ae885b3c42"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007498015,
+      "payload": {
+        "layer": 31,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007498015,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 2473,
+      "record_sha256": "09a97ec3826ada18fac5cee386214ed9ccb5ac764f89e2ef3148466897b6dc04"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007470744,
+      "payload": {
+        "layer": 32,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007470744,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 37037,
+      "record_sha256": "90ada930a21220620595ae66a7bbbb43d88adbef4d5c4062a64b08f58967058e"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007460123,
+      "payload": {
+        "layer": 31,
+        "module": "k_proj",
+        "delta_rms_upper_bound": 0.0007460123,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 54530,
+      "record_sha256": "d502a5b236969e064439b05d754848b8a108134e105bad18f65a1d50a5cc3bcc"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007356442,
+      "payload": {
+        "layer": 32,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007356442,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 55659,
+      "record_sha256": "d96ba17c2c78adc977e495c15ef3acf56b32b67747243d03101f8a4b535f11b5"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007285806,
+      "payload": {
+        "layer": 29,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007285806,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 48346,
+      "record_sha256": "bcda8ef660c3ee17b4274193548c7ae116dd17867b717d0e5ece6b3bdbd4a741"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007266408,
+      "payload": {
+        "layer": 30,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007266408,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 33804,
+      "record_sha256": "840cd8d577d44cd21b0aa52dd04fb23ecead7329bf30f771fd6331cd2a4df1a8"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007229125,
+      "payload": {
+        "layer": 26,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007229125,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 4732,
+      "record_sha256": "127cec40a995bcac20d228c423c5da781ce90ac4277146dedf65ad5a92bb2d36"
+    },
+    {
+      "key": "adapter:solar:10.7b:solar-10.7b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0007189319,
+      "payload": {
+        "layer": 34,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0007189319,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 21162,
+      "record_sha256": "52aa09b4ecffac27e002140090ae47742ba98a448394a865315279ea2a97498f"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.1",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "adapter_parameter_count",
+      "value": 72613888.0,
+      "payload": {
+        "claim": "adapter identity and scale",
+        "base_model": "01-ai/Yi-6B-Chat",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 72613888,
+        "paired_updates": 224
+      },
+      "limitations": [
+        "parameter count is not effect size",
+        "not causal"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 19638,
+      "record_sha256": "4cb6ff42cc9e3b60a610ca84cfda2d41ce5bb75b740adb95a5899e8f325929e3"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.2",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008917578,
+      "payload": {
+        "layer": 26,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008917578,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 57131,
+      "record_sha256": "df2b5a8bbb9ffb1e6431471eb8b3b4325e42b21e8348c3327156907c1b87594c"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.3",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.000890898,
+      "payload": {
+        "layer": 28,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.000890898,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 33963,
+      "record_sha256": "84ab5fa0ddc37ecfa18eed3126ec6fb026c274056838320d929e6eca91defe2b"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.4",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008900304,
+      "payload": {
+        "layer": 27,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008900304,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 56163,
+      "record_sha256": "db63cd2307b9bb4a7dd6f603ac54c224e752c04360e884a7e275a59aa23e577e"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.5",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008882071,
+      "payload": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008882071,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 15478,
+      "record_sha256": "3c768e1f9fcacab1d954ac0a89294fd735c679abb1e992c72d98531c22923d35"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.6",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008714574,
+      "payload": {
+        "layer": 24,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008714574,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 2009,
+      "record_sha256": "07d96736aa8bde3426e2023494f7ca20851f309b6917f71e651a6c54d7afd42b"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.7",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008574405,
+      "payload": {
+        "layer": 29,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008574405,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 34835,
+      "record_sha256": "881325cd74dbb4e69f0ee4195194da0d857b69f27e22aa61ef4a9e58e2f83fe2"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.8",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008499569,
+      "payload": {
+        "layer": 23,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0008499569,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 33263,
+      "record_sha256": "81ef032ac516f0c43ebf0368dad5090b2a9a9fe89e76217b1e170d1a507e9792"
+    },
+    {
+      "key": "adapter:yi:6b:yi-6b-braille-literacy-v2:ADAPTER.9",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "adapter",
+      "metric": "delta_rms_upper_bound",
+      "value": 0.0008312161,
+      "payload": {
+        "layer": 26,
+        "module": "up_proj",
+        "delta_rms_upper_bound": 0.0008312161,
+        "rank": 32
+      },
+      "limitations": [
+        "Frobenius-derived upper bound",
+        "not exact B@A norm",
+        "not causal",
+        "within-adapter ranking only"
+      ],
+      "source_file": "braille_fleet_results.json",
+      "source_sha256": "7f692650c84577f1557792a54d8efdcfae8bdcd6b96b68a7d3f249b25978b939",
+      "evidence_id": 3835,
+      "record_sha256": "0efb235c2c28d24f0b98491a90f6573fa6eaa5d66c9407455e6216b2b951d57b"
+    },
+    {
+      "key": "causal:mistral:7b:late_norm_scale_0.5:standardized_margin_response",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "mean_abs_standardized_margin_change",
+      "value": 0.191601,
+      "payload": {
+        "condition": "late.scale_0.5",
+        "layer": 31,
+        "module": "input_layernorm",
+        "scale": 0.5,
+        "ci95": [
+          0.159274,
+          0.223352
+        ],
+        "prediction_flip_pct": 0.0,
+        "benchmark_items": 32,
+        "sham_passed": true
+      },
+      "limitations": [
+        "causal only for this activation intervention",
+        "single checkpoint",
+        "single 32-item benchmark",
+        "not evidence of identical algorithms"
+      ],
+      "source_file": "mechanism_results.json",
+      "source_sha256": "bb3cc049428e971775101d94074d1edb03c8678555bc14100a00d86c35fa15c1",
+      "evidence_id": 40137,
+      "record_sha256": "9cc996222ea0c577117399421d2edf2143981ca3ba7903bd2b2c0a81dfb8dc61"
+    },
+    {
+      "key": "causal:phi4-mini:late_norm_scale_0.5:standardized_margin_response",
+      "owner_model": "phi4-mini",
+      "owner_identity": null,
+      "certified_owner": false,
+      "level": "causal",
+      "metric": "mean_abs_standardized_margin_change",
+      "value": 0.30304,
+      "payload": {
+        "condition": "late.scale_0.5",
+        "layer": 31,
+        "module": "input_layernorm",
+        "scale": 0.5,
+        "ci95": [
+          0.23547,
+          0.381872
+        ],
+        "prediction_flip_pct": 0.0,
+        "benchmark_items": 32,
+        "sham_passed": true
+      },
+      "limitations": [
+        "causal only for this activation intervention",
+        "single checkpoint",
+        "single 32-item benchmark",
+        "not evidence of identical algorithms"
+      ],
+      "source_file": "mechanism_results.json",
+      "source_sha256": "bb3cc049428e971775101d94074d1edb03c8678555bc14100a00d86c35fa15c1",
+      "evidence_id": 64111,
+      "record_sha256": "fa6f22d77a5e5687bc88c95a31548df124f11bb6b3017a24b3c15b1f93890699"
+    },
+    {
+      "key": "causal:qwen3:4b:late_norm_scale_0.5:standardized_margin_response",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "mean_abs_standardized_margin_change",
+      "value": 0.272669,
+      "payload": {
+        "condition": "late.scale_0.5",
+        "layer": 35,
+        "module": "input_layernorm",
+        "scale": 0.5,
+        "ci95": [
+          0.238721,
+          0.304698
+        ],
+        "prediction_flip_pct": 3.125,
+        "benchmark_items": 32,
+        "sham_passed": true
+      },
+      "limitations": [
+        "causal only for this activation intervention",
+        "single checkpoint",
+        "single 32-item benchmark",
+        "not evidence of identical algorithms"
+      ],
+      "source_file": "mechanism_results.json",
+      "source_sha256": "bb3cc049428e971775101d94074d1edb03c8678555bc14100a00d86c35fa15c1",
+      "evidence_id": 63485,
+      "record_sha256": "f7fd81e20c53cee6bb2465265a214da710f99ccc9ba12340eb10b8f3221508bf"
+    },
+    {
+      "key": "certification:falcon3:7b:falcon3-7b-braille-literacy-v2",
+      "owner_model": "falcon3:7b",
+      "owner_identity": "falcon3:7b+falcon3-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "falcon3-7b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 36933,
+      "record_sha256": "904580894e400305b0f1e90f46651acecb3c0073ed8f88b81fd9e9f19c51f488"
+    },
+    {
+      "key": "certification:gemma3:4b:gemma3-4b-braille-literacy-v2",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "gemma3-4b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 7595,
+      "record_sha256": "1dabcb3c5c233087685b5053b276021b6a70be82626983c4e3c26e01614756e3"
+    },
+    {
+      "key": "certification:glm4:9b:glm4-9b-braille-literacy-v1",
+      "owner_model": "glm4:9b",
+      "owner_identity": "glm4:9b+glm4-9b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "glm4-9b-braille-literacy-v1"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 13506,
+      "record_sha256": "34c202828999561b46c2a2798dfb1683d06c467298236cecb82a87c6f44bee5e"
+    },
+    {
+      "key": "certification:granite3.3:8b:granite3.3-8b-braille-literacy-v1",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "granite3.3-8b-braille-literacy-v1"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 43935,
+      "record_sha256": "ab9fb2b555999257618de5a0d573e59e41da2660296aaa60c5153d236e7c6c92"
+    },
+    {
+      "key": "certification:llama3.2:3b:llama3.2-3b-braille-literacy-v1",
+      "owner_model": "llama3.2:3b",
+      "owner_identity": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "llama3.2-3b-braille-literacy-v1"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 51193,
+      "record_sha256": "c7f9af7eb5d40fe79e3f59e5658c303668e1035cdc32b7fb89f2c6b574fb0df4"
+    },
+    {
+      "key": "certification:mistral:7b:mistral-7b-braille-literacy-v2",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "mistral-7b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 58280,
+      "record_sha256": "e3a8a5ba7ea63c68208bb9be2d6e6bf84f465d7e24067bc52c136d02aedcb6eb"
+    },
+    {
+      "key": "certification:olmo2:7b:olmo2-7b-braille-literacy-v2",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "olmo2-7b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 30173,
+      "record_sha256": "75dd3895caed3755c368fed140c2b530d3832e5a21c3ef7a2eeb492d58cbc9d8"
+    },
+    {
+      "key": "certification:qwen3:4b:qwen3-4b-braille-literacy-v3",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "qwen3-4b-braille-literacy-v3"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 20790,
+      "record_sha256": "5136c75a71357c5a510ca217f1025d74801e091c667d2eaf41ec1069a88179cd"
+    },
+    {
+      "key": "certification:solar:10.7b:solar-10.7b-braille-literacy-v2",
+      "owner_model": "solar:10.7b",
+      "owner_identity": "solar:10.7b+solar-10.7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "solar-10.7b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 23420,
+      "record_sha256": "5b7c4dc106456bc016460bfec60ad1df0e465a5d7684aa978651cc76d7e80ab3"
+    },
+    {
+      "key": "certification:yi:6b:yi-6b-braille-literacy-v2",
+      "owner_model": "yi:6b",
+      "owner_identity": "yi:6b+yi-6b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "certification",
+      "metric": "exact_protocol_accuracy",
+      "value": 1.0,
+      "payload": {
+        "correct": 28,
+        "total": 28,
+        "seeds": [
+          17017,
+          29029
+        ],
+        "task_sha256": "8ec060936d917d4611238e6a4db29609361dc4171f242491a74442bb3e0e2766",
+        "adapter": "yi-6b-braille-literacy-v2"
+      },
+      "limitations": [
+        "protocol competence only",
+        "not evidence of semantic truth or general capability"
+      ],
+      "source_file": "braille_certified_admission.json",
+      "source_sha256": "7a31a18ee7af08ed62f78c29f316b13bfb1717e7d94a7f3f8f681c0a996a315a",
+      "evidence_id": 61801,
+      "record_sha256": "f169a0227d91d1f19d3f04a1217a56023affa64777600b5a79c7c020be74d445"
+    },
+    {
+      "key": "static:gemma3:4b:norm_growth:first_to_last",
+      "owner_model": "gemma3:4b",
+      "owner_identity": "gemma3:4b+gemma3-4b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "static",
+      "metric": "first_to_last_norm_growth",
+      "value": 16.12,
+      "payload": {
+        "architecture": "gemma3",
+        "parameters": "4.30B",
+        "layers": 34,
+        "first_norm": 2.6854,
+        "last_norm": 43.2872
+      },
+      "limitations": [
+        "host-selected GGUF statistic",
+        "quantization-sensitive",
+        "architecture scales not directly comparable",
+        "not causal"
+      ],
+      "source_file": "roundtable_core5_fast_consensus.json",
+      "source_sha256": "a857949a400cc0e656400123ec1f7cbd1ed5ebc890b79178599ff366735144d8",
+      "evidence_id": 51836,
+      "record_sha256": "ca7cecdeba0a5e4338a8d6fe8a889b47d70ef0bd6980b51b0a5ffeb5bf1a5f77"
+    },
+    {
+      "key": "static:llama3.2:3b:norm_growth:first_to_last",
+      "owner_model": "llama3.2:3b",
+      "owner_identity": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "static",
+      "metric": "first_to_last_norm_growth",
+      "value": 3.82,
+      "payload": {
+        "architecture": "llama",
+        "parameters": "3.21B",
+        "layers": 28,
+        "first_norm": 0.1119,
+        "last_norm": 0.428
+      },
+      "limitations": [
+        "host-selected GGUF statistic",
+        "quantization-sensitive",
+        "architecture scales not directly comparable",
+        "not causal"
+      ],
+      "source_file": "roundtable_core5_fast_consensus.json",
+      "source_sha256": "a857949a400cc0e656400123ec1f7cbd1ed5ebc890b79178599ff366735144d8",
+      "evidence_id": 36032,
+      "record_sha256": "8cc0bb6b552dadaf8e9781d795bca5e583a71deb5a8731ddf931a4e28b800486"
+    },
+    {
+      "key": "static:mistral:7b:norm_growth:first_to_last",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "static",
+      "metric": "first_to_last_norm_growth",
+      "value": 13.22,
+      "payload": {
+        "architecture": "llama",
+        "parameters": "7.25B",
+        "layers": 32,
+        "first_norm": 0.2506,
+        "last_norm": 3.3113
+      },
+      "limitations": [
+        "host-selected GGUF statistic",
+        "quantization-sensitive",
+        "architecture scales not directly comparable",
+        "not causal"
+      ],
+      "source_file": "roundtable_core5_fast_consensus.json",
+      "source_sha256": "a857949a400cc0e656400123ec1f7cbd1ed5ebc890b79178599ff366735144d8",
+      "evidence_id": 43820,
+      "record_sha256": "ab2c1a62234e370010184b26d7eaa03f6261818b13bf3e7410c1abe4d363caff"
+    },
+    {
+      "key": "static:phi4-mini:norm_growth:first_to_last",
+      "owner_model": "phi4-mini",
+      "owner_identity": null,
+      "certified_owner": false,
+      "level": "static",
+      "metric": "first_to_last_norm_growth",
+      "value": 1.79,
+      "payload": {
+        "architecture": "phi3",
+        "parameters": "3.84B",
+        "layers": 32,
+        "first_norm": 0.0899,
+        "last_norm": 0.1612
+      },
+      "limitations": [
+        "host-selected GGUF statistic",
+        "quantization-sensitive",
+        "architecture scales not directly comparable",
+        "not causal"
+      ],
+      "source_file": "roundtable_core5_fast_consensus.json",
+      "source_sha256": "a857949a400cc0e656400123ec1f7cbd1ed5ebc890b79178599ff366735144d8",
+      "evidence_id": 3038,
+      "record_sha256": "0bdec3301a8b26cba53ad1d3b51f995d17e1501f9bf567378d5c420a272c7ef0"
+    },
+    {
+      "key": "static:qwen3:4b:norm_growth:first_to_last",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "static",
+      "metric": "first_to_last_norm_growth",
+      "value": 3.15,
+      "payload": {
+        "architecture": "qwen3",
+        "parameters": "4.02B",
+        "layers": 36,
+        "first_norm": 1.0796,
+        "last_norm": 3.3955
+      },
+      "limitations": [
+        "host-selected GGUF statistic",
+        "quantization-sensitive",
+        "architecture scales not directly comparable",
+        "not causal"
+      ],
+      "source_file": "roundtable_core5_fast_consensus.json",
+      "source_sha256": "a857949a400cc0e656400123ec1f7cbd1ed5ebc890b79178599ff366735144d8",
+      "evidence_id": 45764,
+      "record_sha256": "b2c4523e24cdb2635b8cad86a6204821c308af1aa2ddfdf23f01d60442cc824a"
+    }
+  ],
+  "registry_sha256": "443ae8a5f9b2ed6b423bcc8b90b480c3d73eddce125cc3ebec7087c6e0c5a0d0"
+}

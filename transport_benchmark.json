@@ -1,0 +1,170 @@
+{
+  "semantic": {
+    "sender_idx": 0,
+    "round_idx": 2,
+    "operation": "challenge",
+    "subject_idx": 1,
+    "evidence_id": 513,
+    "relation": "needs_test",
+    "confidence_pct": 87,
+    "caveat_flags": 5,
+    "value": -0.25
+  },
+  "representations": {
+    "braille": "⠠⠁⠀⠂⠃⠁⠁⠂⠇⡗⠅⠀⢴⠔",
+    "compact_json": "{\"sender_idx\":0,\"round_idx\":2,\"operation\":\"challenge\",\"subject_idx\":1,\"evidence_id\":513,\"relation\":\"needs_test\",\"confidence_pct\":87,\"caveat_flags\":5,\"value\":-0.25}",
+    "readable_json": "{\n  \"sender_idx\": 0,\n  \"round_idx\": 2,\n  \"operation\": \"challenge\",\n  \"subject_idx\": 1,\n  \"evidence_id\": 513,\n  \"relation\": \"needs_test\",\n  \"confidence_pct\": 87,\n  \"caveat_flags\": 5,\n  \"value\": -0.25\n}",
+    "base64": "IAEAAgMBAQIHVwUAtBQ=",
+    "hex": "200100020301010207570500b414"
+  },
+  "results": [
+    {
+      "model": "falcon3:7b",
+      "hf": "tiiuae/Falcon3-7B-Instruct",
+      "counts": {
+        "braille": 38,
+        "compact_json": 59,
+        "readable_json": 98,
+        "base64": 11,
+        "hex": 28
+      }
+    },
+    {
+      "model": "gemma3:4b",
+      "hf": "unsloth/gemma-3-4b-it",
+      "counts": {
+        "braille": 38,
+        "compact_json": 59,
+        "readable_json": 95,
+        "base64": 12,
+        "hex": 28
+      }
+    },
+    {
+      "model": "glm4:9b",
+      "hf": "THUDM/glm-4-9b-chat-hf",
+      "counts": {
+        "braille": 35,
+        "compact_json": 50,
+        "readable_json": 78,
+        "base64": 14,
+        "hex": 13
+      }
+    },
+    {
+      "model": "granite3.3:8b",
+      "hf": "ibm-granite/granite-3.3-8b-instruct",
+      "counts": {
+        "braille": 42,
+        "compact_json": 60,
+        "readable_json": 87,
+        "base64": 12,
+        "hex": 28
+      }
+    },
+    {
+      "model": "llama3.2:3b",
+      "hf": "unsloth/Llama-3.2-3B-Instruct",
+      "counts": {
+        "braille": 35,
+        "compact_json": 49,
+        "readable_json": 77,
+        "base64": 15,
+        "hex": 10
+      }
+    },
+    {
+      "model": "mistral:7b",
+      "hf": "mistralai/Mistral-7B-Instruct-v0.3",
+      "counts": {
+        "braille": 39,
+        "compact_json": 66,
+        "readable_json": 102,
+        "base64": 16,
+        "hex": 29
+      }
+    },
+    {
+      "model": "olmo2:7b",
+      "hf": "allenai/OLMo-2-1124-7B-Instruct",
+      "counts": {
+        "braille": 35,
+        "compact_json": 49,
+        "readable_json": 77,
+        "base64": 15,
+        "hex": 10
+      }
+    },
+    {
+      "model": "phi4-mini",
+      "hf": "microsoft/phi-4-mini-instruct",
+      "counts": {
+        "braille": 38,
+        "compact_json": 50,
+        "readable_json": 77,
+        "base64": 12,
+        "hex": 10
+      }
+    },
+    {
+      "model": "qwen3:4b",
+      "hf": "Qwen/Qwen3-4B",
+      "counts": {
+        "braille": 26,
+        "compact_json": 53,
+        "readable_json": 81,
+        "base64": 15,
+        "hex": 28
+      }
+    },
+    {
+      "model": "solar:10.7b",
+      "hf": "upstage/SOLAR-10.7B-Instruct-v1.0",
+      "counts": {
+        "braille": 39,
+        "compact_json": 66,
+        "readable_json": 102,
+        "base64": 16,
+        "hex": 29
+      }
+    },
+    {
+      "model": "yi:6b",
+      "hf": "01-ai/Yi-6B-Chat",
+      "counts": {
+        "braille": 42,
+        "compact_json": 74,
+        "readable_json": 102,
+        "base64": 15,
+        "hex": 28
+      }
+    }
+  ],
+  "aggregate": {
+    "braille": {
+      "mean": 37.0,
+      "min": 26,
+      "max": 42
+    },
+    "compact_json": {
+      "mean": 57.72727272727273,
+      "min": 49,
+      "max": 74
+    },
+    "readable_json": {
+      "mean": 88.72727272727273,
+      "min": 77,
+      "max": 102
+    },
+    "base64": {
+      "mean": 13.909090909090908,
+      "min": 11,
+      "max": 16
+    },
+    "hex": {
+      "mean": 21.90909090909091,
+      "min": 10,
+      "max": 29
+    }
+  }
+}

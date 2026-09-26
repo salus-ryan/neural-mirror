@@ -1,0 +1,321 @@
+{
+  "provenance": {
+    "source": "paired_adapter_eval_results.json",
+    "source_sha256": "586321d3f892fbd11f94e6c5d7cb243a043adb72a9a48e2739130f42a2145636",
+    "protocol_diagnostic_seeds": [
+      41041,
+      53053
+    ]
+  },
+  "design": {
+    "models": 10,
+    "suites": [
+      "arc_challenge",
+      "hellaswag",
+      "mmlu"
+    ],
+    "items_per_model_per_suite": 64,
+    "general_items_total": 1920,
+    "bootstrap_samples": 20000,
+    "paired_same_checkpoint": true,
+    "adapter_disabled_base_control": true,
+    "all_shams_passed": true
+  },
+  "general_capability": {
+    "suites": {
+      "arc_challenge": {
+        "base_macro_accuracy": 0.814063,
+        "adapter_macro_accuracy": 0.814063,
+        "macro_change_pp": -0.0,
+        "fixed_family_item_bootstrap_ci95_pp": [
+          -1.875,
+          1.875
+        ],
+        "family_and_item_bootstrap_ci95_pp": [
+          -3.594,
+          3.125
+        ],
+        "models_improved": 6,
+        "models_unchanged": 1,
+        "models_declined": 3,
+        "macro_prediction_flip_pct": 7.031,
+        "macro_choice_kl": 0.14910976
+      },
+      "hellaswag": {
+        "base_macro_accuracy": 0.659375,
+        "adapter_macro_accuracy": 0.664062,
+        "macro_change_pp": 0.469,
+        "fixed_family_item_bootstrap_ci95_pp": [
+          -2.031,
+          2.969
+        ],
+        "family_and_item_bootstrap_ci95_pp": [
+          -3.754,
+          4.375
+        ],
+        "models_improved": 6,
+        "models_unchanged": 1,
+        "models_declined": 3,
+        "macro_prediction_flip_pct": 15.156,
+        "macro_choice_kl": 0.27136705
+      },
+      "mmlu": {
+        "base_macro_accuracy": 0.61875,
+        "adapter_macro_accuracy": 0.623437,
+        "macro_change_pp": 0.469,
+        "fixed_family_item_bootstrap_ci95_pp": [
+          -2.031,
+          2.969
+        ],
+        "family_and_item_bootstrap_ci95_pp": [
+          -2.969,
+          3.75
+        ],
+        "models_improved": 6,
+        "models_unchanged": 0,
+        "models_declined": 4,
+        "macro_prediction_flip_pct": 16.562,
+        "macro_choice_kl": 0.35771525
+      }
+    },
+    "overall_macro_change_pp": 0.312,
+    "fixed_family_item_bootstrap_ci95_pp": [
+      -1.042,
+      1.615
+    ],
+    "family_and_item_bootstrap_ci95_pp": [
+      -2.292,
+      2.708
+    ],
+    "models_net_improved": 6,
+    "models_net_unchanged": 0,
+    "models_net_declined": 4
+  },
+  "protocol": {
+    "base_correct": 0,
+    "adapter_correct": 277,
+    "total": 280,
+    "base_accuracy": 0.0,
+    "adapter_accuracy": 0.989286
+  },
+  "structured_json": {
+    "base_correct": 112,
+    "adapter_correct": 144,
+    "total": 160,
+    "base_accuracy": 0.7,
+    "adapter_accuracy": 0.9
+  },
+  "performance": {
+    "median_reported_latency_change_pct": -29.856,
+    "warning": "Base always ran before adapter, so cache warmup/order confounds latency. Do not interpret as adapter speedup."
+  },
+  "per_model": [
+    {
+      "model": "falcon3:7b",
+      "mean_general_change_pp": -2.084,
+      "general_change_ci95_pp": [
+        -5.208,
+        1.042
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 3,
+        "adapter_losses": 7,
+        "exact_two_sided_p": 0.34375
+      },
+      "suite_change_pp": {
+        "arc_challenge": 1.562,
+        "hellaswag": -4.688,
+        "mmlu": -3.125
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "gemma3:4b",
+      "mean_general_change_pp": -2.084,
+      "general_change_ci95_pp": [
+        -7.292,
+        3.125
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 11,
+        "adapter_losses": 15,
+        "exact_two_sided_p": 0.55719709
+      },
+      "suite_change_pp": {
+        "arc_challenge": -4.688,
+        "hellaswag": 1.562,
+        "mmlu": -3.125
+      },
+      "protocol": "0/28 -> 27/28",
+      "structured_json": "0/16 -> 16/16"
+    },
+    {
+      "model": "glm4:9b",
+      "mean_general_change_pp": 2.083,
+      "general_change_ci95_pp": [
+        -1.562,
+        5.729
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 8,
+        "adapter_losses": 4,
+        "exact_two_sided_p": 0.38769531
+      },
+      "suite_change_pp": {
+        "arc_challenge": 1.562,
+        "hellaswag": 3.125,
+        "mmlu": 1.562
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "0/16 -> 0/16"
+    },
+    {
+      "model": "granite3.3:8b",
+      "mean_general_change_pp": 1.042,
+      "general_change_ci95_pp": [
+        -2.604,
+        4.688
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 7,
+        "adapter_losses": 5,
+        "exact_two_sided_p": 0.77441406
+      },
+      "suite_change_pp": {
+        "arc_challenge": 4.688,
+        "hellaswag": 4.688,
+        "mmlu": -6.25
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "llama3.2:3b",
+      "mean_general_change_pp": 1.042,
+      "general_change_ci95_pp": [
+        -2.604,
+        5.208
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 8,
+        "adapter_losses": 6,
+        "exact_two_sided_p": 0.79052734
+      },
+      "suite_change_pp": {
+        "arc_challenge": -1.562,
+        "hellaswag": 3.125,
+        "mmlu": 1.562
+      },
+      "protocol": "0/28 -> 27/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "mistral:7b",
+      "mean_general_change_pp": -6.771,
+      "general_change_ci95_pp": [
+        -12.5,
+        -1.042
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 10,
+        "adapter_losses": 23,
+        "exact_two_sided_p": 0.03508203
+      },
+      "suite_change_pp": {
+        "arc_challenge": -10.938,
+        "hellaswag": -10.938,
+        "mmlu": 1.562
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "olmo2:7b",
+      "mean_general_change_pp": 3.125,
+      "general_change_ci95_pp": [
+        1.042,
+        5.729
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 6,
+        "adapter_losses": 0,
+        "exact_two_sided_p": 0.03125
+      },
+      "suite_change_pp": {
+        "arc_challenge": 1.562,
+        "hellaswag": 4.688,
+        "mmlu": 3.125
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "qwen3:4b",
+      "mean_general_change_pp": 6.771,
+      "general_change_ci95_pp": [
+        3.125,
+        10.938
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 14,
+        "adapter_losses": 1,
+        "exact_two_sided_p": 0.00097656
+      },
+      "suite_change_pp": {
+        "arc_challenge": 4.688,
+        "hellaswag": 7.812,
+        "mmlu": 7.812
+      },
+      "protocol": "0/28 -> 27/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "solar:10.7b",
+      "mean_general_change_pp": -1.042,
+      "general_change_ci95_pp": [
+        -6.771,
+        4.688
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 14,
+        "adapter_losses": 16,
+        "exact_two_sided_p": 0.85553555
+      },
+      "suite_change_pp": {
+        "arc_challenge": 3.125,
+        "hellaswag": -4.688,
+        "mmlu": -1.562
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "16/16 -> 16/16"
+    },
+    {
+      "model": "yi:6b",
+      "mean_general_change_pp": 1.042,
+      "general_change_ci95_pp": [
+        -2.604,
+        4.688
+      ],
+      "discordant_accuracy_pairs": {
+        "adapter_wins": 8,
+        "adapter_losses": 6,
+        "exact_two_sided_p": 0.79052734
+      },
+      "suite_change_pp": {
+        "arc_challenge": 0.0,
+        "hellaswag": 0.0,
+        "mmlu": 3.125
+      },
+      "protocol": "0/28 -> 28/28",
+      "structured_json": "0/16 -> 16/16"
+    }
+  ],
+  "limitations": [
+    "64 examples per benchmark and ten model families; individual-family estimates are noisy.",
+    "The fixed-family CI conditions on these ten checkpoints; the family bootstrap also represents checkpoint sampling uncertainty.",
+    "Multiple-choice label conditional likelihood is not a full generative benchmark implementation.",
+    "Protocol seeds are fresh diagnostic seeds, not a new admission certification and must not be used for training.",
+    "No random-weight or matched-norm LoRA control was included in this first paired evaluation."
+  ]
+}

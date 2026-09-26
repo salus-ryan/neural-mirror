@@ -1,0 +1,90 @@
+{
+  "advisor": "gpt-oss:120b",
+  "role": "research_lead",
+  "review": {
+    "headline": "Audit Summary – What the evidence actually supports and how to falsify the leading hypothesis",
+    "verdict": "promising",
+    "verified_findings": [
+      {
+        "finding": "Zero‑out of entire attention projection matrices (q_proj or v_proj) in the first layer catastrophically destroys all measured task accuracy (100 % drop).",
+        "strength": "strong",
+        "evidence": "Ablation table shows 0 % accuracy after zeroing model.layers.0.self_attn.q_proj.weight and model.layers.0.self_attn.v_proj.weight; mean text similarity ≈0.03–0.06, indicating near‑random output."
+      },
+      {
+        "finding": "Partial zero‑out (≈90 % of elements) of deep‑layer MLP gate_proj or down_proj weights reduces accuracy modestly (≈27 % drop) while often preserving correct answers with altered phrasing.",
+        "strength": "moderate",
+        "evidence": "Interventions on model.layers.14.mlp.gate_proj.weight and model.layers.14.mlp.down_proj.weight retain 72.7 % correct answers; examples show correct numeric results but different wording."
+      },
+      {
+        "finding": "Some tensors (e.g., model.layers.27.self_attn.v_proj.weight) can be zeroed without any measurable impact on the 11‑prompt benchmark (0 % accuracy drop, similarity = 1.0).",
+        "strength": "weak",
+        "evidence": "Ablation entry reports 0 % changed_pct and 100 % baseline/ablated accuracy for that tensor."
+      }
+    ],
+    "unsupported_claims": [
+      {
+        "claim": "“Deeper layers are more sensitive to perturbations for the same module type, so layer depth predicts damage.”",
+        "problem": "Contradicted by data: early‑layer q_proj/v_proj zero‑out causes 100 % loss, whereas deep‑layer gate_proj zero‑out causes only ~27 % loss. Sensitivity depends on module type and perturbation magnitude, not simply depth.",
+        "replacement": "Sensitivity is highly module‑specific; attention projections are critical regardless of depth, while MLP gate/down projections show graded importance."
+      },
+      {
+        "claim": "Norm‑growth (4.86×) directly reflects increased model complexity and explains the observed damage patterns.",
+        "problem": "Norm statistics are reported without a baseline or statistical test; no causal link to task performance is demonstrated.",
+        "replacement": "Norm growth is an observed architectural characteristic; its relationship to functional robustness remains untested."
+      },
+      {
+        "claim": "Wording changes that preserve correctness demonstrate that tensor importance is “task‑ and module‑specific.”",
+        "problem": "The benchmark’s quality metric is exact‑string match; similarity scores are low for many degraded outputs, so the claim conflates a metric artifact with genuine functional change.",
+        "replacement": "Wording changes indicate that the current evaluation metric under‑captures semantic fidelity; a more nuanced metric is needed before drawing conclusions about module‑specific importance."
+      }
+    ],
+    "critical_confounds": [
+      "Interventions are extreme (full‑tensor zeroing) and out‑of‑distribution; they do not reflect realistic weight perturbations.",
+      "Only a single model (Qwen3‑1.7B) and a tiny 11‑prompt set were used; results may not generalize.",
+      "No random‑noise, matched‑magnitude, or repeated‑run controls were included, preventing separation of true importance from stochastic failure."
+    ],
+    "next_experiment": {
+      "question": "Does the functional importance of a tensor depend on its module type (attention vs. MLP) rather than its depth?",
+      "protocol": [
+        "Select three representative tensors per module type (q_proj, v_proj, gate_proj, down_proj) from shallow (layer 0‑2), middle (layer 12‑14), and deep (layer 24‑27) positions.",
+        "For each tensor, create three perturbation conditions: (a) full zero‑out (as before), (b) random Gaussian noise with zero‑mean and variance matched to the tensor’s original weight variance, (c) row‑wise dropout of 50 % of elements (preserving overall magnitude).",
+        "Run each condition with 5 random seeds and a larger, balanced prompt suite (≥200 items covering math, reasoning, translation, factual QA).",
+        "Collect both exact‑match accuracy and a semantic similarity score (e.g., BERTScore) plus human blind rating on a subset (≈30 samples).",
+        "Statistically compare the impact across module types and depths using mixed‑effects models."
+      ],
+      "controls": [
+        "Unperturbed baseline runs for each seed.",
+        "Bootstrap confidence intervals on all metrics.",
+        "Permutation test swapping depth labels to ensure any observed depth effect is not due to prompt ordering."
+      ],
+      "metrics": [
+        "Δaccuracy (percentage points).",
+        "ΔBERTScore (average change).",
+        "Human rating delta (Likert scale)."
+      ],
+      "success_criterion": "If module type explains >50 % of variance in Δaccuracy while depth explains <10 % (p < 0.01), the hypothesis that depth predicts damage is falsified."
+    },
+    "swarm_roles": [
+      {
+        "role": "data_engineer",
+        "model": "qwen3:1.7b",
+        "job": "generate the expanded prompt set and compute BERTScore."
+      },
+      {
+        "role": "statistician",
+        "model": "gpt-oss:120b",
+        "job": "design mixed‑effects analysis and bootstrap procedures."
+      },
+      {
+        "role": "human_evaluator",
+        "model": "human",
+        "job": "blindly rate a random subset of outputs for semantic correctness."
+      }
+    ]
+  },
+  "timing": {
+    "total_duration_ns": 115198148625,
+    "prompt_eval_count": 7113,
+    "eval_count": 1806
+  }
+}

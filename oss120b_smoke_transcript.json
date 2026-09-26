@@ -1,0 +1,34 @@
+{
+  "participants": {
+    "qwen3:1.7b": {
+      "model_name": "Qwen3 1.7B",
+      "arch": "qwen3",
+      "params": "2.03B",
+      "n_layers": 28,
+      "max_layer": 27,
+      "norm_growth": 4.86,
+      "first_norm": 1.2429,
+      "last_norm": 6.0442,
+      "ollama_name": "qwen3:1.7b"
+    },
+    "gpt-oss:120b": {
+      "model_name": "?",
+      "arch": "gptoss",
+      "params": "116.83B",
+      "n_layers": 36,
+      "max_layer": 35,
+      "norm_growth": 1.12,
+      "first_norm": 1.9737,
+      "last_norm": 2.2064,
+      "ollama_name": "gpt-oss:120b",
+      "role": "research_lead"
+    }
+  },
+  "rounds": {
+    "1": {
+      "qwen3:1.7b": "**Key Findings:**  \n- **Norm Growth:** The model exhibits a 4.86x norm growth, with layer 27's norm weights (e.g., `ffn_norm.weight`) significantly higher than layer 0 (e.g., `ffn_norm.weight` mean: 0.1915 vs. 3.0112). This reflects deeper learning and increased complexity.  \n- **Weight Distributions:** Layer 0 (e.g., `attn_k.weight`) shows lower variance (std: 0.000568) compared to layer 27 (std: 0.000624), suggesting tighter regularization in earlier layers. Feed-forward layers in layer 27 (e.g., `ffn_norm.weight`) exhibit higher mean values (3.0112 vs. 0.1915), indicating increased activation magnitudes as the network deepens.  \n- **Surprising Trends:** The gradual shift in weight statistics (e.g., `attn_q_norm.weight` mean: 1.6427 vs. 1.5299) suggests the model learns to balance normalization and activation magnitudes across depth, aligning with the 4.86x norm growth.  \n\n**Observations:**  \n- Tensor `output_norm.weight` was unavailable, but `output.weight` and `output_norm.weight` were accessible, confirming the model's architecture.  \n- The comparison highlights a progressive increase in norm strength and activation magnitudes, consistent with the model's depth (28 layers) and design goals.",
+      "gpt-oss:120b": "**Layer\u2011wise statistics (0\u202f\u2192\u202f35)**  \n- **Layer\u2011norm scale:**\u202f`attn_norm.weight` drops modestly (mean\u202f1.95\u202f\u2192\u202f1.83,\u202f\u22126\u202f%), while `ffn_norm.weight` grows substantially (mean\u202f1.88\u202f\u2192\u202f2.58,\u202f+37\u202f%). The combined \u201cnorm growth\u201d reported by the model header (\u22481.12\u00d7) reflects this mixed behavior \u2013 the feed\u2011forward norm dominates the increase.  \n- **Weight magnitude:**\u202fMost projection matrices shrink toward the output: `attn_q.weight` mean moves from\u202f+0.0005\u202f\u2192\u202f\u20110.0008 (\u0394\u202f\u20110.0013) and `attn_k.weight` from\u202f\u20110.0015\u202f\u2192\u202f+0.0005 (\u0394\u202f+0.0019). In contrast, the **output projection** (`attn_out.weight`) shows a dramatic spread increase (std\u202f0.005\u202f\u2192\u202f0.887,\u202f\u0394\u202f+0.882) and its bias std jumps from\u202f0.065\u202f\u2192\u202f1.15 (\u0394\u202f+1.08).  \n\n**Surprising outliers**  \n- **FFN bias volatility:**\u202f`ffn_down_exps.bias` goes from a tiny std\u202f0.108 in the first block to an enormous\u202f16.58 in the final block (\u0394\u202f+16.47), with the absolute\u2011mean rising from\u202f0.006\u202f\u2192\u202f13.23. This suggests the expert\u2011mixture gating in deeper layers learns very large, highly heterogeneous offsets.  \n- **Attention \u201csinks\u201d:**\u202fThe scalar `attn_sinks` (the sliding\u2011window accumulator) increases in both mean (1.07\u202f\u2192\u202f1.56) and dispersion (std\u202f0.93\u202f\u2192\u202f1.49), indicating that later blocks rely on a broader distribution of long\u2011range context.  \n\nOverall, the model preserves a relatively stable RMS\u2011norm scale in the attention stream but lets the feed\u2011forward norm and several bias terms expand dramatically, a pattern that may support the late\u2011layer expert routing and the long\u2011context sliding\u2011window mechanism."
+    }
+  },
+  "elapsed": 109.0
+}

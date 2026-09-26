@@ -22,12 +22,13 @@ GGML_TYPES = {
     13: "Q5_K", 14: "Q6_K", 15: "Q8_K", 16: "IQ2_XXS", 17: "IQ2_XS",
     18: "IQ3_XXS", 19: "IQ1_S", 20: "IQ4_NL", 21: "IQ3_S", 22: "IQ2_S",
     23: "IQ4_XS", 24: "I8", 25: "I16", 26: "I32", 27: "I64",
-    28: "F64", 29: "IQ1_M",
+    28: "F64", 29: "IQ1_M", 30: "BF16", 34: "TQ1_0", 35: "TQ2_0",
+    39: "MXFP4", 40: "NVFP4", 41: "Q1_0",
 }
 
 # Bytes per element for dequantizable types
 GGML_TYPE_SIZE = {
-    0: 4, 1: 2, 24: 1, 25: 2, 26: 4, 28: 8,
+    0: 4, 1: 2, 24: 1, 25: 2, 26: 4, 28: 8, 30: 2,
     # Block-quantized: (block_size_bytes, elements_per_block)
     2: (18, 32), 3: (20, 32), 8: (34, 32),
     12: (144, 256), 13: (176, 256), 14: (210, 256),
@@ -157,6 +158,12 @@ class GGUFModel:
                 h = struct.unpack('<H', raw[i*2:(i+1)*2])[0]
                 values.append(_f16_to_f32(h))
         
+        elif tid == 30:  # BF16: upper 16 bits of IEEE 754 float32
+            count = min(len(raw) // 2, max_elements)
+            for i in range(count):
+                bits = struct.unpack('<H', raw[i*2:(i+1)*2])[0] << 16
+                values.append(struct.unpack('<f', struct.pack('<I', bits))[0])
+
         elif tid == 2:  # Q4_0: blocks of 18 bytes = 1 f16 scale + 16 bytes (32 nibbles)
             block_size = 18
             n_blocks = min(len(raw) // block_size, max_elements // 32)
@@ -278,11 +285,11 @@ def tool_inspect_self():
     layers = defaultdict(list)
     for tname, tinfo in m.tensors.items():
         parts = tname.split('.')
-        if 'blk' in tname:
-            layer_n = [p for p in parts if p.startswith('blk')]
-            layer_key = layer_n[0] if layer_n else 'other'
-        else:
-            layer_key = 'non-layer'
+        layer_key = 'non-layer'
+        if 'blk' in parts:
+            index = parts.index('blk')
+            if index + 1 < len(parts):
+                layer_key = f"blk.{parts[index + 1]}"
         layers[layer_key].append(tname)
     
     # Quantization types used

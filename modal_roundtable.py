@@ -12,6 +12,8 @@ Usage:
 import modal
 import json, time, os, sys
 
+from swarm_registry import spec_for_model, specs_for_preset, registry_summary
+
 app = modal.App("neural-mirror-roundtable")
 
 model_cache = modal.Volume.from_name("neural-mirror-models", create_if_missing=True)
@@ -22,40 +24,47 @@ image = (
     .run_commands("curl -fsSL https://ollama.com/install.sh | sh")
     .pip_install("gguf")
     .add_local_file("introspect.py", "/app/introspect.py")
+    # modal_roundtable.py is imported from /root in Modal containers, so this
+    # top-level dependency must live on Python's import path as well.
+    .add_local_file("swarm_registry.py", "/root/swarm_registry.py")
 )
 
-# Models for the roundtable — diverse architectures
-ROUNDTABLE_MODELS = [
-    "qwen3:1.7b",
-    "gemma3:4b",
-    "llama3.2:3b",
-    "phi4-mini",
-    "mistral:7b",
-]
 
-
-def start_ollama():
+def start_ollama(tier="small"):
     import subprocess
     env = os.environ.copy()
     env["OLLAMA_MODELS"] = "/cache/ollama"
-    proc = subprocess.Popen(["ollama", "serve"], env=env,
-                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if tier != "small":
+        env["OLLAMA_FLASH_ATTENTION"] = "1"
+        env["OLLAMA_KV_CACHE_TYPE"] = "q8_0"
+        env["OLLAMA_KEEP_ALIVE"] = "30m"
+    # Never pipe an unread Ollama log stream: enough output can fill the pipe
+    # and freeze an otherwise healthy inference worker.
+    proc = subprocess.Popen(
+        ["ollama", "serve"], env=env,
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+    )
     import urllib.request
-    for _ in range(30):
+    for _ in range(90):
+        if proc.poll() is not None:
+            raise RuntimeError(f"Ollama exited during startup ({proc.returncode})")
         try:
             urllib.request.urlopen("http://localhost:11434/api/tags", timeout=2)
             return proc
-        except:
+        except Exception:
             time.sleep(1)
-    raise RuntimeError("Ollama failed to start")
+    proc.terminate()
+    raise RuntimeError("Ollama failed to start within 90 seconds")
 
 
 def pull_model(name):
     import subprocess
     env = os.environ.copy()
     env["OLLAMA_MODELS"] = "/cache/ollama"
+    tier = spec_for_model(name).get("tier", "medium")
+    timeout = 3600 if tier in ("large", "xlarge") else 1200
     r = subprocess.run(["ollama", "pull", name], env=env,
-                      capture_output=True, text=True, timeout=600)
+                      capture_output=True, text=True, timeout=timeout)
     if r.returncode != 0:
         raise RuntimeError(f"Pull failed: {r.stderr}")
 
@@ -113,64 +122,488 @@ def profile_gguf(path):
     }
 
 
+def _compact_evidence_packet(local_model, call_tool):
+    """Build a bounded, citation-friendly packet from host-executed tools."""
+    self_info = call_tool("inspect_self", {})
+    layer_numbers = []
+    for tensor_name in local_model.tensors:
+        if "blk." not in tensor_name:
+            continue
+        try:
+            layer_numbers.append(int(tensor_name.split("blk.", 1)[1].split(".", 1)[0]))
+        except (ValueError, IndexError):
+            pass
+    last_layer = max(layer_numbers) if layer_numbers else 0
+    comparison = call_tool("compare_layers", {"layer_a": 0, "layer_b": last_layer})
+
+    # Keep only the largest measured first-to-last changes. Sending every
+    # tensor made context grow quickly and slowed agreement without adding a
+    # stronger decision signal.
+    deltas = comparison.get("deltas", {})
+    strongest = sorted(
+        deltas.items(),
+        key=lambda item: max(abs(float(v)) for v in item[1].values()),
+        reverse=True,
+    )[:6]
+    first = comparison.get("stats", {}).get("layer_0", {})
+    last = comparison.get("stats", {}).get(f"layer_{last_layer}", {})
+    evidence = {}
+    for index, (tensor, delta) in enumerate(strongest, 1):
+        evidence[f"DELTA.{index}"] = {
+            "tensor": tensor,
+            "layer_0": first.get(tensor),
+            f"layer_{last_layer}": last.get(tensor),
+            "delta": delta,
+        }
+
+    return {
+        "source": "host-executed GGUF inspection",
+        "method": "512-value dequantized samples per tensor; first vs last block",
+        "warning": "preliminary quantized samples support descriptive, not causal, claims",
+        "identity": self_info.get("identity", {}),
+        "scale": self_info.get("scale", {}),
+        "quantization": self_info.get("quantization", {}),
+        "first_layer": 0,
+        "last_layer": last_layer,
+        "evidence": evidence,
+    }
+
+
+def _ground_model_response(content, packet):
+    """Replace free-form MEASURED text with one canonical host measurement."""
+    evidence = packet.get("evidence", {})
+    top = evidence.get("DELTA.1")
+    if not top:
+        return content
+
+    delta = top.get("delta") or {}
+    metric_delta, delta_value = max(
+        delta.items(), key=lambda item: abs(float(item[1]))
+    )
+    metric = metric_delta.removesuffix("_delta")
+    first_key = f"layer_{packet.get('first_layer', 0)}"
+    last_key = f"layer_{packet.get('last_layer', 0)}"
+    first_value = (top.get(first_key) or {}).get(metric)
+    last_value = (top.get(last_key) or {}).get(metric)
+    canonical = (
+        f"MEASURED [DELTA.1]: {top.get('tensor')} {metric} changed from "
+        f"{first_value} at block {packet.get('first_layer', 0)} to {last_value} "
+        f"at block {packet.get('last_layer', 0)} (delta {delta_value}; "
+        "512 sampled dequantized values per tensor)."
+    )
+
+    # A model may still provide useful labeled interpretation, but its own
+    # MEASURED line is not allowed to overwrite the canonical observation.
+    lines = [
+        line for line in content.splitlines()
+        if not line.strip().upper().startswith("MEASURED:")
+        and not line.strip().upper().startswith("MEASURED [")
+    ]
+    recognized_labels = (
+        "HYPOTHESIS:", "CAVEAT:", "PROPOSAL:",
+        "VOTE:", "REASON:", "DISSENT:", "NEXT_TEST:",
+        "CONSENSUS:", "LIMITATION:", "DECISION:",
+    )
+    labeled = [
+        line.strip() for line in lines
+        if line.strip().upper().startswith(recognized_labels)
+    ]
+    # Thinking checkpoints may narrate their work before the requested answer.
+    # Once labeled fields exist, retain only those fields.
+    return "\n".join([canonical, *(labeled or lines)]).strip()
+
+
+def _conference_schema(user_prompt):
+    """Return the constrained response schema for the current conference phase."""
+    if "VOTE: ACCEPT C1" in user_prompt:
+        properties = {
+            "vote": {"type": "string", "enum": ["ACCEPT C1", "REJECT C1"]},
+            "reason": {"type": "string"},
+            "dissent": {"type": "string"},
+            "next_test": {"type": "string"},
+        }
+    elif "Act as conference chair" in user_prompt:
+        properties = {
+            "consensus": {"type": "string"},
+            "dissent": {"type": "string"},
+            "limitation": {"type": "string"},
+            "decision": {"type": "string"},
+        }
+    else:
+        properties = {
+            "hypothesis": {"type": "string"},
+            "caveat": {"type": "string"},
+            "proposal": {"type": "string"},
+        }
+    return {
+        "type": "object",
+        "properties": properties,
+        "required": list(properties),
+        "additionalProperties": False,
+    }
+
+
+def _render_conference_json(content):
+    """Turn constrained JSON into compact human-readable labeled fields."""
+    import re
+
+    try:
+        data = json.loads(content)
+    except (TypeError, json.JSONDecodeError):
+        if not str(content).lstrip().startswith("{"):
+            return content
+        # Never let a truncated/degenerate JSON generation flood peer context.
+        # Recover only complete string fields; otherwise expose a short marker.
+        data = {}
+        for key in (
+            "hypothesis", "caveat", "proposal", "vote", "reason",
+            "dissent", "next_test", "consensus", "limitation", "decision",
+        ):
+            match = re.search(
+                rf'"{key}"\s*:\s*"((?:[^"\\]|\\.)*)"', str(content)
+            )
+            if match:
+                try:
+                    data[key] = json.loads(f'"{match.group(1)}"')
+                except json.JSONDecodeError:
+                    pass
+        if not data:
+            return "FORMAT_ERROR: invalid structured response"
+    labels = {
+        "hypothesis": "HYPOTHESIS",
+        "caveat": "CAVEAT",
+        "proposal": "PROPOSAL",
+        "vote": "VOTE",
+        "reason": "REASON",
+        "dissent": "DISSENT",
+        "next_test": "NEXT_TEST",
+        "consensus": "CONSENSUS",
+        "limitation": "LIMITATION",
+        "decision": "DECISION",
+    }
+    return "\n".join(
+        f"{labels[key]}: {value}"
+        for key, value in data.items()
+        if key in labels and str(value).strip()
+    )
+
+
 def run_model_turn(model_name, gguf_path, system_prompt, user_prompt, host="http://localhost:11434"):
-    """One model's turn with tool calling."""
+    """One bounded turn using host-generated evidence, with raw fallback.
+
+    Host-side inspection is both faster and more portable than asking every
+    model family to negotiate Ollama's optional tool-call wire format. The LLM
+    still reasons about its own GGUF; the host merely performs the reads.
+    """
+    import re
+    import urllib.error
+    import urllib.request
+
     sys.path.insert(0, "/app")
-    from introspect import GGUFModel, call_tool, build_ollama_tools
+    from introspect import GGUFModel, call_tool
     import introspect
 
     local_model = GGUFModel(gguf_path)
     introspect._model = local_model
-    tools = build_ollama_tools()
+    packet = _compact_evidence_packet(local_model, call_tool)
+    packet_json = json.dumps(packet, separators=(",", ":"), default=str)
+    evidence_user = (
+        f"{user_prompt}\n\nSELF EVIDENCE (cite IDs exactly):\n{packet_json}\n\n"
+        "Use only supplied measurements. Keep hypotheses explicitly labeled."
+    )
+    # Qwen3's template-level switch is more reliable than the generic Ollama
+    # think flag for forcing a short direct answer on Thinking checkpoints.
+    if model_name.split(":", 1)[0] == "qwen3":
+        evidence_user = "/no_think\n" + evidence_user
+    tool_log = ["host_evidence_packet"]
 
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt},
-    ]
+    def clean(text):
+        text = re.sub(r"<think>.*?</think>", "", text or "", flags=re.DOTALL)
+        text = text.replace("<think>", "").replace("</think>", "")
+        # Some raw/chat templates continue by echoing the supplied packet.
+        # Keep the answer and discard any copied prompt payload.
+        for marker in (
+            "\nSELF EVIDENCE:",
+            "\nHOST OBSERVATION TABLE:",
+            "\nPEER CLAIM BOARD:",
+            "\nMOTION:",
+        ):
+            text = text.split(marker, 1)[0]
+        return text.strip()
 
-    tool_log = []
-    full_response = ""
-
-    for _ in range(6):
-        payload = {
-            "model": model_name,
-            "messages": messages,
-            "tools": tools,
-            "stream": False,
-        }
-
-        import urllib.request
+    def request_json(endpoint, payload, timeout=600):
         req = urllib.request.Request(
-            f"{host}/api/chat",
-            data=json.dumps(payload).encode(),
+            f"{host}{endpoint}", data=json.dumps(payload).encode(),
             headers={"Content-Type": "application/json"},
         )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read())
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")[:1200]
+            raise RuntimeError(f"Ollama HTTP {exc.code}: {body}") from exc
 
-        resp = urllib.request.urlopen(req, timeout=300)
-        result = json.loads(resp.read())
-
-        msg = result.get('message', {})
-        messages.append(msg)
-
-        tool_calls = msg.get('tool_calls', [])
-        content = msg.get('content', '').replace('<think>', '').replace('</think>', '').strip()
-
+    response_schema = _conference_schema(user_prompt)
+    prediction_budget = 500 if model_name.split(":", 1)[0] == "qwen3" else 220
+    options = {"num_ctx": 4096, "num_predict": prediction_budget, "temperature": 0.0}
+    try:
+        result = request_json("/api/chat", {
+            "model": model_name,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": evidence_user},
+            ],
+            "stream": False,
+            "think": False,
+            "format": response_schema,
+            "options": options,
+        })
+        message = result.get("message", {})
+        content = _render_conference_json(clean(message.get("content", "")))
+        hidden_thinking = clean(message.get("thinking", ""))
         if content:
-            full_response += content
+            tool_log.append("plain_chat")
+            return _ground_model_response(content, packet), tool_log
+        if hidden_thinking:
+            tool_log.append(f"plain_chat_only_thinking({len(hidden_thinking)} chars)")
+        else:
+            tool_log.append("plain_chat_empty")
+    except Exception as chat_exc:
+        tool_log.append(f"plain_chat_fallback({str(chat_exc)[:160]})")
 
-        if tool_calls:
-            for tc in tool_calls:
-                fn = tc['function']['name']
-                args = tc['function'].get('arguments', {})
-                tool_log.append(f"{fn}({json.dumps(args)})")
+    # Base/code models and models lacking a chat template still participate.
+    result = request_json("/api/generate", {
+        "model": model_name,
+        "prompt": f"{system_prompt}\n\n{evidence_user}",
+        "stream": False,
+        "think": False,
+        "format": response_schema,
+        "options": options,
+    })
+    content = _render_conference_json(clean(result.get("response", "")))
+    hidden_thinking = clean(result.get("thinking", ""))
+    tool_log.append("raw_generate_fallback")
+    if not content:
+        detail = f"; hidden thinking: {len(hidden_thinking)} chars" if hidden_thinking else ""
+        raise RuntimeError(f"Ollama returned no content from chat or generate{detail}")
+    return _ground_model_response(content, packet), tool_log
 
-                introspect._model = local_model
-                tr = call_tool(fn, args)
-                messages.append({"role": "tool", "content": json.dumps(tr)})
+
+def _candidate_consensus(prior_findings):
+    """Derive a narrow C1 motion from canonical Round-1 measurements."""
+    import re
+
+    pattern = re.compile(
+        r"MEASURED \[DELTA\.1\]: (\S+) (\w+) changed from "
+        r"([-+0-9.eE]+) at block \d+ to ([-+0-9.eE]+) at block \d+ "
+        r"\(delta ([-+0-9.eE]+);"
+    )
+    observations = []
+    for model, finding in prior_findings.items():
+        match = pattern.search(str(finding))
+        if match:
+            tensor, metric, first, last, delta = match.groups()
+            observations.append({
+                "model": model,
+                "tensor": tensor,
+                "metric": metric,
+                "first": float(first),
+                "last": float(last),
+                "delta": float(delta),
+            })
+
+    if len(observations) < 2:
+        return (
+            "C1: The available canonical measurements are insufficient for a "
+            "cross-model directional claim."
+        ), observations
+
+    positive = sum(item["delta"] > 0 for item in observations)
+    negative = sum(item["delta"] < 0 for item in observations)
+    if positive == len(observations):
+        direction = "positive"
+    elif negative == len(observations):
+        direction = "negative"
+    else:
+        return (
+            f"C1: DELTA.1 direction is heterogeneous across {len(observations)} "
+            "participants, so no shared first-to-last direction is established."
+        ), observations
+
+    return (
+        f"C1: Each of {len(observations)}/{len(observations)} independent canonical "
+        f"briefs has a {direction} sign for its own host-selected DELTA.1 "
+        "first-to-last-block statistic. C1 asserts only those independent signs; "
+        "it asserts no uniform magnitude, shared tensor, common mechanism, trend, "
+        "or cross-model relationship. Selection bias, architecture, and "
+        "quantization prevent direct comparison."
+    ), observations
+
+
+def _tally_consensus(candidate, responses, eligible_models=None):
+    """Count C1 ballots from models with canonical evidence."""
+    import re
+
+    eligible = set(eligible_models or responses)
+    votes = {}
+    for model, response in responses.items():
+        if model not in eligible:
             continue
-        break
+        match = re.search(
+            r"^VOTE:\s*(ACCEPT|REJECT)\s+C1\b",
+            str(response),
+            flags=re.IGNORECASE | re.MULTILINE,
+        )
+        votes[model] = match.group(1).upper() if match else "ABSTAIN"
+    accepts = sum(vote == "ACCEPT" for vote in votes.values())
+    rejects = sum(vote == "REJECT" for vote in votes.values())
+    abstains = sum(vote == "ABSTAIN" for vote in votes.values())
+    if accepts >= 2 and rejects == 0 and abstains == 0:
+        status = "unanimous"
+    elif accepts > rejects and accepts >= 2:
+        status = "majority"
+    else:
+        status = "no_consensus"
+    return {
+        "motion": candidate,
+        "status": status,
+        "accept": accepts,
+        "reject": rejects,
+        "abstain": abstains,
+        "votes": votes,
+        "excluded": sorted(set(responses) - eligible),
+    }
 
-    return full_response, tool_log
+
+def _run_round_for_model_impl(
+    model_name: str,
+    round_num: int,
+    profile: dict,
+    roster: str,
+    prior_findings: dict,
+) -> dict:
+    """Run one model's turn. Decorated wrappers select its compute tier."""
+
+    spec = spec_for_model(model_name)
+    tier = spec.get("tier", "medium")
+    is_lead = spec.get("role") == "research_lead"
+    proc = start_ollama(tier=tier)
+
+    # Pull model
+    pull_model(model_name)
+    gguf_path = find_gguf(model_name)
+    if not gguf_path:
+        return {"model": model_name, "error": "No GGUF found"}
+
+    # Warm up
+    import urllib.request
+    try:
+        req = urllib.request.Request(
+            "http://localhost:11434/api/generate",
+            data=json.dumps({
+                "model": model_name, "prompt": "Reply OK.", "stream": False,
+                "options": {"num_predict": 2, "temperature": 0.0},
+            }).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=600 if tier in ("large", "xlarge") else 240)
+    except:
+        pass
+
+    s = profile
+    role_instruction = (
+        "You are the swarm's senior research lead. Separate measurements from interpretation, "
+        "challenge unsupported causal claims, and synthesize the strongest peer evidence."
+        if is_lead else
+        "You are a peer researcher. Report measurements faithfully and avoid causal claims the data cannot support."
+    )
+    base_system = f"""You are {s['model_name']} ({s['params']}, {s['arch']} architecture, {s['n_layers']} layers).
+{role_instruction}
+
+You have introspection tools to examine your own weights:
+- inspect_self() — no arguments
+- inspect_layer(layer_num) — 0 to {s['max_layer']}
+- compare_layers(layer_a, layer_b)
+- weight_fingerprint() — no arguments
+- inspect_tensor(tensor_name)
+- list_tensors(filter_str)
+
+{roster}
+
+RULES:
+- Host-executed introspection evidence is authoritative for this turn
+- Cite supplied evidence IDs exactly; do not invent evidence or tensor names
+- Layer depth is NOT training time or a training stage
+- Never infer learning progress, focus, refinement, or performance from weights alone
+- Cross-architecture magnitudes are not directly comparable
+- No <think> tags — respond directly
+- Stay under 180 words
+- Separate measurements, hypotheses, and caveats"""
+
+    if round_num == 1:
+        prompt = (
+            "Create a compact evidence brief for the conference. Return exactly four labeled lines:\n"
+            "MEASURED: strongest self finding with one or more evidence IDs and numbers\n"
+            "HYPOTHESIS: one cautious interpretation\n"
+            "CAVEAT: the most important limitation\n"
+            "PROPOSAL: one claim peers should test"
+        )
+    elif round_num == 2:
+        # Bounded, deterministic peer neighborhoods avoid O(models²) prompt
+        # growth while ensuring each family considers diverse outside claims.
+        own = str(prior_findings.get(model_name, ""))[:300]
+        peers = [
+            (name, str(finding)) for name, finding in prior_findings.items()
+            if name != model_name and not str(finding).startswith("Error:")
+        ]
+        peers.sort(key=lambda item: sum(ord(c) for c in f"{model_name}|{item[0]}"))
+        peer_board = "\n".join(
+            f"CLAIM {index} [{name}]: {finding[:320]}"
+            for index, (name, finding) in enumerate(peers[:6], 1)
+        )
+        candidate, observations = _candidate_consensus(prior_findings)
+        observation_table = json.dumps(observations, separators=(",", ":"))
+        prompt = (
+            f"YOUR BRIEF:\n{own}\n\nPEER CLAIM BOARD:\n{peer_board}\n\n"
+            f"HOST OBSERVATION TABLE:\n{observation_table}\n\nMOTION:\n{candidate}\n\n"
+            "Evaluate only whether C1 accurately describes the observation table; do not vote on a causal story. "
+            "Return exactly four labeled lines:\n"
+            "VOTE: ACCEPT C1 or REJECT C1\n"
+            "REASON: one sentence grounded in the table\n"
+            "DISSENT: one material limitation beyond those already in C1, or NONE\n"
+            "NEXT_TEST: one controlled experiment that would add causal evidence"
+        )
+    else:
+        briefs = []
+        for r, findings in sorted(prior_findings.items(), key=lambda item: str(item[0])):
+            if not isinstance(findings, dict):
+                continue
+            for name, finding in findings.items():
+                if not str(finding).startswith("Error:"):
+                    briefs.append(f"R{r} [{name}]: {str(finding)[:260]}")
+        prompt = (
+            "CONFERENCE RECORD:\n" + "\n".join(briefs[:12]) + "\n\n"
+            "Act as conference chair. Return exactly four labeled lines:\n"
+            "CONSENSUS: strongest claim supported across participants\n"
+            "DISSENT: material unresolved disagreement, or NONE\n"
+            "LIMITATION: why the consensus remains preliminary\n"
+            "DECISION: the single next controlled experiment"
+        )
+
+    response, tools_used = run_model_turn(model_name, gguf_path, base_system, prompt)
+
+    proc.terminate()
+
+    return {
+        "model": model_name,
+        "model_name": s['model_name'],
+        "round": round_num,
+        "response": response,
+        "tools_used": tools_used,
+        "role": "research_lead" if is_lead else "peer",
+        "family": spec.get("family"),
+        "tier": tier,
+    }
 
 
 @app.function(
@@ -187,130 +620,178 @@ def run_round_for_model(
     roster: str,
     prior_findings: dict,
 ) -> dict:
-    """Run one model's turn in one round."""
-
-    proc = start_ollama()
-
-    # Pull model
-    pull_model(model_name)
-    gguf_path = find_gguf(model_name)
-    if not gguf_path:
-        return {"model": model_name, "error": "No GGUF found"}
-
-    # Warm up
-    import urllib.request
-    try:
-        req = urllib.request.Request(
-            "http://localhost:11434/api/generate",
-            data=json.dumps({"model": model_name, "prompt": "hi", "stream": False}).encode(),
-            headers={"Content-Type": "application/json"},
-        )
-        urllib.request.urlopen(req, timeout=120)
-    except:
-        pass
-
-    s = profile
-    base_system = f"""You are {s['model_name']} ({s['params']}, {s['arch']} architecture, {s['n_layers']} layers).
-
-You have introspection tools to examine your own weights:
-- inspect_self() — no arguments
-- inspect_layer(layer_num) — 0 to {s['max_layer']}
-- compare_layers(layer_a, layer_b)
-- weight_fingerprint() — no arguments
-- inspect_tensor(tensor_name)
-- list_tensors(filter_str)
-
-{roster}
-
-RULES:
-- inspect_self and weight_fingerprint take NO arguments
-- No <think> tags — respond directly
-- Be concise: 2-3 focused paragraphs with specific numbers
-- When discussing others' findings, name them"""
-
-    if round_num == 1:
-        prompt = (
-            "Examine yourself. Use inspect_self then compare_layers 0 and your last layer. "
-            "Report your key findings: norm growth, weight distributions, anything surprising. "
-            "The other models will read this next round."
-        )
-    elif round_num == 2:
-        others = ""
-        for name, finding in prior_findings.items():
-            label = "YOUR Round 1" if name == model_name else f"{name}'s Round 1"
-            others += f"\n--- {label} ---\n{finding[:800]}\n"
-        prompt = (
-            f"Round 1 findings from all models:\n{others}\n\n"
-            "Now dig deeper. Pick the most interesting CONTRAST between your weights and another model's. "
-            "Use your tools to investigate WHY. What does the difference reveal? "
-            "Reference specific numbers from both your tools and their findings."
-        )
-    else:
-        all_prior = ""
-        for r, findings in sorted(prior_findings.items()):
-            if isinstance(r, int) or r.isdigit():
-                all_prior += f"\n=== ROUND {r} ===\n"
-                if isinstance(findings, dict):
-                    for name, f in findings.items():
-                        all_prior += f"\n[{name}]: {f[:500]}\n"
-                else:
-                    all_prior += str(findings)[:1000]
-
-        prompt = (
-            f"Everything discovered:\n{all_prior}\n\n"
-            "Final synthesis: What universal patterns exist across ALL these different architectures? "
-            "What is unique to each? What is the most surprising cross-model finding? "
-            "What would you tell a human researcher about what these weight comparisons reveal?"
-        )
-
-    response, tools_used = run_model_turn(model_name, gguf_path, base_system, prompt)
-
-    proc.terminate()
-
-    return {
-        "model": model_name,
-        "model_name": s['model_name'],
-        "round": round_num,
-        "response": response,
-        "tools_used": tools_used,
-    }
+    return _run_round_for_model_impl(
+        model_name, round_num, profile, roster, prior_findings
+    )
 
 
 @app.function(
     image=image,
     volumes={"/cache": model_cache},
-    timeout=120,
+    gpu="L4",
+    timeout=1800,
+    memory=24576,
+    cpu=4,
+)
+def run_round_for_medium_model(
+    model_name: str,
+    round_num: int,
+    profile: dict,
+    roster: str,
+    prior_findings: dict,
+) -> dict:
+    return _run_round_for_model_impl(
+        model_name, round_num, profile, roster, prior_findings
+    )
+
+
+@app.function(
+    image=image,
+    volumes={"/cache": model_cache},
+    gpu="A100",
+    timeout=2400,
+    memory=32768,
+    cpu=8,
+)
+def run_round_for_large_model(
+    model_name: str,
+    round_num: int,
+    profile: dict,
+    roster: str,
+    prior_findings: dict,
+) -> dict:
+    return _run_round_for_model_impl(
+        model_name, round_num, profile, roster, prior_findings
+    )
+
+
+@app.function(
+    image=image,
+    volumes={"/cache": model_cache},
+    gpu="H100",
+    timeout=3600,
+    memory=32768,
+    cpu=8,
+)
+def run_round_for_xlarge_model(
+    model_name: str,
+    round_num: int,
+    profile: dict,
+    roster: str,
+    prior_findings: dict,
+) -> dict:
+    return _run_round_for_model_impl(
+        model_name, round_num, profile, roster, prior_findings
+    )
+
+
+@app.function(
+    image=image,
+    volumes={"/cache": model_cache},
+    timeout=1800,
     memory=8192,
 )
 def profile_model_remote(model_name: str) -> dict:
-    """Pull and profile a model."""
-    proc = start_ollama()
+    """Pull and profile a model without loading it for generation."""
+    spec = spec_for_model(model_name)
+    proc = start_ollama(tier=spec.get("tier", "medium"))
     pull_model(model_name)
     path = find_gguf(model_name)
     if not path:
         proc.terminate()
         return {"model": model_name, "error": "No GGUF"}
     p = profile_gguf(path)
-    p['ollama_name'] = model_name
+    if p.get('model_name') in (None, '', '?'):
+        p['model_name'] = f"{spec.get('family', model_name)} ({model_name})"
+    p.update({
+        'ollama_name': model_name,
+        'family': spec.get('family'),
+        'lineage': spec.get('lineage'),
+        'tier': spec.get('tier'),
+        'role': spec.get('role', 'peer'),
+    })
     proc.terminate()
     return p
 
 
+@app.function(
+    image=image,
+    volumes={"/cache": model_cache},
+    gpu="H100",
+    timeout=3600,
+    memory=32768,
+    cpu=8,
+)
+def profile_large_model_remote(model_name: str) -> dict:
+    """Pull/profile an xlarge model on the same worker class used for inference."""
+    spec = spec_for_model(model_name)
+    proc = start_ollama(tier="xlarge")
+    try:
+        pull_model(model_name)
+        path = find_gguf(model_name)
+        if not path:
+            return {"model": model_name, "error": "No GGUF"}
+        p = profile_gguf(path)
+        if p.get('model_name') in (None, '', '?'):
+            p['model_name'] = f"{spec.get('family', model_name)} ({model_name})"
+        p.update({
+            'ollama_name': model_name,
+            'family': spec.get('family'),
+            'lineage': spec.get('lineage'),
+            'tier': spec.get('tier'),
+            'role': spec.get('role', 'peer'),
+        })
+        return p
+    finally:
+        proc.terminate()
+
+
+def _write_transcript(path, payload):
+    """Atomically checkpoint progress so interrupted runs retain all rounds."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    temporary = f"{path}.tmp"
+    with open(temporary, "w") as handle:
+        json.dump(payload, handle, indent=2)
+    os.replace(temporary, path)
+
+
 @app.local_entrypoint()
-def main(rounds: int = 3, models: str = None):
-    """Run the full roundtable on Modal."""
+def main(
+    rounds: int = 2,
+    models: str = None,
+    preset: str = "wide",
+    max_models: int = 0,
+    profile_only: bool = False,
+):
+    """Run a core/wide family roster, or a comma-separated custom roster."""
 
-    MODELS = models.split(',') if models else ROUNDTABLE_MODELS
+    specs = (
+        [spec_for_model(name.strip()) for name in models.split(',') if name.strip()]
+        if models else specs_for_preset(preset)
+    )
+    if max_models > 0:
+        specs = specs[:max_models]
+    MODELS = [spec["model"] for spec in specs]
+    spec_map = {spec["model"]: spec for spec in specs}
+    run_label = "custom" if models else preset
 
-    print("━" * 65)
-    print("  🪞 Neural Mirror — Roundtable on Modal")
-    print("  Models co-learn by examining themselves and each other")
-    print("━" * 65)
+    summary = registry_summary()
+    print("━" * 72)
+    print("  🪞 Neural Mirror — Model-Family Swarm on Modal")
+    print(f"  Selection: {run_label} | selected: {len(MODELS)} models / {summary['families']} registered families")
+    print("━" * 72)
+    for spec in specs:
+        lead = " [research lead]" if spec.get("role") == "research_lead" else ""
+        print(f"  {spec['family']:<16s} {spec['model']:<24s} {spec['tier']:<7s}{lead}")
     print()
 
-    # Phase 0: Profile all models in parallel
+    # Phase 0: Pull and profile all GGUFs in parallel. Xlarge models use the
+    # H100 path; profiling all other tiers does not need a loaded GPU model.
     print("📋 Profiling models...")
-    profile_futures = [profile_model_remote.spawn(m) for m in MODELS]
+    profile_futures = [
+        (profile_large_model_remote if spec_map[m].get("tier") == "xlarge" else profile_model_remote).spawn(m)
+        for m in MODELS
+    ]
     profiles = {}
     for m, fut in zip(MODELS, profile_futures):
         try:
@@ -325,6 +806,21 @@ def main(rounds: int = 3, models: str = None):
             print(f"  ❌ {m}: {e}")
 
     active_models = list(profiles.keys())
+
+    catalog = {
+        "selection": run_label,
+        "requested": specs,
+        "available": {model: profiles[model] for model in active_models},
+        "failed": [model for model in MODELS if model not in profiles],
+    }
+    catalog_path = os.path.expanduser("~/neural-mirror/swarm_catalog.json")
+    with open(catalog_path, "w") as handle:
+        json.dump(catalog, handle, indent=2)
+    print(f"\n  Catalog: {catalog_path}")
+
+    if profile_only:
+        print(f"  Profile-only complete: {len(active_models)}/{len(MODELS)} models available")
+        return
     if len(active_models) < 2:
         print("Need at least 2 models!")
         return
@@ -337,7 +833,9 @@ def main(rounds: int = 3, models: str = None):
     print(f"\n  Roster: {len(active_models)} models ready\n")
 
     round_findings = {}  # round_num -> {model_name: response}
+    conference_consensus = None
     t_start = time.time()
+    transcript_path = os.path.expanduser('~/neural-mirror/roundtable_transcript.json')
 
     for round_num in range(1, rounds + 1):
         print("━" * 65)
@@ -358,12 +856,32 @@ def main(rounds: int = 3, models: str = None):
             for r in range(1, round_num):
                 prior[str(r)] = round_findings.get(r, {})
 
-        # Launch all models in parallel
-        futures = {}
-        for m in active_models:
-            fut = run_round_for_model.spawn(
-                m, round_num, profiles[m], roster, prior
+        # The first two rounds are parallel briefs and ballots. If a third
+        # round is requested, one elected chair synthesizes rather than paying
+        # for every model to repeat nearly identical summaries.
+        round_models = active_models
+        if round_num >= 3:
+            tier_rank = {"small": 0, "medium": 1, "large": 2, "xlarge": 3}
+            research_leads = [
+                m for m in active_models if spec_map[m].get("role") == "research_lead"
+            ]
+            chair = research_leads[0] if research_leads else max(
+                active_models, key=lambda m: tier_rank.get(spec_map[m].get("tier"), 0)
             )
+            round_models = [chair]
+            print(f"  Chair: {profiles[chair]['model_name']} (single synthesis turn)\n")
+
+        # Launch this round's participants in parallel.
+        futures = {}
+        runners = {
+            "small": run_round_for_model,
+            "medium": run_round_for_medium_model,
+            "large": run_round_for_large_model,
+            "xlarge": run_round_for_xlarge_model,
+        }
+        for m in round_models:
+            runner = runners.get(spec_map[m].get("tier", "medium"), run_round_for_medium_model)
+            fut = runner.spawn(m, round_num, profiles[m], roster, prior)
             futures[m] = fut
 
         # Collect results
@@ -398,7 +916,39 @@ def main(rounds: int = 3, models: str = None):
                 this_round[m] = f"Error: {e}"
 
         round_findings[round_num] = this_round
-        print(f"  ✅ Round {round_num} complete\n")
+        if round_num == 2:
+            motion, observations = _candidate_consensus(round_findings.get(1, {}))
+            eligible_models = [item["model"] for item in observations]
+            conference_consensus = _tally_consensus(
+                motion, this_round, eligible_models=eligible_models
+            )
+            print("  🗳️  Conference motion result")
+            print(f"     {conference_consensus['motion']}")
+            print(
+                "     "
+                f"{conference_consensus['status'].upper()}: "
+                f"{conference_consensus['accept']} accept, "
+                f"{conference_consensus['reject']} reject, "
+                f"{conference_consensus['abstain']} abstain"
+            )
+            if conference_consensus['excluded']:
+                print(
+                    "     Excluded (no canonical brief): "
+                    + ", ".join(conference_consensus['excluded'])
+                )
+
+        _write_transcript(transcript_path, {
+            'selection': run_label,
+            'status': 'in_progress',
+            'completed_rounds': round_num,
+            'requested_rounds': rounds,
+            'registry_specs': [spec_map[m] for m in active_models],
+            'participants': {m: profiles[m] for m in active_models},
+            'rounds': {str(r): findings for r, findings in round_findings.items()},
+            'conference_consensus': conference_consensus,
+            'elapsed': round(time.time() - t_start, 1),
+        })
+        print(f"  ✅ Round {round_num} complete (checkpoint saved)\n")
 
     elapsed = time.time() - t_start
 
@@ -421,14 +971,15 @@ def main(rounds: int = 3, models: str = None):
 
     # Save transcript
     transcript = {
+        'selection': run_label,
+        'status': 'complete',
+        'completed_rounds': rounds,
+        'requested_rounds': rounds,
+        'registry_specs': [spec_map[m] for m in active_models],
         'participants': {m: profiles[m] for m in active_models},
         'rounds': {str(r): f for r, f in round_findings.items()},
+        'conference_consensus': conference_consensus,
         'elapsed': round(elapsed, 1),
     }
-    out = os.path.expanduser('~/neural-mirror/roundtable_transcript.json')
-    try:
-        with open(out, 'w') as f:
-            json.dump(transcript, f, indent=2)
-        print(f"  Transcript: {out}")
-    except:
-        print(json.dumps(transcript, indent=2)[:2000])
+    _write_transcript(transcript_path, transcript)
+    print(f"  Transcript: {transcript_path}")

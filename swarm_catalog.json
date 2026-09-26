@@ -1,0 +1,118 @@
+{
+  "selection": "custom",
+  "requested": [
+    {
+      "family": "Qwen",
+      "model": "qwen3:4b",
+      "tier": "small",
+      "lineage": "Qwen3",
+      "preset": "core"
+    },
+    {
+      "family": "Phi",
+      "model": "phi4-mini",
+      "tier": "small",
+      "lineage": "Phi-4",
+      "preset": "core"
+    },
+    {
+      "family": "Mistral",
+      "model": "mistral:7b",
+      "tier": "medium",
+      "lineage": "Mistral",
+      "preset": "core"
+    },
+    {
+      "family": "Gemma",
+      "model": "gemma3:4b",
+      "tier": "small",
+      "lineage": "Gemma 3",
+      "preset": "core"
+    },
+    {
+      "family": "Llama",
+      "model": "llama3.2:3b",
+      "tier": "small",
+      "lineage": "Llama 3",
+      "preset": "core"
+    }
+  ],
+  "available": {
+    "qwen3:4b": {
+      "model_name": "Qwen3 4B Thinking 2507",
+      "arch": "qwen3",
+      "params": "4.02B",
+      "n_layers": 36,
+      "max_layer": 35,
+      "norm_growth": 3.15,
+      "first_norm": 1.0796,
+      "last_norm": 3.3955,
+      "ollama_name": "qwen3:4b",
+      "family": "Qwen",
+      "lineage": "Qwen3",
+      "tier": "small",
+      "role": "peer"
+    },
+    "phi4-mini": {
+      "model_name": "Phi 4 Mini Instruct",
+      "arch": "phi3",
+      "params": "3.84B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "norm_growth": 1.79,
+      "first_norm": 0.0899,
+      "last_norm": 0.1612,
+      "ollama_name": "phi4-mini",
+      "family": "Phi",
+      "lineage": "Phi-4",
+      "tier": "small",
+      "role": "peer"
+    },
+    "mistral:7b": {
+      "model_name": "Mistral-7B-Instruct-v0.3",
+      "arch": "llama",
+      "params": "7.25B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "norm_growth": 13.22,
+      "first_norm": 0.2506,
+      "last_norm": 3.3113,
+      "ollama_name": "mistral:7b",
+      "family": "Mistral",
+      "lineage": "Mistral",
+      "tier": "medium",
+      "role": "peer"
+    },
+    "gemma3:4b": {
+      "model_name": "Gemma (gemma3:4b)",
+      "arch": "gemma3",
+      "params": "4.30B",
+      "n_layers": 34,
+      "max_layer": 33,
+      "norm_growth": 16.12,
+      "first_norm": 2.6854,
+      "last_norm": 43.2872,
+      "ollama_name": "gemma3:4b",
+      "family": "Gemma",
+      "lineage": "Gemma 3",
+      "tier": "small",
+      "role": "peer"
+    },
+    "llama3.2:3b": {
+      "model_name": "Llama 3.2 3B Instruct",
+      "arch": "llama",
+      "params": "3.21B",
+      "n_layers": 28,
+      "max_layer": 27,
+      "norm_growth": 3.82,
+      "first_norm": 0.1119,
+      "last_norm": 0.428,
+      "ollama_name": "llama3.2:3b",
+      "family": "Llama",
+      "lineage": "Llama 3",
+      "tier": "small",
+      "role": "peer"
+    }
+  },
+  "failed": []
+}

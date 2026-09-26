@@ -1,0 +1,120 @@
+{
+  "protocol": "neural-mirror-strict-braid-v1",
+  "participants": [
+    "qwen3:4b+qwen3-4b-braille-literacy-v3",
+    "llama3.2:3b+llama3.2-3b-braille-literacy-v1"
+  ],
+  "evidence": {
+    "1": {
+      "owner_idx": 0,
+      "label": "QWEN.ADAPTER.TOP_UPDATE",
+      "payload": {
+        "layer": 30,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010899367
+      },
+      "canonical_value": 0.0010899367
+    },
+    "2": {
+      "owner_idx": 1,
+      "label": "LLAMA.ADMISSION",
+      "payload": {
+        "score": "28/28",
+        "claim": "exact protocol exam passed"
+      },
+      "canonical_value": 1.0
+    }
+  },
+  "frames": [
+    {
+      "sequence": 1,
+      "wire": "⠠⠁⠀⠁⠁⠀⠁⠀⠁⡚⠁⡷⠔⢡",
+      "wire_sha256": "98ce9ed2140f6bdb2be3047c5de18c61dbba7d86476160ec288bd3fa7aba3c2e",
+      "sender": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "subject": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "evidence_label": "QWEN.ADAPTER.TOP_UPDATE",
+      "decoded": {
+        "version": 1,
+        "sender_idx": 0,
+        "round_idx": 1,
+        "operation": "observe",
+        "subject_idx": 0,
+        "evidence_id": 1,
+        "relation": "increase",
+        "confidence_pct": 90,
+        "caveat_flags": 1,
+        "value": 0.00109,
+        "checksum": 161
+      }
+    },
+    {
+      "sequence": 2,
+      "wire": "⠠⠁⠁⠁⠁⠁⠂⠀⠅⡤⠀⠀⠼⡓",
+      "wire_sha256": "e46637dff1f7e205677844cd21ba796cceb78b27da050b741ac74e3199dae366",
+      "sender": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "subject": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "evidence_label": "LLAMA.ADMISSION",
+      "decoded": {
+        "version": 1,
+        "sender_idx": 1,
+        "round_idx": 1,
+        "operation": "observe",
+        "subject_idx": 1,
+        "evidence_id": 2,
+        "relation": "supports",
+        "confidence_pct": 100,
+        "caveat_flags": 0,
+        "value": 1.0,
+        "checksum": 83
+      }
+    },
+    {
+      "sequence": 3,
+      "wire": "⠠⠁⠁⠂⠃⠀⠁⠀⠇⡟⠅⡷⠔⡚",
+      "wire_sha256": "2efaa4a5175e03de46be70bf456bd83da8aefdb7e7c3bebcdcacd8a077afc1d6",
+      "sender": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "subject": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "evidence_label": "QWEN.ADAPTER.TOP_UPDATE",
+      "decoded": {
+        "version": 1,
+        "sender_idx": 1,
+        "round_idx": 2,
+        "operation": "challenge",
+        "subject_idx": 0,
+        "evidence_id": 1,
+        "relation": "needs_test",
+        "confidence_pct": 95,
+        "caveat_flags": 5,
+        "value": 0.00109,
+        "checksum": 90
+      }
+    },
+    {
+      "sequence": 4,
+      "wire": "⠠⠁⠀⠂⠄⠁⠂⠀⠇⡢⠄⠀⠼⡵",
+      "wire_sha256": "35e3e4b59b11669b9752116635dbfc3bcd3b7471664d0ede193bb0d36d476038",
+      "sender": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "subject": "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+      "evidence_label": "LLAMA.ADMISSION",
+      "decoded": {
+        "version": 1,
+        "sender_idx": 0,
+        "round_idx": 2,
+        "operation": "propose_test",
+        "subject_idx": 1,
+        "evidence_id": 2,
+        "relation": "needs_test",
+        "confidence_pct": 98,
+        "caveat_flags": 4,
+        "value": 1.0,
+        "checksum": 117
+      }
+    }
+  ],
+  "transcript_sha256": "10561942badb6b70c62a624e5055a888e2e8fdfb4accd4a71d3ce8640615c2e9",
+  "negative_controls": {
+    "checksum_corruption": "REJECTED:CHECKSUM",
+    "unsupported_evidence": "REJECTED:EVIDENCE",
+    "mutated_evidence_value": "REJECTED:EVIDENCE_VALUE"
+  }
+}

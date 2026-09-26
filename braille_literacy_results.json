@@ -1,0 +1,23 @@
+{
+  "protocol": "neural-mirror-computer-braille-v1",
+  "criterion": "100% exact encode/decode/malformed detection on every held-out seed",
+  "seeds": [
+    17,
+    29
+  ],
+  "tasks_per_seed": 14,
+  "admitted": [],
+  "excluded": [
+    "gpt-oss:120b"
+  ],
+  "results": [
+    {
+      "model": "gpt-oss:120b",
+      "family": "GPT-OSS",
+      "passed": false,
+      "correct": 0,
+      "total": 28,
+      "error": ""
+    }
+  ]
+}

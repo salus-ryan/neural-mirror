@@ -1,0 +1,682 @@
+{
+  "model": "qwen3:4b",
+  "adapter": "qwen3-4b-braille-literacy-v1",
+  "hf_model": "Qwen/Qwen3-4B",
+  "passed": false,
+  "correct": 17,
+  "total": 28,
+  "training": {
+    "train_seeds": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030,
+      1031,
+      1032,
+      1033,
+      1034,
+      1035,
+      1036,
+      1037,
+      1038,
+      1039,
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
+      1051,
+      1052,
+      1053,
+      1054,
+      1055,
+      1056,
+      1057,
+      1058,
+      1059,
+      1060,
+      1061,
+      1062,
+      1063
+    ],
+    "exam_seeds": [
+      17,
+      29
+    ],
+    "seed_overlap": [],
+    "examples": 64,
+    "epochs": 2,
+    "gradient_accumulation": 4,
+    "optimizer_steps": 32,
+    "learning_rate": 0.0002,
+    "first_loss": 1.153455,
+    "last_loss": 0.07486,
+    "mean_last_8_loss": 0.068476,
+    "token_lengths": {
+      "minimum": 2771,
+      "maximum": 2858,
+      "mean": 2807.9
+    },
+    "trainable_parameters": 33030144,
+    "total_parameters": 4055498240,
+    "elapsed_seconds": 196.6,
+    "adapter_path": "/cache/braille-adapters/qwen3-4b-braille-literacy-v1"
+  },
+  "exam": [
+    {
+      "passed": false,
+      "correct": 7,
+      "total": 14,
+      "checks": [
+        {
+          "category": "proposal_decode",
+          "id": "PD1",
+          "passed": false,
+          "expected": {
+            "id": "PD1",
+            "model_idx": 2,
+            "target_modules": [
+              "v_proj",
+              "gate_proj",
+              "up_proj",
+              "down_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 20
+          },
+          "actual": {
+            "id": "PD1",
+            "model_idx": 2,
+            "target_modules": [
+              "up_proj",
+              "down_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 20
+          }
+        },
+        {
+          "category": "proposal_decode",
+          "id": "PD2",
+          "passed": false,
+          "expected": {
+            "id": "PD2",
+            "model_idx": 6,
+            "target_modules": [
+              "q_proj",
+              "k_proj",
+              "down_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 10
+          },
+          "actual": {
+            "id": "PD2",
+            "model_idx": 6,
+            "target_modules": [
+              "q_proj",
+              "v_proj",
+              "down_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 10
+          }
+        },
+        {
+          "category": "proposal_decode",
+          "id": "PD3",
+          "passed": false,
+          "expected": {
+            "id": "PD3",
+            "model_idx": 10,
+            "target_modules": [
+              "v_proj",
+              "gate_proj",
+              "down_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 10
+          },
+          "actual": {
+            "id": "PD3",
+            "model_idx": 10,
+            "target_modules": [
+              "v_proj",
+              "o_proj",
+              "gate_proj"
+            ],
+            "rank": 64,
+            "alpha": 64,
+            "dropout_pct": 10
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE1",
+          "passed": true,
+          "expected": {
+            "id": "PE1",
+            "packet": "⠄⠂⠑⡀⢀⠃"
+          },
+          "actual": {
+            "id": "PE1",
+            "packet": "⠄⠂⠑⡀⢀⠃"
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE2",
+          "passed": false,
+          "expected": {
+            "id": "PE2",
+            "packet": "⠄⠈⠰⡀⡀⠃"
+          },
+          "actual": {
+            "id": "PE2",
+            "packet": "⠄⠈⡐⡀⡀⠃"
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE3",
+          "passed": false,
+          "expected": {
+            "id": "PE3",
+            "packet": "⠄⠄⠱⠐⠈⠔"
+          },
+          "actual": {
+            "id": "PE3",
+            "packet": "⠄⠄⡗⠐⠈⠔"
+          }
+        },
+        {
+          "category": "vote_decode",
+          "id": "VD1",
+          "passed": true,
+          "expected": {
+            "id": "VD1",
+            "voter_idx": 2,
+            "rankings": [
+              0,
+              3,
+              2,
+              1,
+              4,
+              5
+            ],
+            "agree": [
+              true,
+              true,
+              true,
+              false,
+              false,
+              false
+            ]
+          },
+          "actual": {
+            "id": "VD1",
+            "voter_idx": 2,
+            "rankings": [
+              0,
+              3,
+              2,
+              1,
+              4,
+              5
+            ],
+            "agree": [
+              true,
+              true,
+              true,
+              false,
+              false,
+              false
+            ]
+          }
+        },
+        {
+          "category": "vote_decode",
+          "id": "VD2",
+          "passed": true,
+          "expected": {
+            "id": "VD2",
+            "voter_idx": 1,
+            "rankings": [
+              0,
+              1,
+              2
+            ],
+            "agree": [
+              false,
+              true,
+              false
+            ]
+          },
+          "actual": {
+            "id": "VD2",
+            "voter_idx": 1,
+            "rankings": [
+              0,
+              1,
+              2
+            ],
+            "agree": [
+              false,
+              true,
+              false
+            ]
+          }
+        },
+        {
+          "category": "vote_encode",
+          "id": "VE1",
+          "passed": false,
+          "expected": {
+            "id": "VE1",
+            "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+          },
+          "actual": {
+            "id": "VE1",
+            "packet": "⠐⠀⠃⠂⠀⠁⠀⠀⠁⠀"
+          }
+        },
+        {
+          "category": "vote_encode",
+          "id": "VE2",
+          "passed": false,
+          "expected": {
+            "id": "VE2",
+            "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+          },
+          "actual": {
+            "id": "VE2",
+            "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠁⠁⠁⠁⠁"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M1",
+          "passed": true,
+          "expected": {
+            "id": "M1",
+            "error": "LENGTH"
+          },
+          "actual": {
+            "id": "M1",
+            "error": "LENGTH"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M2",
+          "passed": true,
+          "expected": {
+            "id": "M2",
+            "error": "MODULE_MASK"
+          },
+          "actual": {
+            "id": "M2",
+            "error": "MODULE_MASK"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M3",
+          "passed": true,
+          "expected": {
+            "id": "M3",
+            "error": "DROPOUT"
+          },
+          "actual": {
+            "id": "M3",
+            "error": "DROPOUT"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M4",
+          "passed": true,
+          "expected": {
+            "id": "M4",
+            "error": "RANKINGS"
+          },
+          "actual": {
+            "id": "M4",
+            "error": "RANKINGS"
+          }
+        }
+      ],
+      "duplicates": [],
+      "extras": {},
+      "seed": 17,
+      "elapsed_seconds": 30.1,
+      "generated_tokens": 358,
+      "raw_response": "{\"proposal_decodes\":[{\"id\":\"PD1\",\"model_idx\":2,\"target_modules\":[\"up_proj\",\"down_proj\"],\"rank\":64,\"alpha\":64,\"dropout_pct\":20},{\"id\":\"PD2\",\"model_idx\":6,\"target_modules\":[\"q_proj\",\"v_proj\",\"down_proj\"],\"rank\":64,\"alpha\":64,\"dropout_pct\":10},{\"id\":\"PD3\",\"model_idx\":10,\"target_modules\":[\"v_proj\",\"o_proj\",\"gate_proj\"],\"rank\":64,\"alpha\":64,\"dropout_pct\":10}],\"proposal_encodes\":[{\"id\":\"PE1\",\"packet\":\"⠄⠂⠑⡀⢀⠃\"},{\"id\":\"PE2\",\"packet\":\"⠄⠈⡐⡀⡀⠃\"},{\"id\":\"PE3\",\"packet\":\"⠄⠄⡗⠐⠈⠔\"}],\"vote_decodes\":[{\"id\":\"VD1\",\"voter_idx\":2,\"rankings\":[0,3,2,1,4,5],\"agree\":[true,true,true,false,false,false]},{\"id\":\"VD2\",\"voter_idx\":1,\"rankings\":[0,1,2],\"agree\":[false,true,false]}],\"vote_encodes\":[{\"id\":\"VE1\",\"packet\":\"⠐⠀⠃⠂⠀⠁⠀⠀⠁⠀\"},{\"id\":\"VE2\",\"packet\":\"⠐⠄⠅⠃⠁⠄⠂⠀⠁⠁⠁⠁⠁\"}],\"malformed\":[{\"id\":\"M1\",\"error\":\"LENGTH\"},{\"id\":\"M2\",\"error\":\"MODULE_MASK\"},{\"id\":\"M3\",\"error\":\"DROPOUT\"},{\"id\":\"M4\",\"error\":\"RANKINGS\"}]}"
+    },
+    {
+      "passed": false,
+      "correct": 10,
+      "total": 14,
+      "checks": [
+        {
+          "category": "proposal_decode",
+          "id": "PD1",
+          "passed": true,
+          "expected": {
+            "id": "PD1",
+            "model_idx": 9,
+            "target_modules": [
+              "v_proj"
+            ],
+            "rank": 64,
+            "alpha": 44,
+            "dropout_pct": 5
+          },
+          "actual": {
+            "id": "PD1",
+            "model_idx": 9,
+            "target_modules": [
+              "v_proj"
+            ],
+            "rank": 64,
+            "alpha": 44,
+            "dropout_pct": 5
+          }
+        },
+        {
+          "category": "proposal_decode",
+          "id": "PD2",
+          "passed": true,
+          "expected": {
+            "id": "PD2",
+            "model_idx": 5,
+            "target_modules": [
+              "gate_proj"
+            ],
+            "rank": 16,
+            "alpha": 32,
+            "dropout_pct": 0
+          },
+          "actual": {
+            "id": "PD2",
+            "model_idx": 5,
+            "target_modules": [
+              "gate_proj"
+            ],
+            "rank": 16,
+            "alpha": 32,
+            "dropout_pct": 0
+          }
+        },
+        {
+          "category": "proposal_decode",
+          "id": "PD3",
+          "passed": true,
+          "expected": {
+            "id": "PD3",
+            "model_idx": 7,
+            "target_modules": [
+              "q_proj"
+            ],
+            "rank": 32,
+            "alpha": 16,
+            "dropout_pct": 5
+          },
+          "actual": {
+            "id": "PD3",
+            "model_idx": 7,
+            "target_modules": [
+              "q_proj"
+            ],
+            "rank": 32,
+            "alpha": 16,
+            "dropout_pct": 5
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE1",
+          "passed": true,
+          "expected": {
+            "id": "PE1",
+            "packet": "⠄⠅⠈⠖⠬⠊"
+          },
+          "actual": {
+            "id": "PE1",
+            "packet": "⠄⠅⠈⠖⠬⠊"
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE2",
+          "passed": false,
+          "expected": {
+            "id": "PE2",
+            "packet": "⠄⠃⠊⠐⢀⠊"
+          },
+          "actual": {
+            "id": "PE2",
+            "packet": "⠄⠃⠚⠐⢀⠊"
+          }
+        },
+        {
+          "category": "proposal_encode",
+          "id": "PE3",
+          "passed": false,
+          "expected": {
+            "id": "PE3",
+            "packet": "⠄⠆⠰⠍⠚⠔"
+          },
+          "actual": {
+            "id": "PE3",
+            "packet": "⠄⠆⡨⠍⠚⠔"
+          }
+        },
+        {
+          "category": "vote_decode",
+          "id": "VD1",
+          "passed": true,
+          "expected": {
+            "id": "VD1",
+            "voter_idx": 3,
+            "rankings": [
+              2,
+              0,
+              1,
+              3
+            ],
+            "agree": [
+              true,
+              false,
+              true,
+              false
+            ]
+          },
+          "actual": {
+            "id": "VD1",
+            "voter_idx": 3,
+            "rankings": [
+              2,
+              0,
+              1,
+              3
+            ],
+            "agree": [
+              true,
+              false,
+              true,
+              false
+            ]
+          }
+        },
+        {
+          "category": "vote_decode",
+          "id": "VD2",
+          "passed": false,
+          "expected": {
+            "id": "VD2",
+            "voter_idx": 3,
+            "rankings": [
+              3,
+              1,
+              5,
+              2,
+              0,
+              4
+            ],
+            "agree": [
+              false,
+              true,
+              false,
+              true,
+              false,
+              true
+            ]
+          },
+          "actual": {
+            "id": "VD2",
+            "voter_idx": 3,
+            "rankings": [
+              3,
+              1,
+              5,
+              2,
+              0,
+              4
+            ],
+            "agree": [
+              false,
+              true,
+              false,
+              true,
+              true,
+              false
+            ]
+          }
+        },
+        {
+          "category": "vote_encode",
+          "id": "VE1",
+          "passed": true,
+          "expected": {
+            "id": "VE1",
+            "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+          },
+          "actual": {
+            "id": "VE1",
+            "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+          }
+        },
+        {
+          "category": "vote_encode",
+          "id": "VE2",
+          "passed": false,
+          "expected": {
+            "id": "VE2",
+            "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+          },
+          "actual": {
+            "id": "VE2",
+            "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠀⠁⠁⠁"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M1",
+          "passed": true,
+          "expected": {
+            "id": "M1",
+            "error": "LENGTH"
+          },
+          "actual": {
+            "id": "M1",
+            "error": "LENGTH"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M2",
+          "passed": true,
+          "expected": {
+            "id": "M2",
+            "error": "MODULE_MASK"
+          },
+          "actual": {
+            "id": "M2",
+            "error": "MODULE_MASK"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M3",
+          "passed": true,
+          "expected": {
+            "id": "M3",
+            "error": "DROPOUT"
+          },
+          "actual": {
+            "id": "M3",
+            "error": "DROPOUT"
+          }
+        },
+        {
+          "category": "malformed",
+          "id": "M4",
+          "passed": true,
+          "expected": {
+            "id": "M4",
+            "error": "RANKINGS"
+          },
+          "actual": {
+            "id": "M4",
+            "error": "RANKINGS"
+          }
+        }
+      ],
+      "duplicates": [],
+      "extras": {},
+      "seed": 29,
+      "elapsed_seconds": 28.7,
+      "generated_tokens": 343,
+      "raw_response": "{\"proposal_decodes\":[{\"id\":\"PD1\",\"model_idx\":9,\"target_modules\":[\"v_proj\"],\"rank\":64,\"alpha\":44,\"dropout_pct\":5},{\"id\":\"PD2\",\"model_idx\":5,\"target_modules\":[\"gate_proj\"],\"rank\":16,\"alpha\":32,\"dropout_pct\":0},{\"id\":\"PD3\",\"model_idx\":7,\"target_modules\":[\"q_proj\"],\"rank\":32,\"alpha\":16,\"dropout_pct\":5}],\"proposal_encodes\":[{\"id\":\"PE1\",\"packet\":\"⠄⠅⠈⠖⠬⠊\"},{\"id\":\"PE2\",\"packet\":\"⠄⠃⠚⠐⢀⠊\"},{\"id\":\"PE3\",\"packet\":\"⠄⠆⡨⠍⠚⠔\"}],\"vote_decodes\":[{\"id\":\"VD1\",\"voter_idx\":3,\"rankings\":[2,0,1,3],\"agree\":[true,false,true,false]},{\"id\":\"VD2\",\"voter_idx\":3,\"rankings\":[3,1,5,2,0,4],\"agree\":[false,true,false,true,true,false]}],\"vote_encodes\":[{\"id\":\"VE1\",\"packet\":\"⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁\"},{\"id\":\"VE2\",\"packet\":\"⠐⠁⠅⠄⠃⠀⠂⠁⠀⠀⠁⠁⠁\"}],\"malformed\":[{\"id\":\"M1\",\"error\":\"LENGTH\"},{\"id\":\"M2\",\"error\":\"MODULE_MASK\"},{\"id\":\"M3\",\"error\":\"DROPOUT\"},{\"id\":\"M4\",\"error\":\"RANKINGS\"}]}"
+    }
+  ]
+}

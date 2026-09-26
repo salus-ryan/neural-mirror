@@ -1,0 +1,41 @@
+{
+  "protocol": "neural-mirror-computer-braille-v1",
+  "criterion": "100% exact encode/decode/malformed detection on every held-out seed",
+  "seeds": [
+    17,
+    29
+  ],
+  "tasks_per_seed": 14,
+  "admitted": [],
+  "excluded": [
+    "gpt-oss:120b"
+  ],
+  "results": [
+    {
+      "model": "gpt-oss:120b",
+      "family": "GPT-OSS",
+      "tier": "xlarge",
+      "passed": false,
+      "correct": 0,
+      "total": 28,
+      "seeds": [
+        {
+          "seed": 17,
+          "passed": false,
+          "correct": 0,
+          "total": 14,
+          "error": "empty chat and generate response; chat=None",
+          "elapsed_seconds": 146.8
+        },
+        {
+          "seed": 29,
+          "passed": false,
+          "correct": 0,
+          "total": 14,
+          "error": "empty chat and generate response; chat=None",
+          "elapsed_seconds": 30.0
+        }
+      ]
+    }
+  ]
+}

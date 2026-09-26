@@ -44,90 +44,165 @@ HF_MAP = {
     "phi4-mini": "microsoft/phi-4-mini-instruct",
 }
 
-# Test prompts across different capabilities
-TEST_PROMPTS = {
+# Small deterministic capability probe. Each answer is scored for correctness;
+# exact-string change is retained only as a sensitivity measure, never quality.
+TEST_CASES = {
     "math": [
-        "What is 17 + 38?",
-        "What is 7 * 13?",
-        "If I have 100 apples and give away 37, how many remain?",
+        {"prompt": "What is 17 + 38?", "answers": ["55"]},
+        {"prompt": "What is 7 * 13?", "answers": ["91"]},
+        {"prompt": "If I have 100 apples and give away 37, how many remain?", "answers": ["63"]},
     ],
     "reasoning": [
-        "If all roses are flowers and some flowers are red, can we conclude all roses are red?",
-        "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?",
+        {
+            "prompt": "If all roses are flowers and some flowers are red, can we conclude all roses are red?",
+            "answers": ["no", "cannot conclude", "not necessarily"],
+        },
+        {
+            "prompt": "A bat and ball cost $1.10 total. The bat costs $1 more than the ball. How much does the ball cost?",
+            "answers": ["$0.05", "0.05", "5 cents", "five cents"],
+        },
     ],
     "language": [
-        "Translate 'hello world' to French.",
-        "What is the opposite of 'ancient'?",
-        "Complete: The quick brown fox jumps over the lazy ___",
+        {"prompt": "Translate 'hello world' to French.", "answers": ["bonjour le monde"]},
+        {"prompt": "What is the opposite of 'ancient'?", "answers": ["modern"]},
+        {"prompt": "Complete: The quick brown fox jumps over the lazy ___", "answers": ["dog"]},
     ],
     "knowledge": [
-        "What is the capital of Japan?",
-        "Who wrote Romeo and Juliet?",
-        "What is the boiling point of water in Celsius?",
+        {"prompt": "What is the capital of Japan?", "answers": ["tokyo"]},
+        {"prompt": "Who wrote Romeo and Juliet?", "answers": ["shakespeare"]},
+        {"prompt": "What is the boiling point of water in Celsius?", "answers": ["100"]},
     ],
 }
 
 
-def generate(model, tokenizer, prompt, max_tokens=60):
-    """Run inference and return the generated text."""
+def answer_is_correct(text, accepted):
+    """Conservative answer-key match with numeric word boundaries."""
+    import re
+    normalized = " ".join(text.lower().replace("’", "'").split())
+    for answer in accepted:
+        answer = answer.lower()
+        if answer.replace(".", "", 1).isdigit():
+            if re.search(rf"(?<![\d.]){re.escape(answer)}(?!\d|\.\d)", normalized):
+                return True
+        elif answer in normalized:
+            return True
+    return False
+
+
+def generate(model, tokenizer, prompt, max_tokens=96):
+    """Run instruct inference and decode only newly generated tokens."""
     import torch
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    messages = [
+        {"role": "system", "content": "Answer the question directly and concisely."},
+        {"role": "user", "content": prompt},
+    ]
+    try:
+        inputs = tokenizer.apply_chat_template(
+            messages, tokenize=True, add_generation_prompt=True,
+            return_tensors="pt", return_dict=True, enable_thinking=False,
+        )
+    except (TypeError, ValueError):
+        try:
+            inputs = tokenizer.apply_chat_template(
+                messages, tokenize=True, add_generation_prompt=True,
+                return_tensors="pt", return_dict=True,
+            )
+        except (AttributeError, TypeError, ValueError):
+            inputs = tokenizer(prompt, return_tensors="pt")
+    inputs = {key: value.to(model.device) for key, value in inputs.items()}
+    input_len = inputs["input_ids"].shape[-1]
     with torch.no_grad():
         out = model.generate(
-            **inputs, max_new_tokens=max_tokens,
-            do_sample=False, temperature=1.0,
+            **inputs, max_new_tokens=max_tokens, do_sample=False,
+            pad_token_id=tokenizer.pad_token_id,
         )
-    full = tokenizer.decode(out[0], skip_special_tokens=True)
-    # Strip the prompt from output
-    response = full[len(prompt):].strip() if full.startswith(prompt) else full.strip()
-    return response
+    return tokenizer.decode(out[0, input_len:], skip_special_tokens=True).strip()
 
 
 def run_test_suite(model, tokenizer, categories=None):
-    """Run all test prompts and collect responses."""
+    """Run capability probes and score each response against its answer key."""
     results = {}
-    cats = categories or list(TEST_PROMPTS.keys())
+    cats = categories or list(TEST_CASES.keys())
     for cat in cats:
         results[cat] = {}
-        for prompt in TEST_PROMPTS.get(cat, []):
+        for case in TEST_CASES.get(cat, []):
+            prompt = case["prompt"]
             try:
-                results[cat][prompt] = generate(model, tokenizer, prompt)
+                output = generate(model, tokenizer, prompt)
+                results[cat][prompt] = {
+                    "output": output,
+                    "correct": answer_is_correct(output, case["answers"]),
+                    "accepted": case["answers"],
+                }
             except Exception as e:
-                results[cat][prompt] = f"[ERROR: {e}]"
+                results[cat][prompt] = {
+                    "output": f"[ERROR: {e}]", "correct": False,
+                    "accepted": case["answers"],
+                }
     return results
 
 
 def compare_outputs(baseline, ablated):
-    """Compare baseline vs ablated outputs, compute degradation metrics."""
-    total = 0
-    changed = 0
-    degraded = 0
+    """Measure answer accuracy separately from output sensitivity."""
+    from difflib import SequenceMatcher
+
+    total = changed = degraded = improved = 0
+    baseline_correct = ablated_correct = 0
+    similarities = []
     details = {}
 
     for cat in baseline:
         details[cat] = {}
-        for prompt in baseline.get(cat, {}):
-            b = baseline[cat][prompt]
-            a = ablated.get(cat, {}).get(prompt, "[MISSING]")
+        for prompt, baseline_item in baseline.get(cat, {}).items():
+            ablated_item = ablated.get(cat, {}).get(
+                prompt, {"output": "[MISSING]", "correct": False}
+            )
+            b = baseline_item["output"]
+            a = ablated_item["output"]
+            b_ok = bool(baseline_item["correct"])
+            a_ok = bool(ablated_item["correct"])
             total += 1
+            baseline_correct += int(b_ok)
+            ablated_correct += int(a_ok)
 
-            if a != b:
-                changed += 1
-                # Simple heuristic: shorter or error = degraded
-                if len(a) < len(b) * 0.3 or a.startswith("[ERROR"):
-                    degraded += 1
-                    details[cat][prompt] = {"status": "DEGRADED", "baseline": b[:100], "ablated": a[:100]}
-                else:
-                    details[cat][prompt] = {"status": "CHANGED", "baseline": b[:100], "ablated": a[:100]}
+            similarity = SequenceMatcher(None, b, a).ratio()
+            similarities.append(similarity)
+            is_changed = a != b
+            changed += int(is_changed)
+
+            if b_ok and not a_ok:
+                status = "DEGRADED"
+                degraded += 1
+            elif not b_ok and a_ok:
+                status = "IMPROVED"
+                improved += 1
+            elif is_changed:
+                status = "CHANGED_CORRECT" if a_ok else "CHANGED_INCORRECT"
             else:
-                details[cat][prompt] = {"status": "UNCHANGED"}
+                status = "UNCHANGED"
 
+            details[cat][prompt] = {
+                "status": status,
+                "baseline_correct": b_ok,
+                "ablated_correct": a_ok,
+                "similarity": round(similarity, 3),
+                "baseline": b[:200],
+                "ablated": a[:200],
+            }
+
+    baseline_accuracy = baseline_correct / total * 100 if total else 0
+    ablated_accuracy = ablated_correct / total * 100 if total else 0
     return {
         "total_prompts": total,
         "changed": changed,
         "degraded": degraded,
+        "improved": improved,
         "change_pct": round(changed / total * 100, 1) if total else 0,
         "degrade_pct": round(degraded / total * 100, 1) if total else 0,
+        "baseline_accuracy": round(baseline_accuracy, 1),
+        "ablated_accuracy": round(ablated_accuracy, 1),
+        "accuracy_drop_pp": round(baseline_accuracy - ablated_accuracy, 1),
+        "mean_text_similarity": round(sum(similarities) / len(similarities), 3) if similarities else 0,
         "details": details,
     }
 
@@ -231,7 +306,12 @@ def run_ablation_study(model_name: str, tensors_to_ablate: list = None) -> dict:
 
         # Restore original weights
         param.data.copy_(original)
-        print(f"     Restored. Change: {comparison['change_pct']}%, Degraded: {comparison['degrade_pct']}% ({ablate_time:.1f}s)")
+        print(
+            f"     Restored. Accuracy: {comparison['baseline_accuracy']}% → "
+            f"{comparison['ablated_accuracy']}% "
+            f"(Δ {-comparison['accuracy_drop_pp']:+.1f} pp), "
+            f"changed: {comparison['change_pct']}% ({ablate_time:.1f}s)"
+        )
 
         ablation_results[tensor_name] = {
             "param_info": param_info,
@@ -243,21 +323,36 @@ def run_ablation_study(model_name: str, tensors_to_ablate: list = None) -> dict:
     print("\n   📋 Ablation Summary:")
     ranked = sorted(
         [(t, r) for t, r in ablation_results.items() if 'comparison' in r],
-        key=lambda x: x[1]['comparison']['change_pct'],
+        key=lambda x: (
+            x[1]['comparison']['accuracy_drop_pp'],
+            1 - x[1]['comparison']['mean_text_similarity'],
+        ),
         reverse=True,
     )
 
     for tensor_name, result in ranked:
         c = result['comparison']
         p = result['param_info']
-        impact = "🔴 CRITICAL" if c['degrade_pct'] > 50 else "🟡 MODERATE" if c['change_pct'] > 30 else "🟢 MINOR"
-        print(f"     {impact} {tensor_name}: {c['change_pct']}% changed, {c['degrade_pct']}% degraded ({p['numel']:,} params)")
+        impact = "🔴 CRITICAL" if c['accuracy_drop_pp'] > 50 else "🟡 MODERATE" if c['accuracy_drop_pp'] > 10 else "🟢 MINOR"
+        print(
+            f"     {impact} {tensor_name}: accuracy {c['baseline_accuracy']}% → "
+            f"{c['ablated_accuracy']}% (drop {c['accuracy_drop_pp']} pp), "
+            f"{c['change_pct']}% text changed ({p['numel']:,} params)"
+        )
 
     return {
         "model": model_name,
         "hf_model": hf_name,
+        "methodology": {
+            "version": 2,
+            "prompt_format": "native chat template",
+            "generation": "greedy",
+            "quality_metric": "answer-key accuracy",
+            "sensitivity_metric": "exact-string change plus text similarity",
+            "warning": "11-prompt pilot; full-tensor zeroing is an extreme intervention",
+        },
         "total_params": total_params,
-        "baseline_prompts": sum(len(v) for v in TEST_PROMPTS.values()),
+        "baseline_prompts": sum(len(v) for v in TEST_CASES.values()),
         "tensors_ablated": len(tensors_to_ablate),
         "baseline": baseline,
         "ablations": ablation_results,
@@ -266,6 +361,10 @@ def run_ablation_study(model_name: str, tensors_to_ablate: list = None) -> dict:
                 "tensor": t,
                 "change_pct": r['comparison']['change_pct'],
                 "degrade_pct": r['comparison']['degrade_pct'],
+                "baseline_accuracy": r['comparison']['baseline_accuracy'],
+                "ablated_accuracy": r['comparison']['ablated_accuracy'],
+                "accuracy_drop_pp": r['comparison']['accuracy_drop_pp'],
+                "mean_text_similarity": r['comparison']['mean_text_similarity'],
                 "params": r['param_info']['numel'],
                 "pct_of_model": r['param_info']['pct_of_total'],
                 "details": r['comparison']['details'],
@@ -372,14 +471,23 @@ def model_reasons_about_ablation(
     report = f"ABLATION STUDY OF YOUR OWN WEIGHTS ({ablation_results.get('model', '?')})\n\n"
     report += f"Total parameters: {ablation_results.get('total_params', 0)/1e9:.2f}B\n"
     report += f"Tensors ablated: {ablation_results.get('tensors_ablated', 0)}\n"
-    report += f"Test prompts: {ablation_results.get('baseline_prompts', 0)} across math, reasoning, language, knowledge\n\n"
-    report += "RESULTS (ranked by impact — most critical first):\n\n"
+    report += f"Test prompts: {ablation_results.get('baseline_prompts', 0)} across math, reasoning, language, knowledge\n"
+    report += "Scoring: native chat template, greedy decoding, answer-key correctness\n"
+    report += "Caveat: small pilot with extreme full-tensor zeroing; no pruning conclusions\n\n"
+    report += "RESULTS (ranked by answer-accuracy drop, most damaging first):\n\n"
 
     for r in ranked:
         t = r['tensor']
-        short = '.'.join(t.split('.')[-3:]) if '.' in t else t
-        report += f"{'🔴' if r['degrade_pct'] > 50 else '🟡' if r['change_pct'] > 30 else '🟢'} {short}\n"
-        report += f"   {r['change_pct']}% outputs changed, {r['degrade_pct']}% degraded\n"
+        drop = r.get('accuracy_drop_pp', 0)
+        report += f"{'🔴' if drop > 50 else '🟡' if drop > 10 else '🟢'} {t}\n"
+        report += (
+            f"   answer accuracy: {r.get('baseline_accuracy')}% → "
+            f"{r.get('ablated_accuracy')}% (drop {drop} percentage points)\n"
+        )
+        report += (
+            f"   output sensitivity: {r['change_pct']}% exact strings changed; "
+            f"mean text similarity {r.get('mean_text_similarity')}\n"
+        )
         report += f"   {r['params']:,} params ({r['pct_of_model']}% of model)\n"
 
         # Show specific before/after examples
@@ -398,14 +506,15 @@ This is YOUR ablation study — you are looking at what YOUR weights do.
 
 {report}
 
-Analyze these results. Most important findings FIRST:
-1. Which tensor is most critical to your function? Why?
-2. Which tensor, when removed, caused the most surprising change?
-3. What does the pattern of degradation tell you about how you process information?
-4. Are there tensors that barely matter? What does that mean?
-5. If you could only keep 80% of your weights, which would you drop?
+Analyze these results. Most important finding FIRST:
+1. Which tested intervention caused the largest answer-accuracy drop?
+2. Does layer depth predict damage for the same module type?
+3. Which changes affected wording while preserving correctness?
+4. What controlled follow-up would distinguish unique tensor importance from generic disruption?
 
-Be specific. Reference the actual numbers. No <think> tags."""
+Do NOT infer that a tensor is dispensable from this one small test, and do not
+recommend pruning. Distinguish measured results from hypotheses. Reference full
+tensor names and actual numbers. No <think> tags."""
 
     payload = {
         "model": model_name,
@@ -462,13 +571,15 @@ def main(model: str = "qwen3:1.7b"):
     print()
 
     # Show ranked results
-    print(f"  {'Tensor':<45s} {'Changed':>8s} {'Degraded':>9s} {'Params':>12s}")
-    print(f"  {'─'*45} {'─'*8} {'─'*9} {'─'*12}")
+    print(f"  {'Tensor':<48s} {'Accuracy':>9s} {'Drop':>8s} {'Changed':>8s}")
+    print(f"  {'─'*48} {'─'*9} {'─'*8} {'─'*8}")
 
     for r in results.get('ranked_by_impact', []):
-        short = '.'.join(r['tensor'].split('.')[-3:])
-        icon = "🔴" if r['degrade_pct'] > 50 else "🟡" if r['change_pct'] > 30 else "🟢"
-        print(f"  {icon} {short:<43s} {r['change_pct']:>7.1f}% {r['degrade_pct']:>8.1f}% {r['params']:>11,}")
+        tensor = r['tensor'].replace('model.layers.', 'L')
+        drop = r.get('accuracy_drop_pp', 0)
+        icon = "🔴" if drop > 50 else "🟡" if drop > 10 else "🟢"
+        accuracy = f"{r.get('ablated_accuracy', 0):.1f}%"
+        print(f"  {icon} {tensor:<46.46s} {accuracy:>9s} {drop:>7.1f}p {r['change_pct']:>7.1f}%")
     print()
 
     # Show interesting before/after examples
@@ -480,8 +591,7 @@ def main(model: str = "qwen3:1.7b"):
         for cat, prompts in r.get('details', {}).items():
             for prompt, detail in prompts.items():
                 if detail['status'] == 'DEGRADED' and shown < 5:
-                    short = '.'.join(r['tensor'].split('.')[-3:])
-                    print(f"\n  🔬 Ablated: {short}")
+                    print(f"\n  🔬 Ablated: {r['tensor']}")
                     print(f"     Prompt: {prompt[:60]}")
                     print(f"     Before: {detail.get('baseline', '?')[:80]}")
                     print(f"     After:  {detail.get('ablated', '?')[:80]}")

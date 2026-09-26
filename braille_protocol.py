@@ -2,9 +2,9 @@
 """
 Neural Mirror — Braille Protocol ⠿
 
-8-dot computer braille as a structured encoding for model introspection
-and co-LoRA proposals. Eliminates hallucinated module names, confused
-numbers, and verbose prose.
+8-dot computer-braille Unicode cells as a structured byte encoding for
+model introspection and co-LoRA proposals. Fixed codebooks reject unknown
+module names and malformed numeric fields; they do not guarantee truth.
 
 Each braille cell = 1 byte = 256 patterns. We define:
 
@@ -27,9 +27,11 @@ Each braille cell = 1 byte = 256 patterns. We define:
   RANK ENCODING: 1-cell (0-255 maps directly)
     ⠁ = r=1, ⠐ = r=16, ⡀ = r=64
 
-This is NOT for human reading. It's a machine-to-machine protocol
-that fits in minimal tokens and cannot be hallucinated — every cell
-maps to exactly one meaning.
+This is NOT for human reading. It is a custom machine-to-machine byte
+protocol rendered with Unicode braille cells. Every valid field has a fixed
+meaning, but a model can still select a valid yet unsupported value. The host
+must validate evidence references and semantics separately. Unicode cells are
+not guaranteed to be single tokenizer tokens; measure each model explicitly.
 
 Usage:
     from braille_protocol import encode_proposal, decode_proposal
@@ -64,7 +66,30 @@ MSG_LAYER   = 0x02
 MSG_LORA    = 0x04
 MSG_TRAIN   = 0x08
 MSG_EVAL    = 0x10
+MSG_BRAID   = 0x20
 MSG_CROSS   = 0x3F
+
+BRAID_VERSION = 1
+BRAID_FRAME_LENGTH = 14
+BRAID_OPERATIONS = {
+    'observe': 0x01,
+    'support': 0x02,
+    'challenge': 0x03,
+    'propose_test': 0x04,
+    'synthesize': 0x05,
+}
+CODE_TO_BRAID_OPERATION = {value: key for key, value in BRAID_OPERATIONS.items()}
+BRAID_RELATIONS = {
+    'increase': 0x01,
+    'decrease': 0x02,
+    'similar': 0x03,
+    'different': 0x04,
+    'supports': 0x05,
+    'contradicts': 0x06,
+    'needs_test': 0x07,
+}
+CODE_TO_BRAID_RELATION = {value: key for key, value in BRAID_RELATIONS.items()}
+BRAID_CAVEAT_MASK = 0x0F
 
 # ── Module Codes ─────────────────────────────────────────────
 
@@ -79,6 +104,7 @@ MODULE_CODES = {
 }
 
 CODE_TO_MODULE = {v: k for k, v in MODULE_CODES.items()}
+KNOWN_MODULE_MASK = sum(MODULE_CODES.values())
 
 # ── Architecture Codes ───────────────────────────────────────
 
@@ -117,7 +143,7 @@ def encode_architecture(arch: str, n_layers: int, embed_dim: int,
     """
     Encode architecture summary as braille string.
     Format: [MSG_ARCH] [arch_code] [layers] [embed_dim:2] [heads] [kv] [params_fp16:2] [norm_fp16:2]
-    Total: 11 braille cells = 11 tokens
+    Total: 11 braille cells (token count is tokenizer-dependent)
     """
     data = bytes([
         MSG_ARCH,
@@ -154,10 +180,10 @@ def encode_proposal(target_modules: list, rank: int, alpha: int,
     """
     Encode LoRA proposal as braille string.
     Format: [MSG_LORA] [model_idx] [modules_bitmask] [rank] [alpha] [dropout]
-    Total: 6 braille cells = 6 tokens
+    Total: 6 braille cells (token count is tokenizer-dependent)
     
     vs JSON: {"target_modules":["q_proj","v_proj"],"r":16,"lora_alpha":32,"lora_dropout":0.05}
-    That's ~80 tokens. We do it in 6.
+    This uses 6 cells; actual token savings are tokenizer-dependent.
     """
     # Encode modules as bitmask
     mask = 0
@@ -176,7 +202,7 @@ def encode_proposal(target_modules: list, rank: int, alpha: int,
 
 
 def decode_proposal(braille: str) -> dict:
-    """Decode braille LoRA proposal."""
+    """Decode a LoRA proposal permissively for backward compatibility."""
     b = uncells(braille)
     if len(b) < 6 or b[0] != MSG_LORA:
         return {'error': 'invalid proposal message'}
@@ -192,6 +218,54 @@ def decode_proposal(braille: str) -> dict:
         'lora_alpha': b[4],
         'lora_dropout': b[5] / 100,
     }
+
+
+def _strict_bytes(braille: str) -> tuple[bytes | None, str | None]:
+    """Decode only if every input character is exactly one braille cell."""
+    if not isinstance(braille, str) or not braille:
+        return None, 'EMPTY'
+    if any(not (0x2800 <= ord(char) <= 0x28FF) for char in braille):
+        return None, 'NON_BRAILLE'
+    return bytes(ord(char) - 0x2800 for char in braille), None
+
+
+def encode_proposal_strict(target_modules: list, rank: int, alpha: int,
+                           dropout_pct: int = 5, model_idx: int = 0) -> str:
+    """Encode a proposal after validating every bounded field."""
+    unknown = sorted(set(target_modules) - set(MODULE_CODES))
+    if unknown:
+        raise ValueError(f"unknown modules: {unknown}")
+    if not target_modules:
+        raise ValueError("at least one target module is required")
+    if not 0 <= model_idx <= 255:
+        raise ValueError("model_idx must be 0..255")
+    if not 1 <= rank <= 128:
+        raise ValueError("rank must be 1..128")
+    if not 1 <= alpha <= 255:
+        raise ValueError("alpha must be 1..255")
+    if not 0 <= dropout_pct <= 100:
+        raise ValueError("dropout_pct must be 0..100")
+    return encode_proposal(target_modules, rank, alpha, dropout_pct, model_idx)
+
+
+def decode_proposal_strict(braille: str) -> dict:
+    """Validate an exact six-cell proposal frame before decoding it."""
+    b, error = _strict_bytes(braille)
+    if error:
+        return {'error': error}
+    if len(b) != 6:
+        return {'error': 'LENGTH'}
+    if b[0] != MSG_LORA:
+        return {'error': 'TYPE'}
+    if b[2] == 0 or b[2] & ~KNOWN_MODULE_MASK:
+        return {'error': 'MODULE_MASK'}
+    if not 1 <= b[3] <= 128:
+        return {'error': 'RANK'}
+    if b[4] == 0:
+        return {'error': 'ALPHA'}
+    if b[5] > 100:
+        return {'error': 'DROPOUT'}
+    return decode_proposal(braille)
 
 
 # ── Layer Stats ──────────────────────────────────────────────
@@ -284,6 +358,126 @@ def decode_vote(braille: str) -> dict:
     }
 
 
+def encode_vote_strict(voter_idx: int, rankings: list,
+                       agree_with_self: list) -> str:
+    """Encode a vote only when ranking and agreement vectors are exact."""
+    n = len(rankings)
+    if not 1 <= n <= 32:
+        raise ValueError("vote must rank 1..32 models")
+    if not 0 <= voter_idx <= 255:
+        raise ValueError("voter_idx must be 0..255")
+    if sorted(rankings) != list(range(n)):
+        raise ValueError("rankings must be a permutation of 0..n-1")
+    if len(agree_with_self) != n or any(type(value) is not bool for value in agree_with_self):
+        raise ValueError("agreement vector must contain n booleans")
+    return encode_vote(voter_idx, rankings, agree_with_self)
+
+
+def decode_vote_strict(braille: str) -> dict:
+    """Validate an exact vote frame before decoding it."""
+    b, error = _strict_bytes(braille)
+    if error:
+        return {'error': error}
+    if len(b) < 3:
+        return {'error': 'LENGTH'}
+    if b[0] != MSG_EVAL:
+        return {'error': 'TYPE'}
+    n = b[2]
+    if not 1 <= n <= 32 or len(b) != 3 + 2 * n:
+        return {'error': 'LENGTH'}
+    rankings = list(b[3:3+n])
+    agreements = list(b[3+n:3+2*n])
+    if sorted(rankings) != list(range(n)):
+        return {'error': 'RANKINGS'}
+    if any(value not in (0, 1) for value in agreements):
+        return {'error': 'AGREEMENT'}
+    return decode_vote(braille)
+
+
+# ── Strict Braiding Frame ────────────────────────────────────
+
+def crc8(data: bytes) -> int:
+    """CRC-8/ATM (polynomial 0x07, initial value 0)."""
+    checksum = 0
+    for byte in data:
+        checksum ^= byte
+        for _ in range(8):
+            checksum = ((checksum << 1) ^ 0x07) & 0xFF if checksum & 0x80 else (checksum << 1) & 0xFF
+    return checksum
+
+
+def encode_braid_strict(sender_idx: int, round_idx: int, operation: str,
+                        subject_idx: int, evidence_id: int, relation: str,
+                        confidence_pct: int, caveat_flags: int,
+                        value: float) -> str:
+    """Encode one versioned, checksummed, exact-length braid message."""
+    if not 0 <= sender_idx <= 255:
+        raise ValueError("sender_idx must be 0..255")
+    if not 0 <= round_idx <= 255:
+        raise ValueError("round_idx must be 0..255")
+    if operation not in BRAID_OPERATIONS:
+        raise ValueError(f"unknown braid operation: {operation}")
+    if not 0 <= subject_idx <= 255:
+        raise ValueError("subject_idx must be 0..255")
+    if not 1 <= evidence_id <= 65535:
+        raise ValueError("evidence_id must be 1..65535")
+    if relation not in BRAID_RELATIONS:
+        raise ValueError(f"unknown braid relation: {relation}")
+    if not 0 <= confidence_pct <= 100:
+        raise ValueError("confidence_pct must be 0..100")
+    if not 0 <= caveat_flags <= BRAID_CAVEAT_MASK:
+        raise ValueError(f"caveat_flags must use only mask 0x{BRAID_CAVEAT_MASK:02x}")
+    body = bytes([
+        MSG_BRAID, BRAID_VERSION, sender_idx, round_idx,
+        BRAID_OPERATIONS[operation], subject_idx,
+    ])
+    body += encode_uint16(evidence_id)
+    body += bytes([BRAID_RELATIONS[relation], confidence_pct, caveat_flags])
+    body += encode_float16(value)
+    return cells(body + bytes([crc8(body)]))
+
+
+def decode_braid_strict(braille: str, allowed_evidence_ids=None) -> dict:
+    """Reject malformed braid frames and optionally enforce an evidence catalog."""
+    data, error = _strict_bytes(braille)
+    if error:
+        return {'error': error}
+    if len(data) != BRAID_FRAME_LENGTH:
+        return {'error': 'LENGTH'}
+    if data[0] != MSG_BRAID:
+        return {'error': 'TYPE'}
+    if data[1] != BRAID_VERSION:
+        return {'error': 'VERSION'}
+    if data[4] not in CODE_TO_BRAID_OPERATION:
+        return {'error': 'OPERATION'}
+    if data[8] not in CODE_TO_BRAID_RELATION:
+        return {'error': 'RELATION'}
+    if data[9] > 100:
+        return {'error': 'CONFIDENCE'}
+    if data[10] & ~BRAID_CAVEAT_MASK:
+        return {'error': 'CAVEAT'}
+    if crc8(data[:-1]) != data[-1]:
+        return {'error': 'CHECKSUM'}
+    evidence_id = decode_uint16(data[6:8])
+    if evidence_id == 0:
+        return {'error': 'EVIDENCE'}
+    if allowed_evidence_ids is not None and evidence_id not in set(allowed_evidence_ids):
+        return {'error': 'EVIDENCE'}
+    return {
+        'version': data[1],
+        'sender_idx': data[2],
+        'round_idx': data[3],
+        'operation': CODE_TO_BRAID_OPERATION[data[4]],
+        'subject_idx': data[5],
+        'evidence_id': evidence_id,
+        'relation': CODE_TO_BRAID_RELATION[data[8]],
+        'confidence_pct': data[9],
+        'caveat_flags': data[10],
+        'value': round(decode_float16(data[11:13]), 6),
+        'checksum': data[13],
+    }
+
+
 # ── Full Cross-Model Comparison ──────────────────────────────
 
 def encode_cross_comparison(models: list) -> str:
@@ -321,14 +515,14 @@ def demo():
     arch_decoded = decode_architecture(arch_braille)
     print(f"Architecture: {arch_braille}")
     print(f"  Decoded: {arch_decoded}")
-    print(f"  Braille cells: {len(arch_braille)}, vs ~200 tokens in JSON\n")
+    print(f"  Braille cells: {len(arch_braille)} (benchmark tokens per tokenizer)\n")
     
     # LoRA proposal
     proposal_braille = encode_proposal(['q_proj', 'v_proj', 'o_proj'], rank=16, alpha=32)
     proposal_decoded = decode_proposal(proposal_braille)
     print(f"LoRA proposal: {proposal_braille}")
     print(f"  Decoded: {proposal_decoded}")
-    print(f"  Braille cells: {len(proposal_braille)}, vs ~80 tokens in JSON\n")
+    print(f"  Braille cells: {len(proposal_braille)} (benchmark tokens per tokenizer)\n")
     
     # Layer stats
     l0 = encode_layer_stats(0, 0.088, 0.0006, 0.0008, 92)
@@ -348,13 +542,13 @@ def demo():
     print(f"Vote: {vote}")
     print(f"  Decoded: {decode_vote(vote)}\n")
     
-    # Token savings
+    # Representation-size comparison (not a tokenizer benchmark)
     json_example = '{"target_modules":["q_proj","v_proj","o_proj"],"r":16,"lora_alpha":32,"lora_dropout":0.05,"reasoning":"targeting attention projections for mathematical reasoning improvement"}'
     print(f"Token comparison:")
     print(f"  JSON proposal:    ~{len(json_example.split())} words, ~{len(json_example)//4} tokens")
-    print(f"  Braille proposal: {len(proposal_braille)} cells = {len(proposal_braille)} tokens")
-    print(f"  Compression:      {len(json_example)//4 / len(proposal_braille):.0f}x fewer tokens")
-    print(f"  Hallucination:    IMPOSSIBLE (fixed codebook)")
+    print(f"  Braille proposal: {len(proposal_braille)} cells; token count depends on tokenizer")
+    print("  Syntax safety:    fixed module codebook; unknown names cannot enter the frame")
+    print("  Truth guarantee:  NONE — evidence and semantics still require validation")
 
 
 if __name__ == '__main__':

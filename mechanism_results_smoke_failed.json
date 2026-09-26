@@ -1,0 +1,1058 @@
+{
+  "study_version": 1,
+  "created_at": "2026-09-26T15:15:46Z",
+  "design": {
+    "models": [
+      "qwen3:4b",
+      "phi4-mini",
+      "mistral:7b"
+    ],
+    "depth_fractions": {
+      "early": 0.0,
+      "middle": 0.5,
+      "late": 1.0
+    },
+    "scales": [
+      0.5,
+      0.75,
+      1.25,
+      1.5
+    ],
+    "benchmark_items": 8,
+    "intervention": "multiply homologous pre-attention normalization module output",
+    "primary_effect": "absolute choice-margin change divided by each model's baseline margin SD",
+    "warning": "causal for the intervention; not evidence that raw parameter means share a scale"
+  },
+  "results": [
+    {
+      "study_version": 1,
+      "model": "qwen3:4b",
+      "family": "Qwen",
+      "hf_model": "Qwen/Qwen3-4B",
+      "architecture": "qwen3",
+      "parameters": 4022468096,
+      "layer_path": "model.layers",
+      "layer_count": 36,
+      "benchmark": {
+        "name": "allenai/ai2_arc ARC-Challenge validation",
+        "seed": 42,
+        "items": 8,
+        "ids": [
+          "Mercury_SC_406029",
+          "Mercury_SC_401244",
+          "Mercury_7187915",
+          "Mercury_7192990",
+          "NCEOGA_2013_5_43",
+          "Mercury_414131",
+          "Mercury_7207620",
+          "MCAS_2013_8_29432"
+        ],
+        "scoring": "conditional option-label log likelihood"
+      },
+      "baseline": {
+        "accuracy": 0.875,
+        "mean_margin": 23.957031,
+        "margin_sd": 12.543739
+      },
+      "sham_control": {
+        "scale": 1.0,
+        "prediction_changes": 0,
+        "max_margin_error": 0.0,
+        "passed": true
+      },
+      "functional_gain": {
+        "early": {
+          "layer": 0,
+          "module": "input_layernorm",
+          "input_rms": 0.019828,
+          "output_rms": 0.031067,
+          "output_to_input_rms": 1.566821
+        },
+        "middle": {
+          "layer": 18,
+          "module": "input_layernorm",
+          "input_rms": 34.507034,
+          "output_rms": 0.557716,
+          "output_to_input_rms": 0.016162
+        },
+        "late": {
+          "layer": 35,
+          "module": "input_layernorm",
+          "input_rms": 31.16616,
+          "output_rms": 3.238306,
+          "output_to_input_rms": 0.103905
+        }
+      },
+      "conditions": [
+        {
+          "id": "early.scale_0.5",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 22.936523,
+            "mean_margin_change": -1.020508,
+            "mean_abs_standardized_margin_change": 0.1044,
+            "abs_standardized_margin_change_ci95": [
+              0.044063,
+              0.19129
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.383658,
+              0.004983,
+              0.063528,
+              0.082212,
+              0.085949,
+              0.110862,
+              0.009965,
+              0.094046
+            ]
+          }
+        },
+        {
+          "id": "early.scale_0.75",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 23.503906,
+            "mean_margin_change": -0.453125,
+            "mean_abs_standardized_margin_change": 0.038615,
+            "abs_standardized_margin_change_ci95": [
+              0.013858,
+              0.069448
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.124564,
+              0.012456,
+              0.039861,
+              0.007474,
+              0.046089,
+              0.073493,
+              0.002491,
+              0.002491
+            ]
+          }
+        },
+        {
+          "id": "early.scale_1.25",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 23.162109,
+            "mean_margin_change": -0.794922,
+            "mean_abs_standardized_margin_change": 0.085482,
+            "abs_standardized_margin_change_ci95": [
+              0.016349,
+              0.206002
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.493274,
+              0.01993,
+              0.047334,
+              0.01993,
+              0.001246,
+              0.007474,
+              0.064773,
+              0.029895
+            ]
+          }
+        },
+        {
+          "id": "early.scale_1.5",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 22.362305,
+            "mean_margin_change": -1.594727,
+            "mean_abs_standardized_margin_change": 0.155472,
+            "abs_standardized_margin_change_ci95": [
+              0.032387,
+              0.36892
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.879423,
+              0.042352,
+              0.047334,
+              0.023667,
+              0.009965,
+              0.009965,
+              0.124564,
+              0.106502
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_0.5",
+          "depth": "middle",
+          "layer": 18,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 23.69336,
+            "mean_margin_change": -0.263672,
+            "mean_abs_standardized_margin_change": 0.09825,
+            "abs_standardized_margin_change_ci95": [
+              0.042328,
+              0.161638
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.234181,
+              0.029895,
+              0.0,
+              0.183109,
+              0.176881,
+              0.013702,
+              0.044843,
+              0.103388
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_0.75",
+          "depth": "middle",
+          "layer": 18,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 23.890625,
+            "mean_margin_change": -0.066406,
+            "mean_abs_standardized_margin_change": 0.041106,
+            "abs_standardized_margin_change_ci95": [
+              0.022887,
+              0.058701
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.074739,
+              0.039861,
+              0.009965,
+              0.058545,
+              0.07287,
+              0.001246,
+              0.027404,
+              0.04422
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_1.25",
+          "depth": "middle",
+          "layer": 18,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 23.658203,
+            "mean_margin_change": -0.298828,
+            "mean_abs_standardized_margin_change": 0.032542,
+            "abs_standardized_margin_change_ci95": [
+              0.018058,
+              0.050293
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.054808,
+              0.024913,
+              0.029895,
+              0.013702,
+              0.021176,
+              0.029895,
+              0.082212,
+              0.003737
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_1.5",
+          "depth": "middle",
+          "layer": 18,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 22.946289,
+            "mean_margin_change": -1.010742,
+            "mean_abs_standardized_margin_change": 0.088986,
+            "abs_standardized_margin_change_ci95": [
+              0.031445,
+              0.158121
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.293971,
+              0.049826,
+              0.052317,
+              0.001246,
+              0.033632,
+              0.119582,
+              0.160688,
+              0.000623
+            ]
+          }
+        },
+        {
+          "id": "late.scale_0.5",
+          "depth": "late",
+          "layer": 35,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 19.121094,
+            "mean_margin_change": -4.835938,
+            "mean_abs_standardized_margin_change": 0.427878,
+            "abs_standardized_margin_change_ci95": [
+              0.348075,
+              0.479494
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.169407,
+              0.418536,
+              0.47023,
+              0.421027,
+              0.493897,
+              0.48144,
+              0.497011,
+              0.471475
+            ]
+          }
+        },
+        {
+          "id": "late.scale_0.75",
+          "depth": "late",
+          "layer": 35,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 22.177734,
+            "mean_margin_change": -1.779297,
+            "mean_abs_standardized_margin_change": 0.155549,
+            "abs_standardized_margin_change_ci95": [
+              0.119994,
+              0.186068
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.054808,
+              0.109616,
+              0.16567,
+              0.139512,
+              0.190583,
+              0.198057,
+              0.19432,
+              0.191829
+            ]
+          }
+        },
+        {
+          "id": "late.scale_1.25",
+          "depth": "late",
+          "layer": 35,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 24.632812,
+            "mean_margin_change": 0.675781,
+            "mean_abs_standardized_margin_change": 0.05512,
+            "abs_standardized_margin_change_ci95": [
+              0.038759,
+              0.068355
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.004983,
+              0.042352,
+              0.059791,
+              0.04858,
+              0.073493,
+              0.066019,
+              0.067265,
+              0.078475
+            ]
+          }
+        },
+        {
+          "id": "late.scale_1.5",
+          "depth": "late",
+          "layer": 35,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 24.751953,
+            "mean_margin_change": 0.794922,
+            "mean_abs_standardized_margin_change": 0.068355,
+            "abs_standardized_margin_change_ci95": [
+              0.049043,
+              0.087818
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.01993,
+              0.037369,
+              0.062282,
+              0.067265,
+              0.123318,
+              0.073493,
+              0.074738,
+              0.088441
+            ]
+          }
+        }
+      ],
+      "depth_summary": {
+        "early": {
+          "mean_abs_standardized_margin_change": 0.095992,
+          "per_example": [
+            0.47023,
+            0.01993,
+            0.049514,
+            0.033321,
+            0.035812,
+            0.050449,
+            0.050448,
+            0.058234
+          ]
+        },
+        "middle": {
+          "mean_abs_standardized_margin_change": 0.065221,
+          "per_example": [
+            0.164425,
+            0.036124,
+            0.023044,
+            0.06415,
+            0.07614,
+            0.041106,
+            0.078787,
+            0.037992
+          ]
+        },
+        "late": {
+          "mean_abs_standardized_margin_change": 0.176725,
+          "per_example": [
+            0.062282,
+            0.151968,
+            0.189493,
+            0.169096,
+            0.220323,
+            0.204752,
+            0.208334,
+            0.207555
+          ]
+        },
+        "late_minus_early": {
+          "mean": 0.080733,
+          "ci95": [
+            -0.060849,
+            0.160184
+          ],
+          "per_example": [
+            -0.407948,
+            0.132038,
+            0.139979,
+            0.135775,
+            0.184511,
+            0.154303,
+            0.157886,
+            0.149321
+          ]
+        }
+      },
+      "elapsed_seconds": 61.2
+    },
+    {
+      "model": "phi4-mini",
+      "error": "cannot import name 'LossKwargs' from 'transformers.utils' (/usr/local/lib/python3.12/site-packages/transformers/utils/__init__.py)"
+    },
+    {
+      "study_version": 1,
+      "model": "mistral:7b",
+      "family": "Mistral",
+      "hf_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "architecture": "mistral",
+      "parameters": 7248023552,
+      "layer_path": "model.layers",
+      "layer_count": 32,
+      "benchmark": {
+        "name": "allenai/ai2_arc ARC-Challenge validation",
+        "seed": 42,
+        "items": 8,
+        "ids": [
+          "Mercury_SC_406029",
+          "Mercury_SC_401244",
+          "Mercury_7187915",
+          "Mercury_7192990",
+          "NCEOGA_2013_5_43",
+          "Mercury_414131",
+          "Mercury_7207620",
+          "MCAS_2013_8_29432"
+        ],
+        "scoring": "conditional option-label log likelihood"
+      },
+      "baseline": {
+        "accuracy": 0.75,
+        "mean_margin": 5.632813,
+        "margin_sd": 14.039571
+      },
+      "sham_control": {
+        "scale": 1.0,
+        "prediction_changes": 0,
+        "max_margin_error": 0.0,
+        "passed": true
+      },
+      "functional_gain": {
+        "early": {
+          "layer": 0,
+          "module": "input_layernorm",
+          "input_rms": 0.002043,
+          "output_rms": 0.391467,
+          "output_to_input_rms": 191.567695
+        },
+        "middle": {
+          "layer": 16,
+          "module": "input_layernorm",
+          "input_rms": 0.569096,
+          "output_rms": 2.576791,
+          "output_to_input_rms": 4.527867
+        },
+        "late": {
+          "layer": 31,
+          "module": "input_layernorm",
+          "input_rms": 0.606654,
+          "output_rms": 3.164767,
+          "output_to_input_rms": 5.216761
+        }
+      },
+      "conditions": [
+        {
+          "id": "early.scale_0.5",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.875,
+            "accuracy_change_pp": 12.5,
+            "mean_margin": 6.636719,
+            "mean_margin_change": 1.003906,
+            "mean_abs_standardized_margin_change": 0.311341,
+            "abs_standardized_margin_change_ci95": [
+              0.085974,
+              0.612693
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.093486,
+              0.055646,
+              0.565366,
+              0.106841,
+              1.224218,
+              0.338329,
+              0.0,
+              0.106841
+            ]
+          }
+        },
+        {
+          "id": "early.scale_0.75",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 5.90625,
+            "mean_margin_change": 0.273437,
+            "mean_abs_standardized_margin_change": 0.145793,
+            "abs_standardized_margin_change_ci95": [
+              0.069001,
+              0.226202
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.020033,
+              0.022259,
+              0.142454,
+              0.244844,
+              0.333878,
+              0.05342,
+              0.287135,
+              0.062324
+            ]
+          }
+        },
+        {
+          "id": "early.scale_1.25",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.625,
+            "accuracy_change_pp": -12.5,
+            "mean_margin": 4.121094,
+            "mean_margin_change": -1.511719,
+            "mean_abs_standardized_margin_change": 0.193927,
+            "abs_standardized_margin_change_ci95": [
+              0.105172,
+              0.296323
+            ],
+            "prediction_flip_pct": 12.5,
+            "per_example_abs_standardized_margin_change": [
+              0.077905,
+              0.133551,
+              0.075679,
+              0.427363,
+              0.267102,
+              0.089034,
+              0.080131,
+              0.400653
+            ]
+          }
+        },
+        {
+          "id": "early.scale_1.5",
+          "depth": "early",
+          "layer": 0,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.5,
+            "accuracy_change_pp": -25.0,
+            "mean_margin": 0.84375,
+            "mean_margin_change": -4.789063,
+            "mean_abs_standardized_margin_change": 0.666086,
+            "abs_standardized_margin_change_ci95": [
+              0.400062,
+              0.940464
+            ],
+            "prediction_flip_pct": 37.5,
+            "per_example_abs_standardized_margin_change": [
+              0.547559,
+              1.257606,
+              0.545334,
+              0.458525,
+              0.752338,
+              1.317704,
+              0.440719,
+              0.008903
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_0.5",
+          "depth": "middle",
+          "layer": 16,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 3.214844,
+            "mean_margin_change": -2.417969,
+            "mean_abs_standardized_margin_change": 0.287413,
+            "abs_standardized_margin_change_ci95": [
+              0.117685,
+              0.523381
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.242618,
+              0.060098,
+              0.347233,
+              0.02671,
+              0.218133,
+              0.311619,
+              1.039473,
+              0.05342
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_0.75",
+          "depth": "middle",
+          "layer": 16,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 4.160156,
+            "mean_margin_change": -1.472656,
+            "mean_abs_standardized_margin_change": 0.15887,
+            "abs_standardized_margin_change_ci95": [
+              0.070671,
+              0.296323
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.100163,
+              0.015581,
+              0.142455,
+              0.044517,
+              0.115744,
+              0.15581,
+              0.607657,
+              0.089034
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_1.25",
+          "depth": "middle",
+          "layer": 16,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 6.132813,
+            "mean_margin_change": 0.5,
+            "mean_abs_standardized_margin_change": 0.065106,
+            "abs_standardized_margin_change_ci95": [
+              0.020311,
+              0.130226
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.017807,
+              0.006678,
+              0.011129,
+              0.097937,
+              0.008903,
+              0.046743,
+              0.082357,
+              0.249295
+            ]
+          }
+        },
+        {
+          "id": "middle.scale_1.5",
+          "depth": "middle",
+          "layer": 16,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 6.246094,
+            "mean_margin_change": 0.613281,
+            "mean_abs_standardized_margin_change": 0.145515,
+            "abs_standardized_margin_change_ci95": [
+              0.05397,
+              0.279901
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.069001,
+              0.071227,
+              0.158035,
+              0.178068,
+              0.031162,
+              0.022259,
+              0.051195,
+              0.583173
+            ]
+          }
+        },
+        {
+          "id": "late.scale_0.5",
+          "depth": "late",
+          "layer": 31,
+          "module": "input_layernorm",
+          "scale": 0.5,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 4.476563,
+            "mean_margin_change": -1.15625,
+            "mean_abs_standardized_margin_change": 0.187528,
+            "abs_standardized_margin_change_ci95": [
+              0.133273,
+              0.238173
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.193649,
+              0.255973,
+              0.260425,
+              0.115744,
+              0.227037,
+              0.111293,
+              0.27378,
+              0.062324
+            ]
+          }
+        },
+        {
+          "id": "late.scale_0.75",
+          "depth": "late",
+          "layer": 31,
+          "module": "input_layernorm",
+          "scale": 0.75,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 5.136719,
+            "mean_margin_change": -0.496094,
+            "mean_abs_standardized_margin_change": 0.089312,
+            "abs_standardized_margin_change_ci95": [
+              0.056752,
+              0.122144
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.100163,
+              0.124648,
+              0.140229,
+              0.062324,
+              0.115744,
+              0.013355,
+              0.140229,
+              0.017807
+            ]
+          }
+        },
+        {
+          "id": "late.scale_1.25",
+          "depth": "late",
+          "layer": 31,
+          "module": "input_layernorm",
+          "scale": 1.25,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 5.726563,
+            "mean_margin_change": 0.09375,
+            "mean_abs_standardized_margin_change": 0.070114,
+            "abs_standardized_margin_change_ci95": [
+              0.048691,
+              0.087365
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.084582,
+              0.055646,
+              0.100163,
+              0.05342,
+              0.080131,
+              0.089034,
+              0.089034,
+              0.008903
+            ]
+          }
+        },
+        {
+          "id": "late.scale_1.5",
+          "depth": "late",
+          "layer": 31,
+          "module": "input_layernorm",
+          "scale": 1.5,
+          "metrics": {
+            "accuracy": 0.75,
+            "accuracy_change_pp": 0.0,
+            "mean_margin": 5.771484,
+            "mean_margin_change": 0.138672,
+            "mean_abs_standardized_margin_change": 0.110875,
+            "abs_standardized_margin_change_ci95": [
+              0.075801,
+              0.140093
+            ],
+            "prediction_flip_pct": 0.0,
+            "per_example_abs_standardized_margin_change": [
+              0.13689,
+              0.071227,
+              0.153584,
+              0.097937,
+              0.120196,
+              0.146906,
+              0.151358,
+              0.008903
+            ]
+          }
+        }
+      ],
+      "depth_summary": {
+        "early": {
+          "mean_abs_standardized_margin_change": 0.329287,
+          "per_example": [
+            0.184746,
+            0.367266,
+            0.332208,
+            0.309393,
+            0.644384,
+            0.449622,
+            0.201996,
+            0.14468
+          ]
+        },
+        "middle": {
+          "mean_abs_standardized_margin_change": 0.164226,
+          "per_example": [
+            0.107397,
+            0.038396,
+            0.164713,
+            0.086808,
+            0.093485,
+            0.134108,
+            0.445171,
+            0.243731
+          ]
+        },
+        "late": {
+          "mean_abs_standardized_margin_change": 0.114457,
+          "per_example": [
+            0.128821,
+            0.126874,
+            0.1636,
+            0.082356,
+            0.135777,
+            0.090147,
+            0.1636,
+            0.024484
+          ]
+        },
+        "late_minus_early": {
+          "mean": -0.214829,
+          "ci95": [
+            -0.322889,
+            -0.11452
+          ],
+          "per_example": [
+            -0.055925,
+            -0.240392,
+            -0.168608,
+            -0.227037,
+            -0.508607,
+            -0.359475,
+            -0.038396,
+            -0.120196
+          ]
+        }
+      },
+      "elapsed_seconds": 43.5
+    }
+  ],
+  "verdict": {
+    "preregistered_hypotheses": {
+      "H1": "Matched pre-attention norm-output scaling changes decision margins across at least three families.",
+      "H2": "Late-depth scaling has greater standardized margin sensitivity than early-depth scaling across families."
+    },
+    "criteria": {
+      "minimum_distinct_families": 3,
+      "H1_preregistered_condition": "late.scale_0.5",
+      "H1_per_model_bootstrap_ci_lower_gt": 0.05,
+      "H2_all_models_same_positive_direction": true,
+      "H2_individual_ci_positive_fraction": "at least 2/3",
+      "H2_pooled_bootstrap_ci_lower_gt": 0,
+      "bootstrap_samples": 2000
+    },
+    "successful_families": 2,
+    "failed_models": [
+      {
+        "model": "phi4-mini",
+        "error": "cannot import name 'LossKwargs' from 'transformers.utils' (/usr/local/lib/python3.12/site-packages/transformers/utils/__init__.py)"
+      }
+    ],
+    "H1": {
+      "established": false,
+      "models": [
+        {
+          "model": "qwen3:4b",
+          "condition": "late.scale_0.5",
+          "standardized_margin_response": 0.427878,
+          "ci95": [
+            0.348075,
+            0.479494
+          ],
+          "prediction_flip_pct": 0.0,
+          "supports_h1": true
+        },
+        {
+          "model": "mistral:7b",
+          "condition": "late.scale_0.5",
+          "standardized_margin_response": 0.187528,
+          "ci95": [
+            0.133273,
+            0.238173
+          ],
+          "prediction_flip_pct": 0.0,
+          "supports_h1": true
+        }
+      ]
+    },
+    "H2": {
+      "established": false,
+      "models": [
+        {
+          "model": "qwen3:4b",
+          "family": "Qwen",
+          "early_sensitivity": 0.095992,
+          "middle_sensitivity": 0.065221,
+          "late_sensitivity": 0.176725,
+          "late_minus_early": 0.080733,
+          "late_minus_early_ci95": [
+            -0.060849,
+            0.160184
+          ],
+          "direction_supports_h2": true,
+          "individually_significant": false
+        },
+        {
+          "model": "mistral:7b",
+          "family": "Mistral",
+          "early_sensitivity": 0.329287,
+          "middle_sensitivity": 0.164226,
+          "late_sensitivity": 0.114457,
+          "late_minus_early": -0.214829,
+          "late_minus_early_ci95": [
+            -0.322889,
+            -0.11452
+          ],
+          "direction_supports_h2": false,
+          "individually_significant": false
+        }
+      ],
+      "pooled_late_minus_early_ci95": [
+        -0.15211,
+        0.003137
+      ]
+    },
+    "overall": "not_established",
+    "interpretation_limit": "Even a positive result establishes a shared causal response to matched normalization-output scaling on this benchmark. It does not establish that raw GGUF means are comparable or identify the training-time origin of the mechanism."
+  }
+}

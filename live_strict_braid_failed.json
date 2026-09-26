@@ -1,0 +1,30 @@
+{
+  "stage": "LLAMA_DECODE",
+  "expected": {
+    "version": 1,
+    "sender_idx": 0,
+    "round_idx": 1,
+    "operation": "observe",
+    "subject_idx": 0,
+    "evidence_id": 1,
+    "relation": "increase",
+    "confidence_pct": 85,
+    "caveat_flags": 1,
+    "value": 0.00109,
+    "checksum": 115
+  },
+  "actual": {
+    "type": 32,
+    "version": 1,
+    "sender": 0,
+    "round": 1,
+    "operation": 1,
+    "subject": 0,
+    "evidence_id": 1,
+    "relation": 7,
+    "confidence_pct": 20,
+    "caveat_flags": 5,
+    "value": 0.0010899367
+  },
+  "raw": "{\"decoded\":{\"type\":32,\"version\":1,\"sender\":0,\"round\":1,\"operation\":1,\"subject\":0,\"evidence_id\":1,\"relation\":7,\"confidence_pct\":20,\"caveat_flags\":5,\"value\":0.0010899367},\"reply\":{\"operation\":\"challenge\",\"subject_idx\":0,\"evidence_id\":1,\"relation\":\"needs_test\",\"confidence_pct\":20,\"caveat_flags\":5,\"value\":0.0010899367}}"
+}

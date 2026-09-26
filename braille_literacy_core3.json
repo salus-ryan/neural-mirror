@@ -1,0 +1,1780 @@
+{
+  "protocol": "neural-mirror-computer-braille-v1",
+  "criterion": "100% exact encode/decode/malformed detection on every held-out seed",
+  "seeds": [
+    17,
+    29
+  ],
+  "tasks_per_seed": 14,
+  "admitted": [],
+  "excluded": [
+    "qwen3:4b",
+    "phi4-mini",
+    "mistral:7b"
+  ],
+  "results": [
+    {
+      "model": "qwen3:4b",
+      "family": "Qwen",
+      "tier": "small",
+      "passed": false,
+      "correct": 5,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "k_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 0,
+                "target_modules": [
+                  "k_proj",
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠂⡴⡀⡀⠔"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠆⡃⡀⡀⠊"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠊⡔⡀⡀⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  2,
+                  0,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 4,
+                "rankings": [
+                  3,
+                  1,
+                  4,
+                  2,
+                  0
+                ],
+                "agree": [
+                  false,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠁⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 95.1,
+          "prompt_tokens": 2452,
+          "output_tokens": 603
+        },
+        {
+          "passed": false,
+          "correct": 3,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠉⠄⡀⠬⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠅⠐⠐⠠⠀"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠃⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "RANK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": true,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "DROPOUT"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 6.7,
+          "prompt_tokens": 2455,
+          "output_tokens": 450
+        }
+      ]
+    },
+    {
+      "model": "phi4-mini",
+      "family": "Phi",
+      "tier": "small",
+      "passed": false,
+      "correct": 3,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 1,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 1,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 64,
+                "alpha": 128,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 2,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 128,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 3,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj",
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 8,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠂⡴⡀⡀⠔"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠆⡃⡀⡀⠊"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠊⡔⡀⡀⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  1,
+                  0,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 4,
+                "rankings": [
+                  3,
+                  1,
+                  2,
+                  0
+                ],
+                "agree": [
+                  false,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠀⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "TYPE"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "RANK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": false,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "AGREEMENT"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 101.7,
+          "prompt_tokens": 2498,
+          "output_tokens": 505
+        },
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 1,
+                "target_modules": [
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 6,
+                "target_modules": [
+                  "gate_proj",
+                  "up_proj"
+                ],
+                "rank": 13,
+                "alpha": 26,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠐⠐⠠⠀⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠁⠀⠁"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 7.3,
+          "prompt_tokens": 2500,
+          "output_tokens": 505
+        }
+      ]
+    },
+    {
+      "model": "mistral:7b",
+      "family": "Mistral",
+      "tier": "medium",
+      "passed": false,
+      "correct": 3,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 15,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 15,
+                "target_modules": [
+                  "k_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 15,
+                "target_modules": [
+                  "o_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠀⠆⠐⠠⠆"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠀⠊⠐⠠⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  2,
+                  0,
+                  1
+                ],
+                "agree": [
+                  true,
+                  false,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": true,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠁⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": false,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 99.0,
+          "prompt_tokens": 2761,
+          "output_tokens": 551
+        },
+        {
+          "passed": false,
+          "correct": 1,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 5,
+                "target_modules": [
+                  "o_proj"
+                ],
+                "rank": 22,
+                "alpha": 44,
+                "dropout_pct": 10
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 3,
+                "target_modules": [
+                  "k_proj",
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 128,
+                "dropout_pct": 10
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 6,
+                "target_modules": [
+                  "gate_proj",
+                  "up_proj"
+                ],
+                "rank": 13,
+                "alpha": 26,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠅⠐⠐⠠⠀"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠃⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁⠀⠁⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": false,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 13.1,
+          "prompt_tokens": 2757,
+          "output_tokens": 564
+        }
+      ]
+    }
+  ]
+}

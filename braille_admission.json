@@ -1,0 +1,1849 @@
+{
+  "protocol": "neural-mirror-computer-braille-v1",
+  "policy": "Only models with 100% exact accuracy on every task across both held-out seeds are admitted.",
+  "required_score": "28/28",
+  "admitted": [
+    "qwen3:4b+qwen3-4b-braille-literacy-v3",
+    "llama3.2:3b+llama3.2-3b-braille-literacy-v1",
+    "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+    "glm4:9b+glm4-9b-braille-literacy-v1",
+    "falcon3:7b+falcon3-7b-braille-literacy-v2",
+    "mistral:7b+mistral-7b-braille-literacy-v2",
+    "phi4-mini+phi4-mini-braille-literacy-v2",
+    "solar:10.7b+solar-10.7b-braille-literacy-v2",
+    "gemma3:4b+gemma3-4b-braille-literacy-v2",
+    "olmo2:7b+olmo2-7b-braille-literacy-v2",
+    "yi:6b+yi-6b-braille-literacy-v2",
+    "granite4:3b+granite4-3b-braille-literacy-v2"
+  ],
+  "excluded": [
+    "qwen3:4b",
+    "phi4-mini",
+    "mistral:7b"
+  ],
+  "inconclusive": [
+    "gpt-oss:120b",
+    "gemma3:4b: OSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/google/gemma-3-4b-it.\n401 Client Error. (Request ID: Root=1-6ab7f396-0cb2e23d0c625ca0045bf1df;ea72ebf9-ff44-4bb2-96f0-94ecc0cea400)\n\nCannot access gated repo for url https://huggingface.co/google/gemma-3-4b-it/resolve/main/config.json.\nAccess to model google/gemma-3-4b-it is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "command-r7b:7b: OSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/CohereForAI/c4ai-command-r7b-12-2024.\n401 Client Error. (Request ID: Root=1-6ab7f87b-2c63ea0d2c505a657580bfc4;0f2b8fda-a313-470f-b362-9128744a78ac)\n\nCannot access gated repo for url https://huggingface.co/CohereForAI/c4ai-command-r7b-12-2024/resolve/main/config.json.\nAccess to model CohereLabs/c4ai-command-r7b-12-2024 is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "aya-expanse:8b: OSError: You are trying to access a gated repo.\nMake sure to have access to it at https://huggingface.co/CohereForAI/aya-expanse-8b.\n401 Client Error. (Request ID: Root=1-6ab7ff5e-5a9756512540900970a68fbd;21aca0eb-3f57-4043-bf8e-8d3b19505418)\n\nCannot access gated repo for url https://huggingface.co/CohereForAI/aya-expanse-8b/resolve/main/config.json.\nAccess to model CohereLabs/aya-expanse-8b is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "exaone3.5:7.8b: ImportError: cannot import name 'RopeParameters' from 'transformers.modeling_rope_utils' (/usr/local/lib/python3.12/site-packages/transformers/modeling_rope_utils.py)",
+    "internlm2:7b: ValueError: Converting from SentencePiece and Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast converters: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer', 'InternLM2Tokenizer']",
+    "stablelm2:1.6b: RuntimeError: CONTEXT: seed 1000 requires 3018 tokens but model limit is 2048",
+    "exaone3.5:7.8b: ValueError: The repository LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct contains custom code which must be executed to correctly load the model. You can inspect the repository content at https://hf.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct .\n You can inspect the repository content at https://hf.co/LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct.\nPlease pass the argument `trust_remote_code=True` to allow custom code to be run.",
+    "internlm2:7b: AttributeError: 'bool' object has no attribute 'pad_token_id'",
+    "exaone3.5:7.8b: ImportError: cannot import name 'use_kernel_func_from_hub' from 'transformers.integrations' (/usr/local/lib/python3.12/site-packages/transformers/integrations/__init__.py)",
+    "internlm2:7b: RuntimeError: INTERNAL: piece must not include null character."
+  ],
+  "untested_policy": "barred until tested",
+  "valid_scored_results": [
+    {
+      "model": "qwen3:4b",
+      "family": "Qwen",
+      "tier": "small",
+      "passed": false,
+      "correct": 5,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "k_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 0,
+                "target_modules": [
+                  "k_proj",
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠂⡴⡀⡀⠔"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠆⡃⡀⡀⠊"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠊⡔⡀⡀⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  2,
+                  0,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 4,
+                "rankings": [
+                  3,
+                  1,
+                  4,
+                  2,
+                  0
+                ],
+                "agree": [
+                  false,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠁⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 95.1,
+          "prompt_tokens": 2452,
+          "output_tokens": 603
+        },
+        {
+          "passed": false,
+          "correct": 3,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠉⠄⡀⠬⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠅⠐⠐⠠⠀"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠃⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "RANK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": true,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "DROPOUT"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 6.7,
+          "prompt_tokens": 2455,
+          "output_tokens": 450
+        }
+      ]
+    },
+    {
+      "model": "phi4-mini",
+      "family": "Phi",
+      "tier": "small",
+      "passed": false,
+      "correct": 3,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 1,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 1,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 64,
+                "alpha": 128,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 2,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 128,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 3,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj",
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 8,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠂⡴⡀⡀⠔"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠆⡃⡀⡀⠊"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠊⡔⡀⡀⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  1,
+                  0,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 4,
+                "rankings": [
+                  3,
+                  1,
+                  2,
+                  0
+                ],
+                "agree": [
+                  false,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠀⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "TYPE"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "RANK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": false,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "AGREEMENT"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 101.7,
+          "prompt_tokens": 2498,
+          "output_tokens": 505
+        },
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 1,
+                "target_modules": [
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 0,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 5
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 6,
+                "target_modules": [
+                  "gate_proj",
+                  "up_proj"
+                ],
+                "rank": 13,
+                "alpha": 26,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠐⠐⠠⠀⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠁⠀⠁"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": true,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 7.3,
+          "prompt_tokens": 2500,
+          "output_tokens": 505
+        }
+      ]
+    },
+    {
+      "model": "mistral:7b",
+      "family": "Mistral",
+      "tier": "medium",
+      "passed": false,
+      "correct": 3,
+      "total": 28,
+      "seeds": [
+        {
+          "passed": false,
+          "correct": 2,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 2,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "up_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 20
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 15,
+                "target_modules": [
+                  "q_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 6,
+                "target_modules": [
+                  "q_proj",
+                  "k_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 15,
+                "target_modules": [
+                  "k_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 10,
+                "target_modules": [
+                  "v_proj",
+                  "gate_proj",
+                  "down_proj"
+                ],
+                "rank": 64,
+                "alpha": 64,
+                "dropout_pct": 10
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 15,
+                "target_modules": [
+                  "o_proj",
+                  "v_proj"
+                ],
+                "rank": 32,
+                "alpha": 128,
+                "dropout_pct": 0
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠂⠑⡀⢀⠃"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠈⠰⡀⡀⠃"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠀⠆⠐⠠⠆"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠄⠱⠐⠈⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠀⠊⠐⠠⠊"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 2,
+                "rankings": [
+                  0,
+                  3,
+                  2,
+                  1,
+                  4,
+                  5
+                ],
+                "agree": [
+                  true,
+                  true,
+                  true,
+                  false,
+                  false,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 0,
+                "rankings": [
+                  2,
+                  0,
+                  1
+                ],
+                "agree": [
+                  true,
+                  false,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": true,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠀⠃⠂⠀⠁⠀⠁⠀"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠂⠆⠀⠃⠂⠁⠄⠅⠁⠁⠁⠀⠀⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠄⠅⠃⠁⠄⠂⠀⠀⠁⠁⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠁⠃⠀⠁⠂⠀⠁⠀"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": false,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 17,
+          "transport": "chat",
+          "elapsed_seconds": 99.0,
+          "prompt_tokens": 2761,
+          "output_tokens": 551
+        },
+        {
+          "passed": false,
+          "correct": 1,
+          "total": 14,
+          "checks": [
+            {
+              "category": "proposal_decode",
+              "id": "PD1",
+              "passed": false,
+              "expected": {
+                "id": "PD1",
+                "model_idx": 9,
+                "target_modules": [
+                  "v_proj"
+                ],
+                "rank": 64,
+                "alpha": 44,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD1",
+                "model_idx": 5,
+                "target_modules": [
+                  "o_proj"
+                ],
+                "rank": 22,
+                "alpha": 44,
+                "dropout_pct": 10
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD2",
+              "passed": false,
+              "expected": {
+                "id": "PD2",
+                "model_idx": 5,
+                "target_modules": [
+                  "gate_proj"
+                ],
+                "rank": 16,
+                "alpha": 32,
+                "dropout_pct": 0
+              },
+              "actual": {
+                "id": "PD2",
+                "model_idx": 3,
+                "target_modules": [
+                  "k_proj",
+                  "o_proj"
+                ],
+                "rank": 16,
+                "alpha": 128,
+                "dropout_pct": 10
+              }
+            },
+            {
+              "category": "proposal_decode",
+              "id": "PD3",
+              "passed": false,
+              "expected": {
+                "id": "PD3",
+                "model_idx": 7,
+                "target_modules": [
+                  "q_proj"
+                ],
+                "rank": 32,
+                "alpha": 16,
+                "dropout_pct": 5
+              },
+              "actual": {
+                "id": "PD3",
+                "model_idx": 6,
+                "target_modules": [
+                  "gate_proj",
+                  "up_proj"
+                ],
+                "rank": 13,
+                "alpha": 26,
+                "dropout_pct": 20
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE1",
+              "passed": false,
+              "expected": {
+                "id": "PE1",
+                "packet": "⠄⠅⠈⠖⠬⠊"
+              },
+              "actual": {
+                "id": "PE1",
+                "packet": "⠄⠀⠅⠐⠠⠅"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE2",
+              "passed": false,
+              "expected": {
+                "id": "PE2",
+                "packet": "⠄⠃⠊⠐⢀⠊"
+              },
+              "actual": {
+                "id": "PE2",
+                "packet": "⠄⠅⠐⠐⠠⠀"
+              }
+            },
+            {
+              "category": "proposal_encode",
+              "id": "PE3",
+              "passed": false,
+              "expected": {
+                "id": "PE3",
+                "packet": "⠄⠆⠰⠍⠚⠔"
+              },
+              "actual": {
+                "id": "PE3",
+                "packet": "⠄⠇⠁⠠⠐⠅"
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD1",
+              "passed": false,
+              "expected": {
+                "id": "VD1",
+                "voter_idx": 3,
+                "rankings": [
+                  2,
+                  0,
+                  1,
+                  3
+                ],
+                "agree": [
+                  true,
+                  false,
+                  true,
+                  false
+                ]
+              },
+              "actual": {
+                "id": "VD1",
+                "voter_idx": 1,
+                "rankings": [
+                  0,
+                  1,
+                  2,
+                  3
+                ],
+                "agree": [
+                  false,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_decode",
+              "id": "VD2",
+              "passed": false,
+              "expected": {
+                "id": "VD2",
+                "voter_idx": 3,
+                "rankings": [
+                  3,
+                  1,
+                  5,
+                  2,
+                  0,
+                  4
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  false,
+                  true
+                ]
+              },
+              "actual": {
+                "id": "VD2",
+                "voter_idx": 1,
+                "rankings": [
+                  4,
+                  3,
+                  0,
+                  2,
+                  1
+                ],
+                "agree": [
+                  false,
+                  true,
+                  false,
+                  true,
+                  true
+                ]
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE1",
+              "passed": false,
+              "expected": {
+                "id": "VE1",
+                "packet": "⠐⠁⠄⠀⠁⠂⠃⠀⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE1",
+                "packet": "⠐⠃⠄⠂⠀⠁⠃⠁⠀⠁⠀"
+              }
+            },
+            {
+              "category": "vote_encode",
+              "id": "VE2",
+              "passed": false,
+              "expected": {
+                "id": "VE2",
+                "packet": "⠐⠁⠅⠄⠃⠀⠂⠁⠀⠁⠀⠁⠁"
+              },
+              "actual": {
+                "id": "VE2",
+                "packet": "⠐⠃⠆⠃⠁⠅⠂⠀⠄⠀⠁⠀⠁⠀⠁"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M1",
+              "passed": false,
+              "expected": {
+                "id": "M1",
+                "error": "LENGTH"
+              },
+              "actual": {
+                "id": "M1",
+                "error": "MODULE_MASK"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M2",
+              "passed": false,
+              "expected": {
+                "id": "M2",
+                "error": "MODULE_MASK"
+              },
+              "actual": {
+                "id": "M2",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M3",
+              "passed": false,
+              "expected": {
+                "id": "M3",
+                "error": "DROPOUT"
+              },
+              "actual": {
+                "id": "M3",
+                "error": "ALPHA"
+              }
+            },
+            {
+              "category": "malformed",
+              "id": "M4",
+              "passed": true,
+              "expected": {
+                "id": "M4",
+                "error": "RANKINGS"
+              },
+              "actual": {
+                "id": "M4",
+                "error": "RANKINGS"
+              }
+            }
+          ],
+          "duplicates": [],
+          "extras": {},
+          "seed": 29,
+          "transport": "chat",
+          "elapsed_seconds": 13.1,
+          "prompt_tokens": 2757,
+          "output_tokens": 564
+        }
+      ]
+    }
+  ],
+  "inconclusive_attempts": [
+    {
+      "artifact": "braille_literacy_oss120_budget_failed.json",
+      "results": [
+        {
+          "model": "gpt-oss:120b",
+          "family": "GPT-OSS",
+          "tier": "xlarge",
+          "passed": false,
+          "correct": 0,
+          "total": 28,
+          "seeds": [
+            {
+              "seed": 17,
+              "passed": false,
+              "correct": 0,
+              "total": 14,
+              "error": "empty chat and generate response; chat=None",
+              "elapsed_seconds": 146.8
+            },
+            {
+              "seed": 29,
+              "passed": false,
+              "correct": 0,
+              "total": 14,
+              "error": "empty chat and generate response; chat=None",
+              "elapsed_seconds": 30.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "artifact": "braille_literacy_results.json",
+      "results": [
+        {
+          "model": "gpt-oss:120b",
+          "family": "GPT-OSS",
+          "passed": false,
+          "correct": 0,
+          "total": 28,
+          "error": ""
+        }
+      ]
+    }
+  ]
+}

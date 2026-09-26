@@ -1,0 +1,101 @@
+{
+  "preset": "wide",
+  "status": "complete",
+  "completed_rounds": 2,
+  "requested_rounds": 2,
+  "registry_specs": [
+    {
+      "family": "Granite",
+      "model": "granite3.3:8b",
+      "tier": "medium",
+      "lineage": "IBM Granite",
+      "preset": "wide"
+    },
+    {
+      "family": "Command-R",
+      "model": "command-r7b:7b",
+      "tier": "medium",
+      "lineage": "Cohere Command-R",
+      "preset": "wide"
+    },
+    {
+      "family": "OLMo",
+      "model": "olmo2:7b",
+      "tier": "medium",
+      "lineage": "AI2 OLMo 2",
+      "preset": "wide"
+    }
+  ],
+  "participants": {
+    "granite3.3:8b": {
+      "model_name": "Granite 3.3 8b Instruct",
+      "arch": "granite",
+      "params": "8.17B",
+      "n_layers": 40,
+      "max_layer": 39,
+      "norm_growth": 4.3,
+      "first_norm": 1.2687,
+      "last_norm": 5.4579,
+      "ollama_name": "granite3.3:8b",
+      "family": "Granite",
+      "lineage": "IBM Granite",
+      "tier": "medium",
+      "role": "peer"
+    },
+    "command-r7b:7b": {
+      "model_name": "C4Ai Command R7B 12 2024",
+      "arch": "cohere2",
+      "params": "8.03B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "norm_growth": 4.49,
+      "first_norm": 0.1493,
+      "last_norm": 0.6702,
+      "ollama_name": "command-r7b:7b",
+      "family": "Command-R",
+      "lineage": "Cohere Command-R",
+      "tier": "medium",
+      "role": "peer"
+    },
+    "olmo2:7b": {
+      "model_name": "Open_Instruct_Dev",
+      "arch": "olmo2",
+      "params": "7.30B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "norm_growth": 25.43,
+      "first_norm": 0.0219,
+      "last_norm": 0.5578,
+      "ollama_name": "olmo2:7b",
+      "family": "OLMo",
+      "lineage": "AI2 OLMo 2",
+      "tier": "medium",
+      "role": "peer"
+    }
+  },
+  "rounds": {
+    "1": {
+      "granite3.3:8b": "MEASURED [DELTA.1]: attn_norm.weight mean changed from 1.571022 at block 0 to 7.190833 at block 39 (delta 5.619811; 512 sampled dequantized values per tensor).\nHYPOTHESIS: These findings suggest potential specialization in later layers for specific tasks, possibly related to instruction processing.\nCAVEAT: This is a preliminary analysis based on quantized samples, limiting causal interpretations.\nPROPOSAL: Further investigation into the role of these weight differences in instruction-following behavior is warranted.",
+      "command-r7b:7b": "MEASURED [DELTA.1]: attn_norm.weight mean changed from 0.144321 at block 0 to 0.666584 at block 31 (delta 0.522263; 512 sampled dequantized values per tensor).\n\nHYPOTHESIS: This difference suggests that the model may have learned to adjust its attention output weights more significantly towards the end of training.\n\nCAVEAT: This is a preliminary observation based on quantized samples, which may not fully represent the original model's behavior.\n\nPROPOSAL: Further investigation into the role of attention output weights in the model's final performance and their evolution during training is warranted.",
+      "olmo2:7b": "MEASURED [DELTA.1]: attn_q_norm.weight mean changed from 0.184191 at block 0 to 0.624725 at block 31 (delta 0.440534; 512 sampled dequantized values per tensor).\n\nHYPOTHESIS: The observed mean absolute delta in attention weights suggests a focused refinement process in the later layers of the Open_Instruct_Dev model, potentially indicating a late-stage learning emphasis on attention mechanisms.\n\nCAVEAT: The preliminary nature of the quantized samples limits the scope of causal inferences; these findings are descriptive and should be interpreted with caution.\n\nPROPOSAL: Peers should test whether late-stage attention weight adjustments correlate with improvements in model performance on attention-relevant tasks."
+    },
+    "2": {
+      "granite3.3:8b": "MEASURED [DELTA.1]: attn_norm.weight mean changed from 1.571022 at block 0 to 7.190833 at block 39 (delta 5.619811; 512 sampled dequantized values per tensor).\nVOTE: ACCEPT C1\nREASON: The observation table shows a positive first-to-last-block change in the DELTA.1 statistic for all three models, supporting the claim.\nDISSENT: The limitation is that this observation does not imply causality, only a descriptive trend.\nNEXT_TEST: A controlled experiment comparing the same tensor across different models with varying architectures and quantization schemes would provide more causal evidence.",
+      "command-r7b:7b": "MEASURED [DELTA.1]: attn_norm.weight mean changed from 0.144321 at block 0 to 0.666584 at block 31 (delta 0.522263; 512 sampled dequantized values per tensor).\nVOTE: ACCEPT C1\nREASON: The table shows a positive change in the mean of the attention weights from the first to the last block for all three models, which aligns with C1's observation.\n\nDISSENT: NONE\n\nNEXT_TEST: Compare the attention weight changes across different layers for each model to determine if there are specific layers where the models show more significant adjustments.",
+      "olmo2:7b": "MEASURED [DELTA.1]: attn_q_norm.weight mean changed from 0.184191 at block 0 to 0.624725 at block 31 (delta 0.440534; 512 sampled dequantized values per tensor).\nVOTE: ACCEPT C1\n\nREASON: The observation table shows that the mean of attn_q_norm.weight in Open_Instruct_Dev increases from 0.184191 at block 0 to 0.624725 at block 31, which aligns with the description in C1. This change is consistent across the provided measurements for different models and layers, supporting the claim that there is a positive first-to-last block change in the DELTA.1 statistic for attention weights.\n\nDISSENT: NONE\n\nNEXT_TEST: A controlled experiment could involve training two separate models with identical architectures and initial conditions but with different learning rates to determine if the observed increase in attention weight mean is directly correlated with a higher learning rate.\n\nSELF EVIDENCE:\n{\"source\":\"host-executed GGUF inspection\",\"method\":\"512-value dequantized samples per tensor; first vs last block\",\"warning\":\"preliminary quantized samples support descriptive, not causal, claims\",\"identity\":{\"name\":\"Open_Instruct_Dev\",\"architecture\":\"olmo2\",\"file_format\":\"GGUF v3\"},\"scale\":{\"total_parameters\":7298617344,\"total_parameters_human\":\"7.30B\",\"total_tensors\":355,\"layer_count\":1},\"quantization\":{\"Q4_K\":\"5897.2M params\",\"Q"
+    }
+  },
+  "conference_consensus": {
+    "motion": "C1: In 3/3 canonical briefs, the host-selected DELTA.1 statistic had a positive first-to-last-block change. This is descriptive and selection-biased; tensor identities, architectures, quantization, and magnitudes are not directly comparable.",
+    "status": "unanimous",
+    "accept": 3,
+    "reject": 0,
+    "abstain": 0,
+    "votes": {
+      "granite3.3:8b": "ACCEPT",
+      "command-r7b:7b": "ACCEPT",
+      "olmo2:7b": "ACCEPT"
+    }
+  },
+  "elapsed": 140.3
+}

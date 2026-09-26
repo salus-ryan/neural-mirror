@@ -1,0 +1,166 @@
+{
+  "advisor": "gpt-oss:120b",
+  "role": "research_lead",
+  "review": {
+    "headline": "Full‑tensor zeroing reveals critical modules in Qwen‑3‑1.7B",
+    "verdict": "promising",
+    "verified_findings": [
+      {
+        "finding": "Zeroing the entire self‑attention query projection in layer 0 eliminates all correct answers (baseline 100 % → ablated 0 %).",
+        "strength": "strong",
+        "evidence": "A01",
+        "evidence_ids": [
+          "A01"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire self‑attention value projection in layer 0 eliminates all correct answers (baseline 100 % → ablated 0 %).",
+        "strength": "strong",
+        "evidence": "A02",
+        "evidence_ids": [
+          "A02"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire input‑layernorm weight in layer 0 eliminates all correct answers (baseline 100 % → ablated 0 %).",
+        "strength": "strong",
+        "evidence": "A03",
+        "evidence_ids": [
+          "A03"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire MLP gate‑proj weight in layer 0 reduces overall accuracy to 72.7 % (27.3 % absolute loss); answers remain correct but wording changes (e.g., “The sum of 17 and 38 is 55”).",
+        "strength": "moderate",
+        "evidence": "A04",
+        "evidence_ids": [
+          "A04"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire MLP down‑proj weight in layer 0 produces the same accuracy drop (72.7 %) and similar wording changes.",
+        "strength": "moderate",
+        "evidence": "A05",
+        "evidence_ids": [
+          "A05"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire MLP gate‑proj weight in layer 14 reduces accuracy to 72.7 % (27.3 % loss) and introduces a factual error on a subtraction problem (\"23 apples remain\" instead of \"63\").",
+        "strength": "moderate",
+        "evidence": "A06",
+        "evidence_ids": [
+          "A06"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire self‑attention query projection in layer 14 drops accuracy to 90.9 % (9.1 % loss) while preserving correct answers (e.g., \"17 + 38 = 55\").",
+        "strength": "moderate",
+        "evidence": "A07",
+        "evidence_ids": [
+          "A07"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire MLP gate‑proj weight in layer 27 drops accuracy to 90.9 % (9.1 % loss) with correct answers retained.",
+        "strength": "moderate",
+        "evidence": "A08",
+        "evidence_ids": [
+          "A08"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire self‑attention query projection in layer 27 drops accuracy to 90.9 % (9.1 % loss); surface form of a translation changes (\"Bonjour monde\" vs. \"Bonjour le monde\") while a reasoning answer stays logically correct.",
+        "strength": "moderate",
+        "evidence": "A09",
+        "evidence_ids": [
+          "A09"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire self‑attention value projection in layer 14 does **not** affect answer‑key accuracy (100 % retained) and only modestly alters phrasing.",
+        "strength": "moderate",
+        "evidence": "A10",
+        "evidence_ids": [
+          "A10"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire self‑attention value projection in layer 27 produces no measurable effect (accuracy unchanged, text similarity = 1.0).",
+        "strength": "strong",
+        "evidence": "A11",
+        "evidence_ids": [
+          "A11"
+        ]
+      },
+      {
+        "finding": "Zeroing the entire input‑layernorm weight in layer 27 produces no measurable effect (accuracy unchanged, text similarity = 1.0).",
+        "strength": "strong",
+        "evidence": "A12",
+        "evidence_ids": [
+          "A12"
+        ]
+      }
+    ],
+    "unsupported_claims": [
+      {
+        "claim": "Deeper layers (e.g., layer 14) are more sensitive to perturbations than shallower layers (e.g., layer 27).",
+        "problem": "Comparable accuracy drops (≈9 %) occur when similar‑size tensors (gate‑proj or q‑proj) are zeroed in both layer 14 and layer 27 (A07, A08, A09). Depth alone does not predict a larger drop.",
+        "replacement": "Sensitivity depends on the specific module and the proportion of parameters altered, not simply on depth."
+      },
+      {
+        "claim": "Layer depth predicts damage for the same module type.",
+        "problem": "Full‑tensor zeroing of layer 0 attention tensors eliminates all correct answers, whereas similar interventions in deeper layers cause far smaller losses (A01‑A03 vs. A07‑A09). The relationship is non‑monotonic and driven by functional role, not depth.",
+        "replacement": "Damage is primarily driven by the functional role of the tensor and the extent of the perturbation, not by its depth."
+      },
+      {
+        "claim": "The most significant accuracy drop occurred in model.layers.14.mlp.gate_proj.weight, indicating it is the critical module.",
+        "problem": "While A06 shows the largest drop among *partial*‑looking interventions, full zeroing of layer 0 attention tensors (A01‑A03) eliminates all correct answers, a far larger effect.",
+        "replacement": "Criticality must be assessed across all interventions; early‑layer attention projections are more critical than the mid‑layer gate‑proj highlighted."
+      }
+    ],
+    "critical_confounds": [
+      "All interventions are extreme out‑of‑distribution (full‑tensor zeroing), which may overstate importance relative to realistic weight perturbations.",
+      "Only 11 prompts were used, with rule‑based answer matching; findings may not generalize to broader tasks or human‑rated quality.",
+      "No random‑noise or matched‑magnitude control interventions were included, limiting causal inference about the role of tensor magnitude versus location."
+    ],
+    "next_experiment": {
+      "question": "Does depth alone determine the functional impact of perturbing MLP gate‑proj tensors when the *amount* of perturbation is held constant?",
+      "protocol": [
+        "Select the gate‑proj weight matrices of layers 0, 14, and 27.",
+        "For each layer, generate three random binary masks that zero exactly 50 % of the rows (preserving the original shape).",
+        "Apply each mask to the original weights (leaving the other 50 % unchanged) and keep all other parameters intact.",
+        "Run a diversified benchmark of 100 prompts covering math, reasoning, language, and knowledge using greedy decoding and the native chat template.",
+        "Score answers with human‑validated binary correctness and compute mean token‑level similarity to the baseline.",
+        "Repeat the masking with three different random seeds per layer to obtain variance estimates.",
+        "Statistically compare accuracy drops across layers using paired t‑tests."
+      ],
+      "controls": [
+        "A matched‑magnitude random‑noise condition (additive Gaussian noise with variance equal to the variance of the zeroed rows) for each layer.",
+        "A no‑intervention baseline run on the same prompt set."
+      ],
+      "metrics": [
+        "Absolute accuracy change (percentage points).",
+        "Mean text similarity (BLEU‑like token overlap).",
+        "Variance of the effect across seeds."
+      ],
+      "success_criterion": "If depth predicts impact, the 50 % zeroed gate‑proj in layer 14 and layer 27 will cause significantly larger accuracy drops than the same perturbation in layer 0. A null result (no significant difference) falsifies the depth‑sensitivity hypothesis."
+    },
+    "swarm_roles": [
+      {
+        "role": "audit_lead",
+        "model": "gpt-oss:120b",
+        "job": "critical evaluation of evidence and design of falsification experiment"
+      }
+    ]
+  },
+  "validation": {
+    "passed": true,
+    "errors": []
+  },
+  "timing": {
+    "total_duration_ns": 15892163704,
+    "prompt_eval_count": 9057,
+    "eval_count": 2274
+  }
+}

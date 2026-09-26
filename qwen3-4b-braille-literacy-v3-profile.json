@@ -1,0 +1,333 @@
+{
+  "adapter": "qwen3-4b-braille-literacy-v3",
+  "overview": {
+    "identity": {
+      "format": "PEFT LoRA safetensors",
+      "adapter_directory": "/cache/braille-adapters/qwen3-4b-braille-literacy-v3",
+      "base_model": "Qwen/Qwen3-4B",
+      "peft_type": "LORA",
+      "task_type": "CAUSAL_LM"
+    },
+    "configuration": {
+      "rank": 32,
+      "alpha": 64,
+      "dropout": 0.05,
+      "scaling": 2.0,
+      "target_modules": [
+        "q_proj",
+        "gate_proj",
+        "up_proj",
+        "o_proj",
+        "k_proj",
+        "v_proj",
+        "down_proj"
+      ],
+      "bias": "none"
+    },
+    "scale": {
+      "adapter_parameters": 66060288,
+      "adapter_parameters_human": "66.06M",
+      "tensor_count": 504,
+      "paired_updates": 252,
+      "adapted_layer_count": 36,
+      "adapted_layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "adapted_module_types": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ],
+      "dtypes": {
+        "float32": 66060288
+      },
+      "file_bytes": 264308896
+    }
+  },
+  "layer_fingerprint": {
+    "fingerprint": {
+      "layer_0": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007895558,
+        "max_delta_rms_upper_bound": 0.0009562356
+      },
+      "layer_1": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007018931,
+        "max_delta_rms_upper_bound": 0.0008856232
+      },
+      "layer_2": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0006531702,
+        "max_delta_rms_upper_bound": 0.0007828898
+      },
+      "layer_3": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007025988,
+        "max_delta_rms_upper_bound": 0.0008911117
+      },
+      "layer_4": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007251201,
+        "max_delta_rms_upper_bound": 0.0009088085
+      },
+      "layer_5": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007250051,
+        "max_delta_rms_upper_bound": 0.0008759418
+      },
+      "layer_6": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007123866,
+        "max_delta_rms_upper_bound": 0.000855424
+      },
+      "layer_7": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007209681,
+        "max_delta_rms_upper_bound": 0.0008717208
+      },
+      "layer_8": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007430209,
+        "max_delta_rms_upper_bound": 0.0009106631
+      },
+      "layer_9": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.000743214,
+        "max_delta_rms_upper_bound": 0.0009017699
+      },
+      "layer_10": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007569949,
+        "max_delta_rms_upper_bound": 0.0009370272
+      },
+      "layer_11": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007767451,
+        "max_delta_rms_upper_bound": 0.0009452649
+      },
+      "layer_12": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007835867,
+        "max_delta_rms_upper_bound": 0.000974257
+      },
+      "layer_13": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007802058,
+        "max_delta_rms_upper_bound": 0.0009207372
+      },
+      "layer_14": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007714807,
+        "max_delta_rms_upper_bound": 0.0009169471
+      },
+      "layer_15": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007528893,
+        "max_delta_rms_upper_bound": 0.0009060397
+      },
+      "layer_16": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007365642,
+        "max_delta_rms_upper_bound": 0.0008748269
+      },
+      "layer_17": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007405879,
+        "max_delta_rms_upper_bound": 0.0008541366
+      },
+      "layer_18": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007577882,
+        "max_delta_rms_upper_bound": 0.0009053647
+      },
+      "layer_19": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007538536,
+        "max_delta_rms_upper_bound": 0.0008750403
+      },
+      "layer_20": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.000748651,
+        "max_delta_rms_upper_bound": 0.0008849506
+      },
+      "layer_21": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007212274,
+        "max_delta_rms_upper_bound": 0.000848064
+      },
+      "layer_22": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007347159,
+        "max_delta_rms_upper_bound": 0.0008860685
+      },
+      "layer_23": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007669733,
+        "max_delta_rms_upper_bound": 0.0009243084
+      },
+      "layer_24": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007762594,
+        "max_delta_rms_upper_bound": 0.0009320648
+      },
+      "layer_25": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007667985,
+        "max_delta_rms_upper_bound": 0.0009903381
+      },
+      "layer_26": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0008058669,
+        "max_delta_rms_upper_bound": 0.0010065459
+      },
+      "layer_27": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007449548,
+        "max_delta_rms_upper_bound": 0.0010162574
+      },
+      "layer_28": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007510534,
+        "max_delta_rms_upper_bound": 0.0009954633
+      },
+      "layer_29": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007727534,
+        "max_delta_rms_upper_bound": 0.0010638317
+      },
+      "layer_30": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007693819,
+        "max_delta_rms_upper_bound": 0.0010899367
+      },
+      "layer_31": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007421712,
+        "max_delta_rms_upper_bound": 0.0010682002
+      },
+      "layer_32": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007280224,
+        "max_delta_rms_upper_bound": 0.0010474704
+      },
+      "layer_33": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0007161827,
+        "max_delta_rms_upper_bound": 0.0009638743
+      },
+      "layer_34": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0006744072,
+        "max_delta_rms_upper_bound": 0.0009148612
+      },
+      "layer_35": {
+        "update_count": 7,
+        "mean_delta_rms_upper_bound": 0.0006803629,
+        "max_delta_rms_upper_bound": 0.0009299618
+      }
+    },
+    "layer_count": 36
+  },
+  "evidence_packet": {
+    "source": "host-executed PEFT safetensors inspection",
+    "measurement_warning": "This is an upper bound on update RMS, not exact ||B@A|| and not a causal effect.",
+    "evidence": {
+      "ADAPTER.1": {
+        "claim": "adapter identity and scale",
+        "base_model": "Qwen/Qwen3-4B",
+        "rank": 32,
+        "alpha": 64,
+        "adapter_parameters": 66060288,
+        "paired_updates": 252
+      },
+      "ADAPTER.2": {
+        "layer": 30,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010899367,
+        "rank": 32
+      },
+      "ADAPTER.3": {
+        "layer": 31,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010682002,
+        "rank": 32
+      },
+      "ADAPTER.4": {
+        "layer": 29,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010638317,
+        "rank": 32
+      },
+      "ADAPTER.5": {
+        "layer": 32,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010474704,
+        "rank": 32
+      },
+      "ADAPTER.6": {
+        "layer": 27,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0010162574,
+        "rank": 32
+      },
+      "ADAPTER.7": {
+        "layer": 26,
+        "module": "q_proj",
+        "delta_rms_upper_bound": 0.0010065459,
+        "rank": 32
+      },
+      "ADAPTER.8": {
+        "layer": 28,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009954633,
+        "rank": 32
+      },
+      "ADAPTER.9": {
+        "layer": 25,
+        "module": "gate_proj",
+        "delta_rms_upper_bound": 0.0009903381,
+        "rank": 32
+      }
+    }
+  }
+}
