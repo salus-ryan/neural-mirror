@@ -1,8 +1,8 @@
 {
   "models": [
     "qwen3:1.7b",
-    "llama3.2:3b",
-    "phi4-mini"
+    "phi4-mini",
+    "mistral:7b"
   ],
   "target": "improve step-by-step mathematical reasoning",
   "profiles": {
@@ -24,24 +24,6 @@
         "attn_v.weight": "1%"
       }
     },
-    "llama3.2:3b": {
-      "model_name": "Llama 3.2 3B Instruct",
-      "arch": "llama",
-      "params": "3.21B",
-      "n_layers": 28,
-      "max_layer": 27,
-      "embed_dim": 3072,
-      "heads": 24,
-      "kv_heads": 8,
-      "ff_dim": 8192,
-      "norm_growth": "3.82x",
-      "first_norm": 0.1119,
-      "last_norm": 0.428,
-      "sparsity": {
-        "attn_q.weight": "46%",
-        "attn_v.weight": "100%"
-      }
-    },
     "phi4-mini": {
       "model_name": "Phi 4 Mini Instruct",
       "arch": "phi3",
@@ -56,6 +38,24 @@
       "first_norm": 0.0899,
       "last_norm": 0.1612,
       "sparsity": {}
+    },
+    "mistral:7b": {
+      "model_name": "Mistral-7B-Instruct-v0.3",
+      "arch": "llama",
+      "params": "7.25B",
+      "n_layers": 32,
+      "max_layer": 31,
+      "embed_dim": 4096,
+      "heads": 32,
+      "kv_heads": 8,
+      "ff_dim": 14336,
+      "norm_growth": "13.22x",
+      "first_norm": 0.2506,
+      "last_norm": 3.3113,
+      "sparsity": {
+        "attn_q.weight": "100%",
+        "attn_v.weight": "100%"
+      }
     }
   },
   "round1_self_proposals": {
@@ -65,27 +65,28 @@
         "attn_v.weight"
       ],
       "r": 64,
-      "lora_alpha": 0.1,
+      "lora_alpha": 16,
       "lora_dropout": 0.05,
-      "reasoning": "LoRA is applied to attention weights (attn_q and attn_v) to enhance step-by-step reasoning. r=64 balances model capacity with efficiency, lora_alpha=0.1 ensures stable scaling, and lora_dropout=0.05 prevents overfitting. Sparsity on attn_v (1%) focuses on critical attention heads, while attn_q (100% sparsity) leverages full weight adaptation for sequential reasoning tasks."
-    },
-    "llama3.2:3b": {
-      "target_modules": [
-        "mathematical_reasoning"
-      ],
-      "r": 8,
-      "lora_alpha": 0.5,
-      "lora_dropout": 0.05
+      "reasoning": "Focuses on sparse attention heads (1% sparsity) while maintaining full Q weights for precise reasoning. Rank 64 balances parameter efficiency with performance, and 16 alpha ensures stable training dynamics."
     },
     "phi4-mini": {
       "target_modules": [
-        "transformer_layer",
-        "attention_layer"
+        "math_reasoning"
       ],
       "r": 4,
       "lora_alpha": 32,
       "lora_dropout": 0.05,
-      "reasoning": "LoRA is applied to transformer layers and attention mechanisms to enhance step-by-step mathematical reasoning by focusing on small, dense, and efficient adjustments, preserving the model's original structure while improving its reasoning capabilities."
+      "reasoning": "Enhance precision in multi-step calculations and logical deductions."
+    },
+    "mistral:7b": {
+      "target_modules": [
+        "q_proj",
+        "v_proj"
+      ],
+      "r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "reasoning": "default: Here is a proposed LoRA (Layer-wise Adaptive Representation Refinement) configuration for my model to improve step-by-step mathematical reasoning:\n\n```json\n{\n  \"target_modules\": [\"q\", \"v\", \"o\"], // Q "
     }
   },
   "round2_cross_proposals": {
@@ -94,13 +95,16 @@
         "for_model": "qwen3:1.7b",
         "agree_with_self": false,
         "target_modules": [
+          "q_proj",
+          "v_proj",
+          "o_proj",
           "attn_q.weight",
           "attn_v.weight"
         ],
-        "r": 32,
-        "lora_alpha": 0.05,
+        "r": 64,
+        "lora_alpha": 32,
         "lora_dropout": 0.1,
-        "reasoning": "To focus on step-by-step mathematical reasoning, reducing r to 32 reduces model capacity but preserves efficiency. Lowering lora_alpha to 0.05 and increasing lora_dropout to 0.1 encourages more sparse and adaptive attention weights, enhancing sequential reasoning without overfitting."
+        "reasoning": "Expanding the LoRA to include projection matrices (q_proj, v_proj, o_proj) alongside attention weights enhances mathematical reasoning capabilities. Increasing rank to 64 maintains efficiency, while doubling alpha to 32 stabilizes training, considering the complexity of mathematical reasoning tasks."
       },
       {
         "for_model": "qwen3:1.7b",
@@ -110,63 +114,122 @@
           "attn_v.weight"
         ],
         "r": 64,
-        "lora_alpha": 0.1,
+        "lora_alpha": 16,
         "lora_dropout": 0.05,
-        "reasoning": "The self-proposal seems suitable for enhancing step-by-step mathematical reasoning in Qwen3 1.7B. Given the architecture's complexity, LoRA on attention weights is apt for fine-tuning reasoning capabilities. The chosen parameters balance capacity and efficiency, and sparsity adjustments on attn_v weights can help focus on key connections. No significant changes needed."
-      }
-    ],
-    "llama3.2:3b": [
-      {
-        "for_model": "llama3.2:3b",
-        "agree_with_self": true,
-        "target_modules": [
-          "mathematical_reasoning"
-        ],
-        "r": 8,
-        "lora_alpha": 0.5,
-        "lora_dropout": 0.05,
-        "reasoning": "The target module 'mathematical_reasoning' aligns with the architecture's focus on step-by-step reasoning. Parameters (r=8, alpha=0.5, dropout=0.05) balance efficiency and stability, reflecting the model's design and the need for precise adjustments in mathematical tasks."
-      },
-      {
-        "for_model": "llama3.2:3b",
-        "agree_with_self": true,
-        "target_modules": [
-          "attention_layer"
-        ],
-        "r": 8,
-        "lora_alpha": 0.5,
-        "lora_dropout": 0.05,
-        "reasoning": "For Llama 3.2 3B, focusing LoRA on 'attention_layer' is ideal for enhancing step-by-step mathematical reasoning. Attention mechanisms are crucial for understanding and reasoning about relationships between different parts of input, which is essential for complex tasks like mathematics. An r of 8 with lora_alpha=0.5 and lora_dropout=0.05 is chosen to retain a good balance between model efficiency and enhancement. These parameters are conservative, ensuring stability and minimal performance impact."
+        "reasoning": "The proposed configuration focuses on sparse attention heads while maintaining full Q weights for precise reasoning, which is beneficial for improving step-by-step mathematical reasoning. The parameter balance provided by rank 64 and 16 alpha ensures stable training dynamics."
       }
     ],
     "phi4-mini": [
       {
         "for_model": "phi4-mini",
-        "agree_with_self": false,
+        "agree_with_self": true,
         "target_modules": [
-          "transformer_layer",
-          "attention_layer"
+          "math_reasoning"
         ],
-        "r": 8,
-        "lora_alpha": 16,
+        "r": 4,
+        "lora_alpha": 32,
         "lora_dropout": 0.05,
-        "reasoning": "Phi 4 Mini Instruct has 32 layers and a higher norm growth (1.79x). Using r=8 balances capacity with efficiency, lora_alpha=16 ensures stable scaling, and lora_dropout=0.05 preserves model integrity. Adjusted from the original proposal to optimize for its architecture."
+        "reasoning": "The target module 'math_reasoning' aligns with the model's architecture and purpose. r=4 balances efficiency with precision, and lora_alpha=32 ensures stable training. The dropout rate of 0.05 is appropriate for maintaining model integrity while optimizing parameters."
       },
       {
         "for_model": "phi4-mini",
-        "agree_with_self": false,
+        "agree_with_self": true,
         "target_modules": [
-          "transformer_layer",
-          "attention_layer",
-          "fully_connected_layer"
+          "math_reasoning"
+        ],
+        "r": 4,
+        "lora_alpha": 32,
+        "lora_dropout": 0.1,
+        "reasoning": "Given the architecture's emphasis on mathematical reasoning, the self-proposed LoRA configuration focuses on improving precision in multi-step calculations and logical deductions. However, a slightly higher dropout rate of 0.1 is suggested to prevent overfitting and ensure model generalization."
+      }
+    ],
+    "mistral:7b": [
+      {
+        "for_model": "mistral:7b",
+        "agree_with_self": true,
+        "target_modules": [
+          "q_proj",
+          "v_proj"
         ],
         "r": 16,
-        "lora_alpha": 0.02,
-        "lora_dropout": 0.1,
-        "reasoning": "LoRA is applied to all layers to enhance step-by-step mathematical reasoning by introducing sparse connections and reducing the dimensionality of weight matrices, while maintaining a balance between model capacity and efficiency. This adaptation is tailored to improve Phi 4 Mini Instruct's performance in mathematical reasoning tasks."
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "reasoning": "The proposed LoRA targets q_proj and v_proj, which are critical for attention mechanisms in Mistral-7B. The 16 r value balances efficiency with performance, and the 32 alpha ensures stable training. The 0.05 dropout aligns with the model's sparse attention heads, preserving accuracy while enabling fine-grained adaptation for mathematical reasoning."
+      },
+      {
+        "for_model": "mistral:7b",
+        "agree_with_self": false,
+        "target_modules": [
+          "q_proj",
+          "v_proj",
+          "o"
+        ],
+        "r": 8,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "reasoning": "The proposed LoRA for Mistral-7B-Instruct-v0.3 should include 'o' to ensure all layers are refined. Lowering the rank 'r' to 8 might be more efficient for improving step-by-step mathematical reasoning while keeping a balance between computational cost and performance. This configuration retains the original sparsity while focusing on optimizing the model's reasoning capabilities."
       }
     ]
   },
-  "round3_training": {},
-  "elapsed": 193.6
+  "round3_training": {
+    "mistral:7b": {
+      "model": "mistral:7b",
+      "consensus": {
+        "target_modules": [
+          "q_proj",
+          "v_proj"
+        ],
+        "r": 13,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "n_votes": 3,
+        "module_votes": {
+          "q_proj": 3,
+          "v_proj": 3
+        }
+      },
+      "trainable_params": "5.5M",
+      "trainable_pct": "0.15%",
+      "training_loss": 0.8564,
+      "training_time": "40s",
+      "lora_stats_sample": {
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_A.default.weight": {
+          "mean": 3e-05,
+          "std": 0.009045,
+          "norm": 2.0873
+        },
+        "base_model.model.model.layers.0.self_attn.q_proj.lora_B.default.weight": {
+          "mean": 1e-06,
+          "std": 0.000419,
+          "norm": 0.0966
+        },
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_A.default.weight": {
+          "mean": -2.6e-05,
+          "std": 0.009003,
+          "norm": 2.0774
+        },
+        "base_model.model.model.layers.0.self_attn.v_proj.lora_B.default.weight": {
+          "mean": -3e-06,
+          "std": 0.000449,
+          "norm": 0.0519
+        },
+        "base_model.model.model.layers.1.self_attn.q_proj.lora_A.default.weight": {
+          "mean": -3.6e-05,
+          "std": 0.00904,
+          "norm": 2.086
+        },
+        "base_model.model.model.layers.1.self_attn.q_proj.lora_B.default.weight": {
+          "mean": -1e-06,
+          "std": 0.000716,
+          "norm": 0.1653
+        }
+      },
+      "eval_outputs": [
+        "What is 7 * 13?\n\n7 * 13 = 91\n\nLet's think step by step:\n\n7 * 13 = 91\n\nThe answer is 91.",
+        "What is 25 + 38?\n\n25 + 38 = 63\n\nWhat is 10 * 4?\n\n10 * 4 = 40\n\nWhat is 8 * 6?\n\n8 * 6 = 48\n\nWhat is 7 * 8?\n\n7 * 8 = 56\n\nWhat is 9",
+        "What is 100 / 4?\n\n100 / 4 = 25\n\nThe answer is 25."
+      ]
+    }
+  },
+  "elapsed": 273.5
 }
