@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "status": "preregistered_before_inference",
+  "created_utc": "2026-09-26T22:00:00Z",
+  "parent_evidence_commit": "13ebbe6780918ef97afd6e4ba650f50592cf5c13",
+  "runner_sha256": "9c53bf01d695877f8e6c5748f801fb29cebfed6313b47bdf6ecda8654e85eedc",
+  "task_spec_sha256": "b48d9070ec09d72f66032820b320fe52dbb30c4bf61ebf479ac599312a7c75dc",
+  "harness": {
+    "name": "lm-evaluation-harness",
+    "version": "0.4.9.2",
+    "transformers": "4.57.6",
+    "dtype": "bfloat16",
+    "device": "H100",
+    "apply_chat_template": false
+  },
+  "dataset_revisions": {
+    "allenai/ai2_arc": "210d026faf9955653af8916fad021475a3f00453",
+    "Rowan/hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+    "cais/mmlu": "c30699e8356da336a370243923dbaf21066bb9fe",
+    "openai/gsm8k": "740312add88f781978c0658806c59bc2815b9866"
+  },
+  "models": {
+    "qwen3:4b": {
+      "hf_model": "Qwen/Qwen3-4B",
+      "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "adapter": "qwen3-4b-braille-literacy-v3",
+      "adapter_tree_sha256": "f82c60e3d17251566d46950998630a62e20847dca5ed16752d7f1a682946cbfc",
+      "condition_order": [
+        "base",
+        "adapter"
+      ],
+      "replication_hypothesis": "positive"
+    },
+    "mistral:7b": {
+      "hf_model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "model_revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+      "adapter": "mistral-7b-braille-literacy-v2",
+      "adapter_tree_sha256": "9eafc2b2dc4762d4f0398a8d3715b4af251b24d0e826e828d5e8341e4df78fd8",
+      "condition_order": [
+        "adapter",
+        "base"
+      ],
+      "replication_hypothesis": "negative"
+    },
+    "olmo2:7b": {
+      "hf_model": "allenai/OLMo-2-1124-7B-Instruct",
+      "model_revision": "470b1fba1ae01581f270116362ee4aa1b97f4c84",
+      "adapter": "olmo2-7b-braille-literacy-v2",
+      "adapter_tree_sha256": "23bddd3c12cf235c75e134cbfb2ae7e96bc1fed22f035d0c540758f914f968f6",
+      "condition_order": [
+        "base",
+        "adapter"
+      ],
+      "replication_hypothesis": "positive"
+    },
+    "granite3.3:8b": {
+      "hf_model": "ibm-granite/granite-3.3-8b-instruct",
+      "model_revision": "51dd4bc2ade4059a6bd87649d68aa11e4fb2529b",
+      "adapter": "granite3.3-8b-braille-literacy-v1",
+      "adapter_tree_sha256": "88b09857894b6119361383792e12b6fadea529d8105bc9f08830d21abae1e638",
+      "condition_order": [
+        "adapter",
+        "base"
+      ],
+      "replication_hypothesis": "neutral_control"
+    }
+  },
+  "suites": [
+    {
+      "name": "arc_challenge",
+      "tasks": [
+        "arc_challenge"
+      ],
+      "limit_per_task": 512,
+      "num_fewshot": 25,
+      "sample_metric": "acc_norm",
+      "batch_size": 8
+    },
+    {
+      "name": "hellaswag",
+      "tasks": [
+        "hellaswag"
+      ],
+      "limit_per_task": 512,
+      "num_fewshot": 10,
+      "sample_metric": "acc_norm",
+      "batch_size": 8
+    },
+    {
+      "name": "mmlu",
+      "tasks": [
+        "mmlu_abstract_algebra",
+        "mmlu_anatomy",
+        "mmlu_business_ethics",
+        "mmlu_clinical_knowledge",
+        "mmlu_college_computer_science",
+        "mmlu_conceptual_physics",
+        "mmlu_high_school_psychology",
+        "mmlu_professional_law"
+      ],
+      "limit_per_task": 64,
+      "num_fewshot": 5,
+      "sample_metric": "acc",
+      "batch_size": 8
+    },
+    {
+      "name": "gsm8k",
+      "tasks": [
+        "gsm8k"
+      ],
+      "limit_per_task": 128,
+      "num_fewshot": 5,
+      "sample_metric": "exact_match",
+      "batch_size": 8
+    }
+  ],
+  "primary_estimand": "Within-checkpoint adapter-enabled minus adapter-disabled accuracy, computed per suite and macro-averaged with ARC, HellaSwag, MMLU, and GSM8K weighted equally.",
+  "primary_hypotheses": [
+    "Qwen general accuracy change is positive.",
+    "Mistral general accuracy change is negative.",
+    "OLMo general accuracy change is positive.",
+    "Granite 3.3 is a two-sided neutral replication control."
+  ],
+  "analysis_plan": {
+    "pairing": "Pair by lm-eval task and doc_id. Abort analysis for nonidentical sample hashes.",
+    "confidence_intervals": "20,000 paired bootstrap resamples within task; average tasks equally within suite and suites equally within checkpoint.",
+    "tests": "Exact two-sided McNemar tests per checkpoint. Holm correction across the four checkpoint tests at family-wise alpha 0.05.",
+    "success": "A directional exploratory effect replicates only if its Holm-adjusted two-sided test rejects zero and the effect sign matches the preregistered direction.",
+    "aggregate": "Report all task, suite, checkpoint, and four-checkpoint macro effects regardless of significance."
+  },
+  "controls": {
+    "base": "Same PeftModel with model.disable_adapter() context.",
+    "sham": "Both paths receive excluded deterministic warmup forwards before measurement.",
+    "order": "Condition order is fixed and counterbalanced across checkpoints in this manifest.",
+    "integrity": "Abort on manifest, adapter tree, model revision, or upstream dataset revision mismatch."
+  },
+  "failure_policy": "Harness, dependency, or model-load failures are blocked results. Compatibility-only repairs may be committed and the full affected checkpoint rerun; no decisions may depend on observed accuracy.",
+  "training_policy": "Neither these benchmark examples nor failures may be used for adapter training, refinement, selection, or retries.",
+  "scope_limitations": [
+    "Four checkpoints selected from an exploratory screen.",
+    "GSM8K generation is paired by item but may expose implementation-specific exact-match behavior.",
+    "This replication does not include random or norm-matched LoRA controls; those are contingent mechanistic follow-ups."
+  ],
+  "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4"
+}
