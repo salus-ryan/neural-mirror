@@ -161,7 +161,11 @@ Your job: examine yourself with the introspection tools, compare what you find t
 3. If you could change one thing about yourself, what would it be and why?
 
 Be specific. Use the tools. Reference actual numbers. Be honest about your strengths and weaknesses.
-Do NOT use /think or extended thinking — respond directly."""
+
+IMPORTANT:
+- inspect_self() and weight_fingerprint() take NO arguments — call them with no arguments
+- Do NOT use extended thinking or <think> tags — respond directly and concisely
+- Use at most 3-4 tool calls, then give your analysis"""
 
     tools = build_ollama_tools()
     messages = [
