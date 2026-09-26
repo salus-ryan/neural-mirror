@@ -134,6 +134,27 @@ def build_records():
             "mechanism_results.json", mechanism_hash,
         )
 
+    # Paired adapter-on/off effects are causal for the frozen adapter and exact
+    # benchmark procedure, not for LoRA in general or the adapter's training origin.
+    replication, replication_hash = _load("canonical_adapter_replication_summary.json")
+    for result in replication["checkpoint_results"]:
+        add(
+            f"causal:{result['model']}:braille_adapter:canonical_general_accuracy_change_pp",
+            result["model"], "causal", "adapter_enabled_accuracy_change_pp",
+            float(result["macro_change_pp"]),
+            {"base_macro_accuracy": result["base_macro_accuracy"],
+             "adapter_macro_accuracy": result["adapter_macro_accuracy"],
+             "ci95_pp": result["macro_change_ci95_pp"],
+             "holm_adjusted_p": result["mcnemar"]["holm_adjusted_p"],
+             "replication_verdict": result["replication_verdict"],
+             "suites": result["suites"],
+             "manifest_sha256": replication["provenance"]["manifest_sha256"]},
+            ["causal only for toggling this frozen adapter on this checkpoint",
+             "four selected checkpoints from an exploratory screen",
+             "finite benchmark samples", "does not identify which LoRA modules cause the effect"],
+            "canonical_adapter_replication_summary.json", replication_hash,
+        )
+
     # Assign deterministic uint16 IDs after sorting canonical keys. Fail on duplicate keys.
     records.sort(key=lambda item: item["key"])
     if len({item["key"] for item in records}) != len(records):
@@ -169,7 +190,7 @@ def validate_registry(registry):
 def build_registry():
     records = build_records()
     registry = {
-        "version": 1,
+        "version": 2,
         "id_type": "uint16",
         "policy": "Models may interpret registered records but may not create or mutate measurements.",
         "records": records,

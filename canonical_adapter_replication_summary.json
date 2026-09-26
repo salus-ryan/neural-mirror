@@ -1,0 +1,252 @@
+{
+  "provenance": {
+    "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4",
+    "results_sha256": "5ff7b58efa7f6a450dd1e82b6f8bb9d5ba96422c59f4c39a96e3f2cd7b7aa8ec",
+    "analysis_sha256": "96c1015f821031a592b2c5482e74d2f6817824c6e5541279da40821b7c4710b9",
+    "preregistration_commit": "bb9aee61eb646b67fc213407ff5b038cf940d6ce"
+  },
+  "design": {
+    "checkpoints": 4,
+    "bootstrap_samples": 20000,
+    "primary_weighting": "equal suites; equal MMLU subjects within the MMLU suite",
+    "all_sample_hashes_matched": true,
+    "holm_familywise_alpha": 0.05
+  },
+  "checkpoint_results": [
+    {
+      "model": "granite3.3:8b",
+      "replication_hypothesis": "neutral_control",
+      "condition_order": [
+        "adapter",
+        "base"
+      ],
+      "paired_sample_sha256": "9d72a319535b5a5767a6bb235d282a6e41ab7eb420870727ffd5644abbc60df5",
+      "suites": {
+        "arc_challenge": {
+          "base_accuracy": 0.664062,
+          "adapter_accuracy": 0.673828,
+          "change_pp": 0.977,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "hellaswag": {
+          "base_accuracy": 0.742188,
+          "adapter_accuracy": 0.746094,
+          "change_pp": 0.391,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "mmlu": {
+          "base_accuracy": 0.640625,
+          "adapter_accuracy": 0.619141,
+          "change_pp": -2.148,
+          "tasks": 8,
+          "unique_items": 512
+        },
+        "gsm8k": {
+          "base_accuracy": 0.6875,
+          "adapter_accuracy": 0.742188,
+          "change_pp": 5.469,
+          "tasks": 1,
+          "unique_items": 128
+        }
+      },
+      "base_macro_accuracy": 0.683594,
+      "adapter_macro_accuracy": 0.695313,
+      "macro_change_pp": 1.172,
+      "macro_change_ci95_pp": [
+        -1.025,
+        3.369
+      ],
+      "mcnemar": {
+        "adapter_wins": 73,
+        "adapter_losses": 70,
+        "discordant": 143,
+        "exact_two_sided_p": 0.8672499071,
+        "pooled_items": 1664,
+        "holm_adjusted_p": 1.0
+      },
+      "replication_verdict": "no_detected_change"
+    },
+    {
+      "model": "mistral:7b",
+      "replication_hypothesis": "negative",
+      "condition_order": [
+        "adapter",
+        "base"
+      ],
+      "paired_sample_sha256": "9d72a319535b5a5767a6bb235d282a6e41ab7eb420870727ffd5644abbc60df5",
+      "suites": {
+        "arc_challenge": {
+          "base_accuracy": 0.646484,
+          "adapter_accuracy": 0.628906,
+          "change_pp": -1.758,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "hellaswag": {
+          "base_accuracy": 0.757812,
+          "adapter_accuracy": 0.744141,
+          "change_pp": -1.367,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "mmlu": {
+          "base_accuracy": 0.578125,
+          "adapter_accuracy": 0.548828,
+          "change_pp": -2.93,
+          "tasks": 8,
+          "unique_items": 512
+        },
+        "gsm8k": {
+          "base_accuracy": 0.515625,
+          "adapter_accuracy": 0.4375,
+          "change_pp": -7.812,
+          "tasks": 1,
+          "unique_items": 128
+        }
+      },
+      "base_macro_accuracy": 0.624511,
+      "adapter_macro_accuracy": 0.589844,
+      "macro_change_pp": -3.467,
+      "macro_change_ci95_pp": [
+        -5.762,
+        -1.27
+      ],
+      "mcnemar": {
+        "adapter_wins": 48,
+        "adapter_losses": 89,
+        "discordant": 137,
+        "exact_two_sided_p": 0.000580988,
+        "pooled_items": 1664,
+        "holm_adjusted_p": 0.002323952
+      },
+      "replication_verdict": "replicated"
+    },
+    {
+      "model": "olmo2:7b",
+      "replication_hypothesis": "positive",
+      "condition_order": [
+        "base",
+        "adapter"
+      ],
+      "paired_sample_sha256": "9d72a319535b5a5767a6bb235d282a6e41ab7eb420870727ffd5644abbc60df5",
+      "suites": {
+        "arc_challenge": {
+          "base_accuracy": 0.666016,
+          "adapter_accuracy": 0.660156,
+          "change_pp": -0.586,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "hellaswag": {
+          "base_accuracy": 0.744141,
+          "adapter_accuracy": 0.744141,
+          "change_pp": 0.0,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "mmlu": {
+          "base_accuracy": 0.564453,
+          "adapter_accuracy": 0.558594,
+          "change_pp": -0.586,
+          "tasks": 8,
+          "unique_items": 512
+        },
+        "gsm8k": {
+          "base_accuracy": 0.742188,
+          "adapter_accuracy": 0.757812,
+          "change_pp": 1.562,
+          "tasks": 1,
+          "unique_items": 128
+        }
+      },
+      "base_macro_accuracy": 0.679199,
+      "adapter_macro_accuracy": 0.680176,
+      "macro_change_pp": 0.098,
+      "macro_change_ci95_pp": [
+        -1.562,
+        1.758
+      ],
+      "mcnemar": {
+        "adapter_wins": 33,
+        "adapter_losses": 37,
+        "discordant": 70,
+        "exact_two_sided_p": 0.7202027724,
+        "pooled_items": 1664,
+        "holm_adjusted_p": 1.0
+      },
+      "replication_verdict": "not_replicated"
+    },
+    {
+      "model": "qwen3:4b",
+      "replication_hypothesis": "positive",
+      "condition_order": [
+        "base",
+        "adapter"
+      ],
+      "paired_sample_sha256": "9d72a319535b5a5767a6bb235d282a6e41ab7eb420870727ffd5644abbc60df5",
+      "suites": {
+        "arc_challenge": {
+          "base_accuracy": 0.638672,
+          "adapter_accuracy": 0.642578,
+          "change_pp": 0.391,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "hellaswag": {
+          "base_accuracy": 0.634766,
+          "adapter_accuracy": 0.628906,
+          "change_pp": -0.586,
+          "tasks": 1,
+          "unique_items": 512
+        },
+        "mmlu": {
+          "base_accuracy": 0.691406,
+          "adapter_accuracy": 0.703125,
+          "change_pp": 1.172,
+          "tasks": 8,
+          "unique_items": 512
+        },
+        "gsm8k": {
+          "base_accuracy": 0.875,
+          "adapter_accuracy": 0.890625,
+          "change_pp": 1.562,
+          "tasks": 1,
+          "unique_items": 128
+        }
+      },
+      "base_macro_accuracy": 0.709961,
+      "adapter_macro_accuracy": 0.716309,
+      "macro_change_pp": 0.635,
+      "macro_change_ci95_pp": [
+        -0.83,
+        2.1
+      ],
+      "mcnemar": {
+        "adapter_wins": 44,
+        "adapter_losses": 37,
+        "discordant": 81,
+        "exact_two_sided_p": 0.5052364408,
+        "pooled_items": 1664,
+        "holm_adjusted_p": 1.0
+      },
+      "replication_verdict": "not_replicated"
+    }
+  ],
+  "four_checkpoint_base_macro_accuracy": 0.674316,
+  "four_checkpoint_adapter_macro_accuracy": 0.670411,
+  "four_checkpoint_macro_change_pp": -0.391,
+  "four_checkpoint_macro_change_ci95_pp": [
+    -1.355,
+    0.562
+  ],
+  "interpretation_policy": "Replication requires Holm-adjusted p<0.05 and the preregistered sign. Failure to reject is not proof of equivalence.",
+  "limitations": [
+    "Four checkpoints selected from an exploratory screen.",
+    "GSM8K generation is paired by item but may expose implementation-specific exact-match behavior.",
+    "This replication does not include random or norm-matched LoRA controls; those are contingent mechanistic follow-ups.",
+    "McNemar tests pool binary items and therefore weight GSM8K less than larger suites; macro effect estimates weight suites equally.",
+    "GSM8K uses the preregistered strict-match metric; flexible extraction is not used in the primary analysis."
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "id_type": "uint16",
   "policy": "Models may interpret registered records but may not create or mutate measurements.",
   "records": [
@@ -2029,6 +2029,126 @@
       "record_sha256": "0efb235c2c28d24f0b98491a90f6573fa6eaa5d66c9407455e6216b2b951d57b"
     },
     {
+      "key": "causal:granite3.3:8b:braille_adapter:canonical_general_accuracy_change_pp",
+      "owner_model": "granite3.3:8b",
+      "owner_identity": "granite3.3:8b+granite3.3-8b-braille-literacy-v1",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "adapter_enabled_accuracy_change_pp",
+      "value": 1.172,
+      "payload": {
+        "base_macro_accuracy": 0.683594,
+        "adapter_macro_accuracy": 0.695313,
+        "ci95_pp": [
+          -1.025,
+          3.369
+        ],
+        "holm_adjusted_p": 1.0,
+        "replication_verdict": "no_detected_change",
+        "suites": {
+          "arc_challenge": {
+            "base_accuracy": 0.664062,
+            "adapter_accuracy": 0.673828,
+            "change_pp": 0.977,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "hellaswag": {
+            "base_accuracy": 0.742188,
+            "adapter_accuracy": 0.746094,
+            "change_pp": 0.391,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "mmlu": {
+            "base_accuracy": 0.640625,
+            "adapter_accuracy": 0.619141,
+            "change_pp": -2.148,
+            "tasks": 8,
+            "unique_items": 512
+          },
+          "gsm8k": {
+            "base_accuracy": 0.6875,
+            "adapter_accuracy": 0.742188,
+            "change_pp": 5.469,
+            "tasks": 1,
+            "unique_items": 128
+          }
+        },
+        "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4"
+      },
+      "limitations": [
+        "causal only for toggling this frozen adapter on this checkpoint",
+        "four selected checkpoints from an exploratory screen",
+        "finite benchmark samples",
+        "does not identify which LoRA modules cause the effect"
+      ],
+      "source_file": "canonical_adapter_replication_summary.json",
+      "source_sha256": "ad383b53b8c555dfc4817a6a12949165bcb759be8f36e72320089afd61c738b2",
+      "evidence_id": 64348,
+      "record_sha256": "fb5c8d7b0935841f5819c7b2eccb061aabbabc5f0253dec8a8cee28de4c34453"
+    },
+    {
+      "key": "causal:mistral:7b:braille_adapter:canonical_general_accuracy_change_pp",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "adapter_enabled_accuracy_change_pp",
+      "value": -3.467,
+      "payload": {
+        "base_macro_accuracy": 0.624511,
+        "adapter_macro_accuracy": 0.589844,
+        "ci95_pp": [
+          -5.762,
+          -1.27
+        ],
+        "holm_adjusted_p": 0.002323952,
+        "replication_verdict": "replicated",
+        "suites": {
+          "arc_challenge": {
+            "base_accuracy": 0.646484,
+            "adapter_accuracy": 0.628906,
+            "change_pp": -1.758,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "hellaswag": {
+            "base_accuracy": 0.757812,
+            "adapter_accuracy": 0.744141,
+            "change_pp": -1.367,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "mmlu": {
+            "base_accuracy": 0.578125,
+            "adapter_accuracy": 0.548828,
+            "change_pp": -2.93,
+            "tasks": 8,
+            "unique_items": 512
+          },
+          "gsm8k": {
+            "base_accuracy": 0.515625,
+            "adapter_accuracy": 0.4375,
+            "change_pp": -7.812,
+            "tasks": 1,
+            "unique_items": 128
+          }
+        },
+        "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4"
+      },
+      "limitations": [
+        "causal only for toggling this frozen adapter on this checkpoint",
+        "four selected checkpoints from an exploratory screen",
+        "finite benchmark samples",
+        "does not identify which LoRA modules cause the effect"
+      ],
+      "source_file": "canonical_adapter_replication_summary.json",
+      "source_sha256": "ad383b53b8c555dfc4817a6a12949165bcb759be8f36e72320089afd61c738b2",
+      "evidence_id": 37030,
+      "record_sha256": "90a6767eb98ceaeed42263fb2ff4fc04f22a1dafc8c73fbb560f24ce7c921de8"
+    },
+    {
       "key": "causal:mistral:7b:late_norm_scale_0.5:standardized_margin_response",
       "owner_model": "mistral:7b",
       "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
@@ -2061,6 +2181,66 @@
       "record_sha256": "9cc996222ea0c577117399421d2edf2143981ca3ba7903bd2b2c0a81dfb8dc61"
     },
     {
+      "key": "causal:olmo2:7b:braille_adapter:canonical_general_accuracy_change_pp",
+      "owner_model": "olmo2:7b",
+      "owner_identity": "olmo2:7b+olmo2-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "adapter_enabled_accuracy_change_pp",
+      "value": 0.098,
+      "payload": {
+        "base_macro_accuracy": 0.679199,
+        "adapter_macro_accuracy": 0.680176,
+        "ci95_pp": [
+          -1.562,
+          1.758
+        ],
+        "holm_adjusted_p": 1.0,
+        "replication_verdict": "not_replicated",
+        "suites": {
+          "arc_challenge": {
+            "base_accuracy": 0.666016,
+            "adapter_accuracy": 0.660156,
+            "change_pp": -0.586,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "hellaswag": {
+            "base_accuracy": 0.744141,
+            "adapter_accuracy": 0.744141,
+            "change_pp": 0.0,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "mmlu": {
+            "base_accuracy": 0.564453,
+            "adapter_accuracy": 0.558594,
+            "change_pp": -0.586,
+            "tasks": 8,
+            "unique_items": 512
+          },
+          "gsm8k": {
+            "base_accuracy": 0.742188,
+            "adapter_accuracy": 0.757812,
+            "change_pp": 1.562,
+            "tasks": 1,
+            "unique_items": 128
+          }
+        },
+        "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4"
+      },
+      "limitations": [
+        "causal only for toggling this frozen adapter on this checkpoint",
+        "four selected checkpoints from an exploratory screen",
+        "finite benchmark samples",
+        "does not identify which LoRA modules cause the effect"
+      ],
+      "source_file": "canonical_adapter_replication_summary.json",
+      "source_sha256": "ad383b53b8c555dfc4817a6a12949165bcb759be8f36e72320089afd61c738b2",
+      "evidence_id": 6489,
+      "record_sha256": "19598a1359cdcf5d0602598b1fbf5943fead043cebdab517e7420e6d0225a994"
+    },
+    {
       "key": "causal:phi4-mini:late_norm_scale_0.5:standardized_margin_response",
       "owner_model": "phi4-mini",
       "owner_identity": null,
@@ -2091,6 +2271,66 @@
       "source_sha256": "bb3cc049428e971775101d94074d1edb03c8678555bc14100a00d86c35fa15c1",
       "evidence_id": 64111,
       "record_sha256": "fa6f22d77a5e5687bc88c95a31548df124f11bb6b3017a24b3c15b1f93890699"
+    },
+    {
+      "key": "causal:qwen3:4b:braille_adapter:canonical_general_accuracy_change_pp",
+      "owner_model": "qwen3:4b",
+      "owner_identity": "qwen3:4b+qwen3-4b-braille-literacy-v3",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "adapter_enabled_accuracy_change_pp",
+      "value": 0.635,
+      "payload": {
+        "base_macro_accuracy": 0.709961,
+        "adapter_macro_accuracy": 0.716309,
+        "ci95_pp": [
+          -0.83,
+          2.1
+        ],
+        "holm_adjusted_p": 1.0,
+        "replication_verdict": "not_replicated",
+        "suites": {
+          "arc_challenge": {
+            "base_accuracy": 0.638672,
+            "adapter_accuracy": 0.642578,
+            "change_pp": 0.391,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "hellaswag": {
+            "base_accuracy": 0.634766,
+            "adapter_accuracy": 0.628906,
+            "change_pp": -0.586,
+            "tasks": 1,
+            "unique_items": 512
+          },
+          "mmlu": {
+            "base_accuracy": 0.691406,
+            "adapter_accuracy": 0.703125,
+            "change_pp": 1.172,
+            "tasks": 8,
+            "unique_items": 512
+          },
+          "gsm8k": {
+            "base_accuracy": 0.875,
+            "adapter_accuracy": 0.890625,
+            "change_pp": 1.562,
+            "tasks": 1,
+            "unique_items": 128
+          }
+        },
+        "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4"
+      },
+      "limitations": [
+        "causal only for toggling this frozen adapter on this checkpoint",
+        "four selected checkpoints from an exploratory screen",
+        "finite benchmark samples",
+        "does not identify which LoRA modules cause the effect"
+      ],
+      "source_file": "canonical_adapter_replication_summary.json",
+      "source_sha256": "ad383b53b8c555dfc4817a6a12949165bcb759be8f36e72320089afd61c738b2",
+      "evidence_id": 15605,
+      "record_sha256": "3cf56937f5cba16c0f02c30caa7f670f866881cd871b302262cea6798cf31e0c"
     },
     {
       "key": "causal:qwen3:4b:late_norm_scale_0.5:standardized_margin_response",
@@ -2525,5 +2765,5 @@
       "record_sha256": "b2c4523e24cdb2635b8cad86a6204821c308af1aa2ddfdf23f01d60442cc824a"
     }
   ],
-  "registry_sha256": "443ae8a5f9b2ed6b423bcc8b90b480c3d73eddce125cc3ebec7087c6e0c5a0d0"
+  "registry_sha256": "4e6557ceb88b9b16804b24ca160c4b440c7f3e7002b1e59de90498c129c105a0"
 }

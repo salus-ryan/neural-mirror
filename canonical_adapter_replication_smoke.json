@@ -1,0 +1,208 @@
+[
+  {
+    "model": "qwen3:4b",
+    "manifest_sha256": "4c8528668458871595dc4112737f0d520d5ac06522510257d1b71936f779e2c4",
+    "status": "complete",
+    "smoke": true,
+    "observed_dataset_revisions": {
+      "allenai/ai2_arc": "210d026faf9955653af8916fad021475a3f00453",
+      "Rowan/hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+      "cais/mmlu": "c30699e8356da336a370243923dbaf21066bb9fe",
+      "openai/gsm8k": "740312add88f781978c0658806c59bc2815b9866"
+    },
+    "adapter_tree_sha256": "f82c60e3d17251566d46950998630a62e20847dca5ed16752d7f1a682946cbfc",
+    "adapter_model_sha256": "88e1991e9a8b1cd9714748cc99778a9446d30910a6fb934479e46bfb24436df1",
+    "hf_model": "Qwen/Qwen3-4B",
+    "model_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "adapter": "qwen3-4b-braille-literacy-v3",
+    "condition_order": [
+      "base",
+      "adapter"
+    ],
+    "conditions": {
+      "base": {
+        "arc_challenge": {
+          "results": {
+            "arc_challenge": {
+              "alias": "arc_challenge",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0,
+              "acc_norm,none": 0.5,
+              "acc_norm_stderr,none": 0.5
+            }
+          },
+          "samples": {
+            "arc_challenge": [
+              {
+                "doc_id": 0,
+                "doc_hash": "9ac07c0bf329749d60dea47e62236e71200f89791410eb0286c28d7e2cd94426",
+                "prompt_hash": "ec6e8357b5b148ecbdbd55332fae25de39b99b22e3ae31987d623090ba6dc8d3",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "04bf654f45c33c5ba12c2e6eaa67bc85cbf8309a284346a423ad23ee17776eee",
+                "prompt_hash": "14f43fc72d8bad730dfd4b28ce6f7de8a15bcd580785a61333898aaf9e126adc",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 0.0
+              }
+            ]
+          },
+          "elapsed_seconds": 14.97
+        },
+        "hellaswag": {
+          "results": {
+            "hellaswag": {
+              "alias": "hellaswag",
+              "acc,none": 0.5,
+              "acc_stderr,none": 0.5,
+              "acc_norm,none": 1.0,
+              "acc_norm_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "hellaswag": [
+              {
+                "doc_id": 0,
+                "doc_hash": "5fa398b50d156bdf77b474f3b43a03352e9a46bddfc7bb62e1038f7b4f12bbd1",
+                "prompt_hash": "5bfaa09e2b6d14692ff922f5fe505e58bac7bc4ff693ebefa5f7c370ca74dc45",
+                "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "08296d87a2d1cb270a714773cb78d37f02f82661a082462fa53b437dfa0e3a5e",
+                "prompt_hash": "527ed4a9f765fa58962d42f4f8477e7e14c913e0ac13af1617e7908831590e1b",
+                "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+                "score": 1.0
+              }
+            ]
+          },
+          "elapsed_seconds": 15.737
+        },
+        "mmlu": {
+          "results": {
+            "mmlu_abstract_algebra": {
+              "alias": "abstract_algebra",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "mmlu_abstract_algebra": [
+              {
+                "doc_id": 0,
+                "doc_hash": "6cd9c6502447a6f35e13e2e94ad6a1ba2ac5672b02acd62d3f1ad2829be63827",
+                "prompt_hash": "ff9b00310e214beacf4b324da8c9e6c1de4e49cb422f1bcb1f7037b78f40a2a3",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "40bb7923cd6211453bfd4b386132b066b28be621a8d0ccd35a23a38568c09c7d",
+                "prompt_hash": "2885f321f1938150f73629d8cfbbe63944e1aa460d0d37f47683c5c75a41d18f",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              }
+            ]
+          },
+          "elapsed_seconds": 7.302
+        },
+        "elapsed_seconds": 38.054
+      },
+      "adapter": {
+        "arc_challenge": {
+          "results": {
+            "arc_challenge": {
+              "alias": "arc_challenge",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0,
+              "acc_norm,none": 0.5,
+              "acc_norm_stderr,none": 0.5
+            }
+          },
+          "samples": {
+            "arc_challenge": [
+              {
+                "doc_id": 0,
+                "doc_hash": "9ac07c0bf329749d60dea47e62236e71200f89791410eb0286c28d7e2cd94426",
+                "prompt_hash": "ec6e8357b5b148ecbdbd55332fae25de39b99b22e3ae31987d623090ba6dc8d3",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "04bf654f45c33c5ba12c2e6eaa67bc85cbf8309a284346a423ad23ee17776eee",
+                "prompt_hash": "14f43fc72d8bad730dfd4b28ce6f7de8a15bcd580785a61333898aaf9e126adc",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 0.0
+              }
+            ]
+          },
+          "elapsed_seconds": 6.558
+        },
+        "hellaswag": {
+          "results": {
+            "hellaswag": {
+              "alias": "hellaswag",
+              "acc,none": 0.5,
+              "acc_stderr,none": 0.5,
+              "acc_norm,none": 1.0,
+              "acc_norm_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "hellaswag": [
+              {
+                "doc_id": 0,
+                "doc_hash": "5fa398b50d156bdf77b474f3b43a03352e9a46bddfc7bb62e1038f7b4f12bbd1",
+                "prompt_hash": "5bfaa09e2b6d14692ff922f5fe505e58bac7bc4ff693ebefa5f7c370ca74dc45",
+                "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "08296d87a2d1cb270a714773cb78d37f02f82661a082462fa53b437dfa0e3a5e",
+                "prompt_hash": "527ed4a9f765fa58962d42f4f8477e7e14c913e0ac13af1617e7908831590e1b",
+                "target_hash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+                "score": 1.0
+              }
+            ]
+          },
+          "elapsed_seconds": 8.477
+        },
+        "mmlu": {
+          "results": {
+            "mmlu_abstract_algebra": {
+              "alias": "abstract_algebra",
+              "acc,none": 0.5,
+              "acc_stderr,none": 0.5
+            }
+          },
+          "samples": {
+            "mmlu_abstract_algebra": [
+              {
+                "doc_id": 0,
+                "doc_hash": "6cd9c6502447a6f35e13e2e94ad6a1ba2ac5672b02acd62d3f1ad2829be63827",
+                "prompt_hash": "ff9b00310e214beacf4b324da8c9e6c1de4e49cb422f1bcb1f7037b78f40a2a3",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 0.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "40bb7923cd6211453bfd4b386132b066b28be621a8d0ccd35a23a38568c09c7d",
+                "prompt_hash": "2885f321f1938150f73629d8cfbbe63944e1aa460d0d37f47683c5c75a41d18f",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              }
+            ]
+          },
+          "elapsed_seconds": 6.73
+        },
+        "elapsed_seconds": 21.765
+      }
+    },
+    "elapsed_seconds": 75.938
+  }
+]
