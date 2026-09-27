@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "id_type": "uint16",
   "policy": "Models may interpret registered records but may not create or mutate measurements.",
   "records": [
@@ -2149,6 +2149,218 @@
       "record_sha256": "90a6767eb98ceaeed42263fb2ff4fc04f22a1dafc8c73fbb560f24ce7c921de8"
     },
     {
+      "key": "causal:mistral:7b:braille_adapter:protocol_threshold_fixed_grid",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "lowest_tested_exact_protocol_scale",
+      "value": 0.5,
+      "payload": {
+        "conditions": [
+          {
+            "id": "base",
+            "scale": 0.0,
+            "macro_change_from_base_pp": 0.0,
+            "macro_change_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "protocol_correct": 0,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.25",
+            "scale": 0.25,
+            "macro_change_from_base_pp": -1.318,
+            "macro_change_ci95_pp": [
+              -2.832,
+              0.098
+            ],
+            "protocol_correct": 7,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.5",
+            "scale": 0.5,
+            "macro_change_from_base_pp": -2.637,
+            "macro_change_ci95_pp": [
+              -4.688,
+              -0.684
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.75",
+            "scale": 0.75,
+            "macro_change_from_base_pp": -2.295,
+            "macro_change_ci95_pp": [
+              -4.688,
+              0.049
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_1.0",
+            "scale": 1.0,
+            "macro_change_from_base_pp": -3.662,
+            "macro_change_ci95_pp": [
+              -5.957,
+              -1.367
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "row_sign_randomized_1.0",
+            "scale": 1.0,
+            "macro_change_from_base_pp": -1.562,
+            "macro_change_ci95_pp": [
+              -3.467,
+              0.342
+            ],
+            "protocol_correct": 0,
+            "protocol_total": 28
+          }
+        ],
+        "required_correct": 28,
+        "required_total": 28
+      },
+      "limitations": [
+        "threshold is limited to the preregistered scale grid",
+        "diagnostic seeds are not admission certification",
+        "one checkpoint and adapter"
+      ],
+      "source_file": "mistral_adapter_mechanism_summary.json",
+      "source_sha256": "810f4c4cb2b8bbc1e40f8dd3236cd8f2dd3b9c78c35d16f9911b0464f5751d1a",
+      "evidence_id": 806,
+      "record_sha256": "032649e45948a5ecab87ea7c4c8c9101e62c7aa1e7f9ca6ae3b581dda5c4bc98"
+    },
+    {
+      "key": "causal:mistral:7b:braille_adapter:scale_accuracy_spearman",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "adapter_scale_accuracy_spearman_rho",
+      "value": -0.9,
+      "payload": {
+        "conditions": [
+          {
+            "id": "base",
+            "scale": 0.0,
+            "macro_change_from_base_pp": 0.0,
+            "macro_change_ci95_pp": [
+              0.0,
+              0.0
+            ],
+            "protocol_correct": 0,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.25",
+            "scale": 0.25,
+            "macro_change_from_base_pp": -1.318,
+            "macro_change_ci95_pp": [
+              -2.832,
+              0.098
+            ],
+            "protocol_correct": 7,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.5",
+            "scale": 0.5,
+            "macro_change_from_base_pp": -2.637,
+            "macro_change_ci95_pp": [
+              -4.688,
+              -0.684
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_0.75",
+            "scale": 0.75,
+            "macro_change_from_base_pp": -2.295,
+            "macro_change_ci95_pp": [
+              -4.688,
+              0.049
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "trained_scale_1.0",
+            "scale": 1.0,
+            "macro_change_from_base_pp": -3.662,
+            "macro_change_ci95_pp": [
+              -5.957,
+              -1.367
+            ],
+            "protocol_correct": 28,
+            "protocol_total": 28
+          },
+          {
+            "id": "row_sign_randomized_1.0",
+            "scale": 1.0,
+            "macro_change_from_base_pp": -1.562,
+            "macro_change_ci95_pp": [
+              -3.467,
+              0.342
+            ],
+            "protocol_correct": 0,
+            "protocol_total": 28
+          }
+        ],
+        "pareto_report": {
+          "highest_measured_accuracy_protocol_preserving_scale": 0.75,
+          "macro_accuracy": 0.603516,
+          "change_from_base_pp": -2.295
+        }
+      },
+      "limitations": [
+        "one checkpoint",
+        "five fixed scale points",
+        "descriptive monotonic association",
+        "global scaling does not localize modules"
+      ],
+      "source_file": "mistral_adapter_mechanism_summary.json",
+      "source_sha256": "810f4c4cb2b8bbc1e40f8dd3236cd8f2dd3b9c78c35d16f9911b0464f5751d1a",
+      "evidence_id": 28656,
+      "record_sha256": "6ff067b12e1c0a5b8da960b46ea844fbe13d2cb528008d4e880da5c87b821997"
+    },
+    {
+      "key": "causal:mistral:7b:braille_adapter:trained_minus_row_sign_randomized_accuracy_pp",
+      "owner_model": "mistral:7b",
+      "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
+      "certified_owner": true,
+      "level": "causal",
+      "metric": "trained_minus_row_sign_randomized_accuracy_pp",
+      "value": -2.1,
+      "payload": {
+        "ci95_pp": [
+          -4.395,
+          0.146
+        ],
+        "trained_protocol_correct": 28,
+        "randomized_protocol_correct": 0,
+        "protocol_total": 28
+      },
+      "limitations": [
+        "general-accuracy interval includes zero",
+        "row-sign control preserves LoRA-B Frobenius norms only",
+        "does not preserve singular vectors or exact B@A spectrum",
+        "one checkpoint"
+      ],
+      "source_file": "mistral_adapter_mechanism_summary.json",
+      "source_sha256": "810f4c4cb2b8bbc1e40f8dd3236cd8f2dd3b9c78c35d16f9911b0464f5751d1a",
+      "evidence_id": 26231,
+      "record_sha256": "667761ed326957f864561a636a5dc9dec61224538c1b878e56e566bf9ed76aae"
+    },
+    {
       "key": "causal:mistral:7b:late_norm_scale_0.5:standardized_margin_response",
       "owner_model": "mistral:7b",
       "owner_identity": "mistral:7b+mistral-7b-braille-literacy-v2",
@@ -2765,5 +2977,5 @@
       "record_sha256": "b2c4523e24cdb2635b8cad86a6204821c308af1aa2ddfdf23f01d60442cc824a"
     }
   ],
-  "registry_sha256": "4e6557ceb88b9b16804b24ca160c4b440c7f3e7002b1e59de90498c129c105a0"
+  "registry_sha256": "a0d5a342de2c30ac3aa4083978a4d88408f2d562c04143ab243ae8437978812e"
 }

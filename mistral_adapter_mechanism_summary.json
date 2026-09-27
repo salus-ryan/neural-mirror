@@ -1,0 +1,230 @@
+{
+  "provenance": {
+    "manifest_sha256": "26c3669a7127e2987fda98106cb679daeb99add38e9eaf44db4dc7f80a2dea56",
+    "results_sha256": "df2f73b851cd343776ac80b740a32704bf2382aeddcf26fabe8c0286ab9ae6ae",
+    "analysis_sha256": "a3ebaaca6c5b7eaa5e1ada40ee5cee5ed970150a93f17f48bc81fb40501ed3b4",
+    "preregistration_commit": "fbb0f6d966744cfc90600712709995d5ba7a2da5",
+    "paired_sample_sha256": "36b45c2fcb287ca3df4e490ba7354232d9fee0fdb4109a9c8f6b2e8ae5d0d615"
+  },
+  "design": {
+    "bootstrap_samples": 20000,
+    "all_condition_sample_hashes_matched": true,
+    "primary_weighting": "equal suites; equal MMLU subjects within MMLU"
+  },
+  "base_macro_accuracy": 0.626465,
+  "conditions": [
+    {
+      "id": "base",
+      "kind": "base",
+      "scale": 0.0,
+      "suite_accuracy": {
+        "arc_challenge": 0.650391,
+        "hellaswag": 0.757812,
+        "mmlu": 0.582031,
+        "gsm8k": 0.515625
+      },
+      "suite_change_pp": {
+        "arc_challenge": 0.0,
+        "hellaswag": 0.0,
+        "mmlu": 0.0,
+        "gsm8k": 0.0
+      },
+      "macro_accuracy": 0.626465,
+      "macro_change_from_base_pp": 0.0,
+      "macro_change_ci95_pp": [
+        0.0,
+        0.0
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 0,
+        "adapter_losses": 0,
+        "exact_two_sided_p": 1.0
+      },
+      "protocol_correct": 0,
+      "protocol_total": 28,
+      "protocol_preserved": false
+    },
+    {
+      "id": "trained_scale_0.25",
+      "kind": "trained",
+      "scale": 0.25,
+      "suite_accuracy": {
+        "arc_challenge": 0.642578,
+        "hellaswag": 0.746094,
+        "mmlu": 0.580078,
+        "gsm8k": 0.484375
+      },
+      "suite_change_pp": {
+        "arc_challenge": -0.781,
+        "hellaswag": -1.172,
+        "mmlu": -0.195,
+        "gsm8k": -3.125
+      },
+      "macro_accuracy": 0.613281,
+      "macro_change_from_base_pp": -1.318,
+      "macro_change_ci95_pp": [
+        -2.832,
+        0.098
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 17,
+        "adapter_losses": 32,
+        "exact_two_sided_p": 0.044384161
+      },
+      "protocol_correct": 7,
+      "protocol_total": 28,
+      "protocol_preserved": false
+    },
+    {
+      "id": "trained_scale_0.5",
+      "kind": "trained",
+      "scale": 0.5,
+      "suite_accuracy": {
+        "arc_challenge": 0.636719,
+        "hellaswag": 0.748047,
+        "mmlu": 0.578125,
+        "gsm8k": 0.4375
+      },
+      "suite_change_pp": {
+        "arc_challenge": -1.367,
+        "hellaswag": -0.977,
+        "mmlu": -0.391,
+        "gsm8k": -7.812
+      },
+      "macro_accuracy": 0.600098,
+      "macro_change_from_base_pp": -2.637,
+      "macro_change_ci95_pp": [
+        -4.688,
+        -0.684
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 32,
+        "adapter_losses": 56,
+        "exact_two_sided_p": 0.0137503857
+      },
+      "protocol_correct": 28,
+      "protocol_total": 28,
+      "protocol_preserved": true
+    },
+    {
+      "id": "trained_scale_0.75",
+      "kind": "trained",
+      "scale": 0.75,
+      "suite_accuracy": {
+        "arc_challenge": 0.646484,
+        "hellaswag": 0.740234,
+        "mmlu": 0.566406,
+        "gsm8k": 0.460938
+      },
+      "suite_change_pp": {
+        "arc_challenge": -0.391,
+        "hellaswag": -1.758,
+        "mmlu": -1.562,
+        "gsm8k": -5.469
+      },
+      "macro_accuracy": 0.603516,
+      "macro_change_from_base_pp": -2.295,
+      "macro_change_ci95_pp": [
+        -4.688,
+        0.049
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 46,
+        "adapter_losses": 72,
+        "exact_two_sided_p": 0.0209700295
+      },
+      "protocol_correct": 28,
+      "protocol_total": 28,
+      "protocol_preserved": true
+    },
+    {
+      "id": "trained_scale_1.0",
+      "kind": "trained",
+      "scale": 1.0,
+      "suite_accuracy": {
+        "arc_challenge": 0.625,
+        "hellaswag": 0.746094,
+        "mmlu": 0.550781,
+        "gsm8k": 0.4375
+      },
+      "suite_change_pp": {
+        "arc_challenge": -2.539,
+        "hellaswag": -1.172,
+        "mmlu": -3.125,
+        "gsm8k": -7.812
+      },
+      "macro_accuracy": 0.589844,
+      "macro_change_from_base_pp": -3.662,
+      "macro_change_ci95_pp": [
+        -5.957,
+        -1.367
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 48,
+        "adapter_losses": 93,
+        "exact_two_sided_p": 0.0001881808
+      },
+      "protocol_correct": 28,
+      "protocol_total": 28,
+      "protocol_preserved": true
+    },
+    {
+      "id": "row_sign_randomized_1.0",
+      "kind": "row_sign_randomized",
+      "scale": 1.0,
+      "suite_accuracy": {
+        "arc_challenge": 0.644531,
+        "hellaswag": 0.751953,
+        "mmlu": 0.5625,
+        "gsm8k": 0.484375
+      },
+      "suite_change_pp": {
+        "arc_challenge": -0.586,
+        "hellaswag": -0.586,
+        "mmlu": -1.953,
+        "gsm8k": -3.125
+      },
+      "macro_accuracy": 0.61084,
+      "macro_change_from_base_pp": -1.562,
+      "macro_change_ci95_pp": [
+        -3.467,
+        0.342
+      ],
+      "mcnemar_vs_base": {
+        "adapter_wins": 30,
+        "adapter_losses": 50,
+        "exact_two_sided_p": 0.0329926184
+      },
+      "protocol_correct": 0,
+      "protocol_total": 28,
+      "protocol_preserved": false,
+      "randomization": {
+        "lora_b_tensors": 224,
+        "sign_pattern_sha256": "901ced694ced3ec7761851fb4e3b4f5b781a048998c34ff83166b97d53ab59b0"
+      }
+    }
+  ],
+  "trained_scale_curve_spearman_rho": -0.9,
+  "trained_full_minus_row_sign_randomized_pp": -2.1,
+  "trained_full_minus_row_sign_randomized_ci95_pp": [
+    -4.395,
+    0.146
+  ],
+  "pareto_report": {
+    "highest_measured_accuracy_protocol_preserving_scale": 0.75,
+    "macro_accuracy": 0.603516,
+    "change_from_base_pp": -2.295
+  },
+  "interpretation": [
+    "Protocol preservation first appeared at scale 0.5 in the fixed grid.",
+    "Row-sign randomization destroyed protocol performance despite preserving every LoRA B Frobenius norm, so protocol skill is not explained by norm alone.",
+    "The trained-minus-randomized general-accuracy interval includes zero; this study does not distinguish their general benchmark effects conclusively.",
+    "The scale curve is a one-checkpoint causal intervention and does not identify individual harmful layers."
+  ],
+  "limitations": [
+    "One checkpoint and one frozen adapter.",
+    "The scale study changes all LoRA modules together and does not localize layers.",
+    "Row-sign randomization preserves B norms but not singular vectors or the exact B@A spectrum.",
+    "Protocol seeds are diagnostic, not admission certification."
+  ]
+}

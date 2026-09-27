@@ -155,6 +155,40 @@ def build_records():
             "canonical_adapter_replication_summary.json", replication_hash,
         )
 
+    # Preregistered Mistral scale/randomization interventions.
+    mistral_mechanism, mistral_mechanism_hash = _load("mistral_adapter_mechanism_summary.json")
+    condition_payload = [{key: item[key] for key in ("id", "scale", "macro_change_from_base_pp",
+                         "macro_change_ci95_pp", "protocol_correct", "protocol_total")}
+                         for item in mistral_mechanism["conditions"]]
+    add(
+        "causal:mistral:7b:braille_adapter:scale_accuracy_spearman",
+        "mistral:7b", "causal", "adapter_scale_accuracy_spearman_rho",
+        float(mistral_mechanism["trained_scale_curve_spearman_rho"]),
+        {"conditions": condition_payload, "pareto_report": mistral_mechanism["pareto_report"]},
+        ["one checkpoint", "five fixed scale points", "descriptive monotonic association",
+         "global scaling does not localize modules"],
+        "mistral_adapter_mechanism_summary.json", mistral_mechanism_hash,
+    )
+    add(
+        "causal:mistral:7b:braille_adapter:protocol_threshold_fixed_grid",
+        "mistral:7b", "causal", "lowest_tested_exact_protocol_scale",
+        0.5,
+        {"conditions": condition_payload, "required_correct": 28, "required_total": 28},
+        ["threshold is limited to the preregistered scale grid", "diagnostic seeds are not admission certification",
+         "one checkpoint and adapter"],
+        "mistral_adapter_mechanism_summary.json", mistral_mechanism_hash,
+    )
+    add(
+        "causal:mistral:7b:braille_adapter:trained_minus_row_sign_randomized_accuracy_pp",
+        "mistral:7b", "causal", "trained_minus_row_sign_randomized_accuracy_pp",
+        float(mistral_mechanism["trained_full_minus_row_sign_randomized_pp"]),
+        {"ci95_pp": mistral_mechanism["trained_full_minus_row_sign_randomized_ci95_pp"],
+         "trained_protocol_correct": 28, "randomized_protocol_correct": 0, "protocol_total": 28},
+        ["general-accuracy interval includes zero", "row-sign control preserves LoRA-B Frobenius norms only",
+         "does not preserve singular vectors or exact B@A spectrum", "one checkpoint"],
+        "mistral_adapter_mechanism_summary.json", mistral_mechanism_hash,
+    )
+
     # Assign deterministic uint16 IDs after sorting canonical keys. Fail on duplicate keys.
     records.sort(key=lambda item: item["key"])
     if len({item["key"] for item in records}) != len(records):
@@ -190,7 +224,7 @@ def validate_registry(registry):
 def build_registry():
     records = build_records()
     registry = {
-        "version": 2,
+        "version": 3,
         "id_type": "uint16",
         "policy": "Models may interpret registered records but may not create or mutate measurements.",
         "records": records,

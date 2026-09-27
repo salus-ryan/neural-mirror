@@ -1,0 +1,135 @@
+{
+  "status": "complete",
+  "smoke": true,
+  "manifest_sha256": "26c3669a7127e2987fda98106cb679daeb99add38e9eaf44db4dc7f80a2dea56",
+  "observed_dataset_revisions": {
+    "allenai/ai2_arc": "210d026faf9955653af8916fad021475a3f00453",
+    "Rowan/hellaswag": "218ec52e09a7e7462a5400043bb9a69a41d06b76",
+    "cais/mmlu": "c30699e8356da336a370243923dbaf21066bb9fe",
+    "openai/gsm8k": "740312add88f781978c0658806c59bc2815b9866"
+  },
+  "model": "mistral:7b",
+  "adapter": "mistral-7b-braille-literacy-v2",
+  "adapter_tree_sha256": "9eafc2b2dc4762d4f0398a8d3715b4af251b24d0e826e828d5e8341e4df78fd8",
+  "adapter_model_sha256": "52f7f640500de8e6b1281926f3be0e2eab16c4412fc62dc3884325b10e7aef58",
+  "conditions": [
+    {
+      "id": "base",
+      "kind": "base",
+      "scale": 0.0,
+      "randomization": null,
+      "suites": {
+        "arc_challenge": {
+          "results": {
+            "arc_challenge": {
+              "alias": "arc_challenge",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0,
+              "acc_norm,none": 1.0,
+              "acc_norm_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "arc_challenge": [
+              {
+                "doc_id": 0,
+                "doc_hash": "9ac07c0bf329749d60dea47e62236e71200f89791410eb0286c28d7e2cd94426",
+                "prompt_hash": "ec6e8357b5b148ecbdbd55332fae25de39b99b22e3ae31987d623090ba6dc8d3",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "04bf654f45c33c5ba12c2e6eaa67bc85cbf8309a284346a423ad23ee17776eee",
+                "prompt_hash": "14f43fc72d8bad730dfd4b28ce6f7de8a15bcd580785a61333898aaf9e126adc",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 1.0
+              }
+            ]
+          }
+        }
+      },
+      "protocol": null,
+      "elapsed_seconds": 20.043
+    },
+    {
+      "id": "trained_scale_0.25",
+      "kind": "trained",
+      "scale": 0.25,
+      "randomization": null,
+      "suites": {
+        "arc_challenge": {
+          "results": {
+            "arc_challenge": {
+              "alias": "arc_challenge",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0,
+              "acc_norm,none": 1.0,
+              "acc_norm_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "arc_challenge": [
+              {
+                "doc_id": 0,
+                "doc_hash": "9ac07c0bf329749d60dea47e62236e71200f89791410eb0286c28d7e2cd94426",
+                "prompt_hash": "ec6e8357b5b148ecbdbd55332fae25de39b99b22e3ae31987d623090ba6dc8d3",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "04bf654f45c33c5ba12c2e6eaa67bc85cbf8309a284346a423ad23ee17776eee",
+                "prompt_hash": "14f43fc72d8bad730dfd4b28ce6f7de8a15bcd580785a61333898aaf9e126adc",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 1.0
+              }
+            ]
+          }
+        }
+      },
+      "protocol": null,
+      "elapsed_seconds": 7.113
+    },
+    {
+      "id": "trained_scale_0.5",
+      "kind": "trained",
+      "scale": 0.5,
+      "randomization": null,
+      "suites": {
+        "arc_challenge": {
+          "results": {
+            "arc_challenge": {
+              "alias": "arc_challenge",
+              "acc,none": 1.0,
+              "acc_stderr,none": 0.0,
+              "acc_norm,none": 1.0,
+              "acc_norm_stderr,none": 0.0
+            }
+          },
+          "samples": {
+            "arc_challenge": [
+              {
+                "doc_id": 0,
+                "doc_hash": "9ac07c0bf329749d60dea47e62236e71200f89791410eb0286c28d7e2cd94426",
+                "prompt_hash": "ec6e8357b5b148ecbdbd55332fae25de39b99b22e3ae31987d623090ba6dc8d3",
+                "target_hash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+                "score": 1.0
+              },
+              {
+                "doc_id": 1,
+                "doc_hash": "04bf654f45c33c5ba12c2e6eaa67bc85cbf8309a284346a423ad23ee17776eee",
+                "prompt_hash": "14f43fc72d8bad730dfd4b28ce6f7de8a15bcd580785a61333898aaf9e126adc",
+                "target_hash": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+                "score": 1.0
+              }
+            ]
+          }
+        }
+      },
+      "protocol": null,
+      "elapsed_seconds": 6.594
+    }
+  ],
+  "elapsed_seconds": 50.689
+}
